@@ -1,9 +1,9 @@
 <section id="experience" class="py-32 bg-background">
     <div class="container mx-auto px-6">
         <div class="mb-16 text-center">
-            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">EXPERIENCE</div>
+            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">{{ __('experience.label') }}</div>
             <h2 class="text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl lg:text-6xl">
-                Professional Journey
+                {{ __('experience.heading') }}
             </h2>
         </div>
 
@@ -14,74 +14,74 @@
                 @php
                     $experiences = [
                         [
-                            'title' => 'VP of Engineering',
+                            'title' => __('experience.vp_engineering.title'),
                             'company' => 'Akieni',
                             'location' => 'Brazzaville',
-                            'period' => 'March 2025 – Present',
+                            'period' => __('experience.vp_engineering.period'),
                             'achievements' => [
-                                'Lead 17+ engineers (Backend, Frontend, Mobile, DevOps)',
-                                'Executive member driving technical strategy',
-                                'Scaled team from 7 to 17+ engineers',
-                                'Established engineering processes and structure',
-                                'Integrated Academy talent with mentorship',
-                                'Lead R&D and product development',
-                                'Oversee enterprise systems delivery'
+                                __('experience.vp_engineering.achievement_1'),
+                                __('experience.vp_engineering.achievement_2'),
+                                __('experience.vp_engineering.achievement_3'),
+                                __('experience.vp_engineering.achievement_4'),
+                                __('experience.vp_engineering.achievement_5'),
+                                __('experience.vp_engineering.achievement_6'),
+                                __('experience.vp_engineering.achievement_7')
                             ],
                             'technologies' => ['Technical Strategy', 'People Management', 'Process Design', 'R&D Leadership', 'Cross-functional Alignment', 'Hiring & Onboarding']
                         ],
                         [
-                            'title' => 'Engineering Manager',
+                            'title' => __('experience.engineering_manager.title'),
                             'company' => 'Akieni',
                             'location' => 'Brazzaville',
-                            'period' => 'April 2024 – February 2025',
+                            'period' => __('experience.engineering_manager.period'),
                             'achievements' => [
-                                'Lead engineering team from 0 to 7+ engineers (Backend, Frontend, DevOps, Mobile)',
-                                'Delivered critical enterprise system after 2+ years stalled',
-                                'Reduced infrastructure costs by 21% through AWS migration and optimization',
-                                'Achieved 99.9% uptime with Kubernetes-based high-availability architecture',
-                                'Built integration middleware connecting government services',
-                                'Mentored 2 junior developers to mid-level within 18 months'
+                                __('experience.engineering_manager.achievement_1'),
+                                __('experience.engineering_manager.achievement_2'),
+                                __('experience.engineering_manager.achievement_3'),
+                                __('experience.engineering_manager.achievement_4'),
+                                __('experience.engineering_manager.achievement_5'),
+                                __('experience.engineering_manager.achievement_6')
                             ],
                             'technologies' => ['Django', 'SpringBoot', 'React', 'Redux', 'GraphQL', 'Next.js']
                         ],
                         [
-                            'title' => 'Technical Officer, Data and Operations',
+                            'title' => __('experience.technical_officer.title'),
                             'company' => 'WHO Regional Office for Africa',
                             'location' => 'Brazzaville',
-                            'period' => 'September 2023 – March 2024',
+                            'period' => __('experience.technical_officer.period'),
                             'achievements' => [
-                                'Maintained internal tools for 47 WHO Africa member states',
-                                'Database management and optimization (SQL Server)',
-                                'Developed data collection tools',
-                                'Reduced report generation time by 40% with automated pipelines',
-                                'Built interactive PowerBI dashboards',
-                                'Provided technical support across the region'
+                                __('experience.technical_officer.achievement_1'),
+                                __('experience.technical_officer.achievement_2'),
+                                __('experience.technical_officer.achievement_3'),
+                                __('experience.technical_officer.achievement_4'),
+                                __('experience.technical_officer.achievement_5'),
+                                __('experience.technical_officer.achievement_6')
                             ],
                             'technologies' => ['ASP.NET Core', 'Blazor', 'SQL Server', 'PowerBI']
                         ],
                         [
-                            'title' => 'CTO & Co-Founder',
+                            'title' => __('experience.cto.title'),
                             'company' => 'COWEMA',
                             'location' => 'Brazzaville',
-                            'period' => 'March 2020 – May 2023',
+                            'period' => __('experience.cto.period'),
                             'achievements' => [
-                                'Co-founded and scaled e-commerce platform from 0 to 30K+ users',
-                                'Built tech stack and shipped Marketplace + VEC apps',
-                                'Developed internal tools for reporting and back-office operations',
-                                'Recruited and mentored 3 junior devs to senior level'
+                                __('experience.cto.achievement_1'),
+                                __('experience.cto.achievement_2'),
+                                __('experience.cto.achievement_3'),
+                                __('experience.cto.achievement_4')
                             ],
                             'technologies' => ['Laravel', 'Flutter', 'Kotlin', 'CakePHP', 'MariaDB']
                         ],
                         [
-                            'title' => 'Freelance Developer',
+                            'title' => __('experience.freelance.title'),
                             'company' => 'Self-employed',
                             'location' => 'Pointe-Noire',
-                            'period' => '2016 – 2020',
+                            'period' => __('experience.freelance.period'),
                             'achievements' => [
-                                'Delivered 20+ projects for local and international clients',
-                                'Built Lord-Market marketplace app (10K+ downloads)',
-                                'Developed mobile and web solutions across various industries',
-                                'Established client base leading to COWEMA founding'
+                                __('experience.freelance.achievement_1'),
+                                __('experience.freelance.achievement_2'),
+                                __('experience.freelance.achievement_3'),
+                                __('experience.freelance.achievement_4')
                             ],
                             'technologies' => ['PHP', 'Java', 'MySQL', 'VB.NET', 'C#.NET', 'Android', 'WordPress']
                         ]

@@ -1,12 +1,12 @@
 <section id="projects" class="bg-muted/30 py-32">
     <div class="container mx-auto px-6">
         <div class="mb-16 text-center">
-            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">PORTFOLIO</div>
+            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">{{ __('projects.label') }}</div>
             <h2 class="mb-4 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl">
-                Selected Projects
+                {{ __('projects.heading') }}
             </h2>
             <p class="mx-auto max-w-2xl text-pretty text-muted-foreground">
-                A few projects that illustrate my expertise
+                {{ __('projects.description') }}
             </p>
         </div>
 

@@ -57,12 +57,12 @@
 
     <div class="container relative mx-auto px-6 z-10">
         <div class="mb-16 text-center">
-            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">SERVICES</div>
+            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">{{ __('services.label') }}</div>
             <h2 class="mb-4 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl">
-                How I can help
+                {{ __('services.heading') }}
             </h2>
             <p class="mx-auto max-w-2xl text-pretty text-muted-foreground">
-                Strategic guidance and hands-on execution for your technical challenges
+                {{ __('services.description') }}
             </p>
         </div>
 
@@ -72,33 +72,33 @@
                 $services = [
                     [
                         'icon' => 'layout-dashboard',
-                        'title' => 'Technical Strategy',
-                        'subtitle' => 'Architecture & Planning',
-                        'description' => "Choosing between microservices and monoliths? Evaluating a new stack? Planning a migration? I help you make technical decisions that align with your business goals and scale sustainably. I've architected systems for government agencies, 30K+ user marketplaces, and enterprise platforms—let me help you build a roadmap that actually works."
+                        'title' => __('services.technical_strategy.title'),
+                        'subtitle' => __('services.technical_strategy.subtitle'),
+                        'description' => __('services.technical_strategy.description')
                     ],
                     [
                         'icon' => 'users',
-                        'title' => 'Engineering Leadership',
-                        'subtitle' => 'Team Building & Management',
-                        'description' => "Need to scale your team while maintaining quality? I've scaled teams from 7 to 17+ engineers at Akieni, trained juniors to senior level at COWEMA, and built hiring processes that work. Whether you're structuring your first team or scaling past 10 engineers, I help you grow without chaos."
+                        'title' => __('services.engineering_leadership.title'),
+                        'subtitle' => __('services.engineering_leadership.subtitle'),
+                        'description' => __('services.engineering_leadership.description')
                     ],
                     [
                         'icon' => 'blocks',
-                        'title' => 'System Design & Migration',
-                        'subtitle' => 'Infrastructure & DevOps',
-                        'description' => "Modernizing infrastructure or planning a complex migration? I've migrated legacy systems to AWS with Kubernetes, architected high-availability platforms, and built CI/CD pipelines that ship reliably. I choose technologies that solve your problem—pragmatic decisions over hype."
+                        'title' => __('services.system_design.title'),
+                        'subtitle' => __('services.system_design.subtitle'),
+                        'description' => __('services.system_design.description')
                     ],
                     [
                         'icon' => 'wrench',
-                        'title' => 'Full-Stack Development',
-                        'subtitle' => 'Laravel, ASP.NET Core, Node.js, React, Flutter',
-                        'description' => "Need hands-on development to ship your product? I build complete solutions—marketplace apps serving 30K+ users, mobile apps with Flutter, enterprise platforms with Laravel, ASP.NET Core, and Node.js. Backend to mobile, database to UI, I write code that works and stays maintainable."
+                        'title' => __('services.fullstack_development.title'),
+                        'subtitle' => __('services.fullstack_development.subtitle'),
+                        'description' => __('services.fullstack_development.description')
                     ],
                     [
                         'icon' => 'lightbulb',
-                        'title' => 'Technical Consulting',
-                        'subtitle' => 'Code Review & Advisory',
-                        'description' => "Facing a complex technical decision or need validation on your approach? I provide hands-on consulting: architecture reviews, code audits, technology evaluation, and strategic guidance. Think of me as your technical advisor who's actually built what you're trying to build."
+                        'title' => __('services.technical_consulting.title'),
+                        'subtitle' => __('services.technical_consulting.subtitle'),
+                        'description' => __('services.technical_consulting.description')
                     ]
                 ];
             @endphp

@@ -2,47 +2,47 @@
     <div class="container mx-auto px-6">
         <div class="grid gap-16 lg:grid-cols-2">
             <div>
-                <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">ABOUT</div>
+                <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">{{ __('about.label') }}</div>
                 <h2 class="mb-8 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl lg:text-6xl">
-                    Building teams & systems that scale
+                    {{ __('about.heading') }}
                 </h2>
                 <div class="space-y-4 text-pretty text-muted-foreground leading-relaxed">
                     <p>
-                        I've spent the last decade building and leading engineering teams across Africa. Started as a freelance developer in 2015, became CTO at Cowema where I built a marketplace platform from scratch to 30K+ users, and now I'm VP of Engineering at Akieni managing 18+ engineers across Backend, Frontend, Mobile, and UI/UX.
+                        {{ __('about.description_1') }}
                     </p>
                     <p>
-                        My focus is building enterprise-grade systems with ASP.NET Core, Django, Laravel, Next.js/React, Node.js, Flutter, and Kotlin—then scaling the teams that maintain them. I've trained multiple junior developers to senior level, unblocked stalled government projects, and shipped everything from mobile apps to critical infrastructure platforms.
+                        {{ __('about.description_2') }}
                     </p>
                     <p>
-                        I work across the full stack and I'm equally comfortable defining technical strategy in a boardroom or shipping code at 2AM. If you're scaling a team, modernizing your stack, or need hands-on leadership to deliver something critical, let's talk.
+                        {{ __('about.description_3') }}
                     </p>
                 </div>
             </div>
 
-            <div class="grid gap-6 md:grid-cols-2">
+            <div class="grid gap-6 md:grid-cols-2 items-start">
                 @php
                     $stats = [
                         [
                             'value' => '10',
-                            'label' => 'Years in Tech Leadership',
+                            'label' => __('about.stat_years'),
                             'gradient' => 'bg-gradient-to-br from-blue-500 to-blue-600',
                             'icon' => 'medal'
                         ],
                         [
                             'value' => '18+',
-                            'label' => 'Engineers Led',
+                            'label' => __('about.stat_engineers'),
                             'gradient' => 'bg-gradient-to-br from-purple-500 to-purple-600',
                             'icon' => 'users-three'
                         ],
                         [
                             'value' => '30K+',
-                            'label' => 'Users Impacted',
+                            'label' => __('about.stat_users'),
                             'gradient' => 'bg-gradient-to-br from-emerald-500 to-emerald-600',
                             'icon' => 'users'
                         ],
                         [
                             'value' => '10+',
-                            'label' => 'Major Projects Delivered',
+                            'label' => __('about.stat_projects'),
                             'gradient' => 'bg-gradient-to-br from-orange-500 to-orange-600',
                             'icon' => 'briefcase'
                         ]
@@ -50,7 +50,7 @@
                 @endphp
 
                 @foreach ($stats as $index => $stat)
-                    <div class="group relative overflow-hidden rounded-3xl shadow-md transition-all duration-500 hover:shadow-lg hover:scale-105 stat-card translate-y-8 opacity-0" style="transition-delay: {{ $index * 100 }}ms">
+                    <div class="group relative overflow-hidden rounded-3xl shadow-md transition-all duration-500 hover:shadow-lg hover:scale-105 stat-card translate-y-8 opacity-0 min-h-[280px] flex flex-col" style="transition-delay: {{ $index * 100 }}ms">
                         <div class="absolute inset-0 {{ $stat['gradient'] }}"></div>
 
                         <!-- Decorative pattern SVG -->

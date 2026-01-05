@@ -134,6 +134,12 @@ function initNavigation() {
         menuToggle.addEventListener('click', toggleMenu);
     }
 
+    // Close button inside mobile menu
+    const mobileMenuClose = document.getElementById('mobile-menu-close');
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', toggleMenu);
+    }
+
     // Close mobile menu when clicking on a link
     mobileNavLinks.forEach(link => {
         link.addEventListener('click', () => {

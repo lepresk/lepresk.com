@@ -1,16 +1,16 @@
 <section id="contact" class="py-32">
     <div class="container mx-auto px-6">
         <div class="mb-16 text-center">
-            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">CONTACT</div>
+            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">{{ __('contact.label') }}</div>
             <h2 class="mb-4 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl">
-                Got an idea? Let's talk about it
+                {{ __('contact.heading') }}
             </h2>
         </div>
 
         <div class="mx-auto grid max-w-6xl gap-12 lg:grid-cols-5">
             <div class="space-y-8 lg:col-span-2 contact-info -translate-x-12 opacity-0">
                 <div>
-                    <h3 class="mb-6 text-2xl font-bold">Information</h3>
+                    <h3 class="mb-6 text-2xl font-bold">{{ __('contact.info_heading') }}</h3>
                     <div class="space-y-4">
                         <a href="mailto:info@lepresk.com" class="group flex items-center gap-4 text-muted-foreground transition-colors hover:text-primary">
                             <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
@@ -40,7 +40,7 @@
                 </div>
 
                 <div>
-                    <h3 class="mb-6 text-2xl font-bold">Networks</h3>
+                    <h3 class="mb-6 text-2xl font-bold">{{ __('contact.networks_heading') }}</h3>
                     <div class="flex gap-4">
                         <a href="https://linkedin.com/in/lepres-kikounga-438911133" target="_blank" rel="noopener noreferrer" class="flex h-12 w-12 items-center justify-center rounded-full border border-border transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground" aria-label="LinkedIn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -65,27 +65,27 @@
                 @csrf
                 <div class="grid gap-6 sm:grid-cols-2">
                     <div>
-                        <label for="name" class="mb-2 block text-sm font-medium">Full Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Your name" class="w-full h-12 rounded-lg border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+                        <label for="name" class="mb-2 block text-sm font-medium">{{ __('contact.form_name') }}</label>
+                        <input type="text" id="name" name="name" required placeholder="{{ __('contact.form_name_placeholder') }}" class="w-full h-12 rounded-lg border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
                     </div>
                     <div>
-                        <label for="email" class="mb-2 block text-sm font-medium">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="your@email.com" class="w-full h-12 rounded-lg border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+                        <label for="email" class="mb-2 block text-sm font-medium">{{ __('contact.form_email') }}</label>
+                        <input type="email" id="email" name="email" required placeholder="{{ __('contact.form_email_placeholder') }}" class="w-full h-12 rounded-lg border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
                     </div>
                 </div>
 
                 <div>
-                    <label for="subject" class="mb-2 block text-sm font-medium">Subject</label>
-                    <input type="text" id="subject" name="subject" required placeholder="Subject of your message" class="w-full h-12 rounded-lg border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
+                    <label for="subject" class="mb-2 block text-sm font-medium">{{ __('contact.form_subject') }}</label>
+                    <input type="text" id="subject" name="subject" required placeholder="{{ __('contact.form_subject_placeholder') }}" class="w-full h-12 rounded-lg border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20">
                 </div>
 
                 <div>
-                    <label for="message" class="mb-2 block text-sm font-medium">Message</label>
+                    <label for="message" class="mb-2 block text-sm font-medium">{{ __('contact.form_message') }}</label>
                     <textarea id="message" name="message" required rows="6" class="w-full resize-none rounded-lg border border-border bg-background px-4 py-3 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"></textarea>
                 </div>
 
                 <button type="submit" class="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-medium text-primary-foreground transition-colors hover:bg-primary/90">
-                    Send Message
+                    {{ __('contact.form_submit') }}
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4z"/>
                     </svg>

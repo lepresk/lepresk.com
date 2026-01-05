@@ -1,22 +1,27 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>@yield('title', 'Lepres Kikounga | VP of Engineering & Tech Advisor')</title>
+    <title>@yield('title', __('meta.home.title'))</title>
 
-    <meta name="description" content="@yield('description', 'Portfolio de Lepres Kikounga - VP of Engineering avec 8+ ans d\'expérience. Ex-CTO at Cowema. Spécialisé en architecture système, leadership technique et stratégie technologique.')">
+    <meta name="description" content="@yield('description', __('meta.home.description'))">
     <meta name="keywords" content="VP of Engineering, CTO, Tech Advisor, Engineering Leadership, System Architecture, Laravel, React, Flutter, .NET, Next.js">
     <meta name="author" content="Lepres Kikounga">
 
+    <!-- Hreflang Tags -->
+    <link rel="alternate" hreflang="en" href="{{ url()->current() }}" />
+    <link rel="alternate" hreflang="fr" href="{{ url()->current() }}" />
+    <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}" />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale" content="{{ app()->getLocale() === 'fr' ? 'fr_FR' : 'en_US' }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="@yield('title', 'Lepres Kikounga | VP of Engineering & Tech Advisor')">
-    <meta property="og:description" content="8+ years leading engineering teams and building scalable systems">
+    <meta property="og:title" content="@yield('title', __('meta.home.title'))">
+    <meta property="og:description" content="@yield('description', __('meta.home.description'))">
     <meta property="og:site_name" content="Lepres Kikounga Portfolio">
 
     <!-- Fonts -->
@@ -32,6 +37,29 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    @php
+        echo json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'Person',
+            'name' => 'Lepres Kikounga',
+            'jobTitle' => __('hero.role'),
+            'description' => __('meta.home.description'),
+            'url' => url('/'),
+            'sameAs' => [
+                'https://linkedin.com/in/lepres-kikounga-438911133',
+                'https://linkedin.com/in/lepresk',
+                'https://github.com/lepresk',
+                'https://youtube.com/@lepresk',
+                'https://facebook.com/lepresk',
+                'https://t.me/lepresk'
+            ],
+            'inLanguage' => ['en', 'fr']
+        ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    @endphp
+    </script>
+
     @stack('head')
 </head>
 <body class="font-sans antialiased">
@@ -44,7 +72,7 @@
     @include('partials.footer')
 
     <!-- Back to Top Button -->
-    <button id="back-to-top" class="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl opacity-0 pointer-events-none" aria-label="Retour en haut">
+    <button id="back-to-top" class="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl opacity-0 pointer-events-none" aria-label="{{ __('back_to_top') }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m18 15-6-6-6 6"/>
         </svg>

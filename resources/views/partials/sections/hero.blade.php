@@ -8,7 +8,7 @@
             <div>
                 <div class="mb-6 overflow-hidden">
                     <p class="animate-fade-in-up text-xl font-bold uppercase tracking-wide text-primary md:text-2xl">
-                        Hi, I'm
+                        {{ __('hero.greeting') }}
                     </p>
                 </div>
 
@@ -20,30 +20,28 @@
 
                 <div class="mb-8 overflow-hidden">
                     <p class="animate-fade-in-up text-2xl text-muted-foreground [animation-delay:200ms] md:text-3xl">
-                        VP of Engineering & Tech Advisor
+                        {{ __('hero.role') }}
                         <br>
-                        <span class="font-semibold text-foreground">Architecture • Leadership • Strategy</span>
+                        <span class="font-semibold text-foreground">{{ __('hero.tagline') }}</span>
                     </p>
                 </div>
 
                 <div class="mb-12 overflow-hidden">
                     <p class="animate-fade-in-up max-w-2xl text-pretty text-muted-foreground [animation-delay:300ms] md:text-lg">
-                        10 years leading engineering teams and building scalable systems. Currently VP of Engineering at Akieni,
-                        ex-CTO at Cowema. I help organizations build robust tech infrastructure, optimize operations, and scale
-                        their engineering capabilities.
+                        {{ __('hero.description') }}
                     </p>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-4 overflow-hidden">
                     <a href="#services" class="animate-fade-in-up group inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-medium text-primary-foreground transition-all hover:gap-4 [animation-delay:400ms]">
-                        See how I can help
+                        {{ __('hero.cta_primary') }}
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1">
                             <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                         </svg>
                     </a>
 
                     <a href="#contact" class="animate-fade-in-up inline-flex items-center gap-2 rounded-full border-2 border-primary/30 bg-primary/10 px-8 py-4 font-medium text-foreground transition-all hover:border-primary hover:bg-primary/20 hover:shadow-lg [animation-delay:450ms]">
-                        Let's talk
+                        {{ __('hero.cta_secondary') }}
                     </a>
 
                     <div class="animate-fade-in-up flex gap-4 [animation-delay:500ms]">

@@ -25,18 +25,35 @@
                 </a>
             </div>
 
+            <!-- Language Switcher -->
+            <div class="flex items-center gap-2">
+                <form action="{{ route('language.switch', 'en') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="text-sm font-medium transition-colors cursor-pointer {{ app()->getLocale() === 'en' ? 'text-primary' : 'text-muted-foreground hover:text-primary' }}">
+                        EN
+                    </button>
+                </form>
+                <span class="text-sm text-muted-foreground">|</span>
+                <form action="{{ route('language.switch', 'fr') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="text-sm font-medium transition-colors cursor-pointer {{ app()->getLocale() === 'fr' ? 'text-primary' : 'text-muted-foreground hover:text-primary' }}">
+                        FR
+                    </button>
+                </form>
+            </div>
+
             <!-- Copyright -->
             <div class="text-center text-sm">
                 <span class="text-muted-foreground">&copy; {{ date('Y') }} </span>
                 <span class="font-semibold text-primary">Lepresk</span>
-                <span class="text-muted-foreground">. All rights reserved</span>
+                <span class="text-muted-foreground">. {{ __('footer.copyright') }}</span>
             </div>
 
             <!-- Crafted By -->
             <div class="text-center text-sm md:text-right">
-                <span class="text-muted-foreground">Hand made & crafted with </span>
+                <span class="text-muted-foreground">{{ __('footer.crafted') }} </span>
                 <span class="text-red-500">❤️</span>
-                <span class="text-muted-foreground"> by </span>
+                <span class="text-muted-foreground"> {{ __('footer.by') }} </span>
                 <span class="font-semibold text-primary">Lepresk</span>
             </div>
         </div>

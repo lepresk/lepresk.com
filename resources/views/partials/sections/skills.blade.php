@@ -1,9 +1,9 @@
 <section id="skills" class="py-32 bg-muted/30">
     <div class="container mx-auto px-6">
         <div class="mb-16 text-center">
-            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">SKILLS</div>
+            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">{{ __('skills.label') }}</div>
             <h2 class="mb-4 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl">
-                Proficient Technologies
+                {{ __('skills.heading') }}
             </h2>
         </div>
 
