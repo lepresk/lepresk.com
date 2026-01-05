@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\WorkController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn (): View => view('index'));
 
 // Blog routes
-Route::get('/blog', fn (): View => view('blog.index'));
-Route::get('/blog/{slug}', fn (string $slug): View => view('blog.show', ['slug' => $slug]));
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 // Project routes
-Route::get('/projets/{slug}', fn (string $slug): View => view('projects.show', ['slug' => $slug]));
+Route::get('/projets/{slug}', [WorkController::class, 'show'])->name('projects.show');
 
 // Contact form
 Route::post('/contact', function () {

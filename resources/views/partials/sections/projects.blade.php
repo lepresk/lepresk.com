@@ -12,67 +12,40 @@
 
         <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             @php
-                $projects = [
-                    [
-                        'slug' => 'cowema-marketplace',
-                        'title' => 'COWEMA Marketplace',
-                        'category' => 'Mobile & Web',
-                        'tags' => ['Flutter', 'Laravel', 'PostgreSQL'],
-                        'image' => '/images/classifieds-app-interface.jpg',
-                        'description' => 'E-commerce marketplace serving 30K+ users across Central Africa'
-                    ],
-                    [
-                        'slug' => 'cowema-vec',
-                        'title' => 'COWEMA VEC',
-                        'category' => 'Mobile',
-                        'tags' => ['Flutter', 'Laravel', 'REST API'],
-                        'image' => '/images/mobile-marketplace-app-interface.jpg',
-                        'description' => 'Vendor management app for marketplace sellers'
-                    ],
-                    [
-                        'slug' => 'lord-market',
-                        'title' => 'Lord-Market',
-                        'category' => 'Mobile',
-                        'tags' => ['Flutter', 'CakePHP', 'MySQL'],
-                        'image' => '/images/mobile-marketplace-app-interface.jpg',
-                        'description' => 'Mobile marketplace app with real-time messaging'
-                    ],
-                    [
-                        'slug' => 'mylibcg',
-                        'title' => 'MylibCG',
-                        'category' => 'Web',
-                        'tags' => ['React', 'Node.js', 'MongoDB'],
-                        'image' => '/images/software-architecture-diagram.png',
-                        'description' => 'Digital library platform for Congolese content'
-                    ],
-                    [
-                        'slug' => 'personal-portfolio',
-                        'title' => 'Personal Portfolio',
-                        'category' => 'Web',
-                        'tags' => ['Laravel', 'Tailwind CSS', 'Vite'],
-                        'image' => '/images/code-review-collaboration.jpg',
-                        'description' => 'Modern portfolio built with Laravel 12 and Tailwind v4'
-                    ]
-                ];
+                $projects = \App\Models\Work::published()
+                    ->with(['categories', 'tags'])
+                    ->orderBy('order')
+                    ->take(6)
+                    ->get();
             @endphp
 
             @foreach ($projects as $index => $project)
-                <a href="/projets/{{ $project['slug'] }}" data-project-card data-index="{{ $index }}" class="group relative overflow-hidden rounded-2xl border border-border bg-background transition-all duration-700 hover:shadow-2xl hover:backdrop-blur-xl hover:bg-background/80 hover:border-primary/30 project-card translate-y-12 opacity-0" style="transition-delay: {{ $index * 100 }}ms">
+                <a href="{{ route('projects.show', $project->slug) }}" data-project-card data-index="{{ $index }}" class="group relative overflow-hidden rounded-2xl border border-border bg-background transition-all duration-700 hover:shadow-2xl hover:backdrop-blur-xl hover:bg-background/80 hover:border-primary/30 project-card translate-y-12 opacity-0" style="transition-delay: {{ $index * 100 }}ms">
                     <div class="relative aspect-[4/3] overflow-hidden bg-muted">
-                        <img src="{{ $project['image'] }}" alt="{{ $project['title'] }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        @if($project->featured_image)
+                            <img src="{{ Storage::url($project->featured_image) }}" alt="{{ $project->title }}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        @else
+                            <div class="h-full w-full bg-gradient-to-br from-primary/10 to-primary/5"></div>
+                        @endif
                         <div class="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100"></div>
                     </div>
 
                     <div class="p-6">
-                        <div class="mb-2 text-xs font-medium text-muted-foreground">{{ $project['category'] }}</div>
-                        <h3 class="mb-2 text-xl font-bold">{{ $project['title'] }}</h3>
-                        <p class="mb-4 text-sm text-muted-foreground">{{ $project['description'] }}</p>
+                        @if($project->categories->isNotEmpty())
+                            <div class="mb-2 text-xs font-medium text-muted-foreground">{{ $project->categories->first()->name }}</div>
+                        @endif
+                        <h3 class="mb-2 text-xl font-bold">{{ $project->title }}</h3>
+                        @if($project->description)
+                            <p class="mb-4 text-sm text-muted-foreground">{{ $project->description }}</p>
+                        @endif
 
-                        <div class="flex flex-wrap gap-2">
-                            @foreach ($project['tags'] as $tag)
-                                <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium">{{ $tag }}</span>
-                            @endforeach
-                        </div>
+                        @if($project->tags->isNotEmpty())
+                            <div class="flex flex-wrap gap-2">
+                                @foreach ($project->tags as $tag)
+                                    <span class="rounded-full bg-muted px-3 py-1 text-xs font-medium">{{ $tag->name }}</span>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
 
                     <div class="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-background opacity-0 shadow-lg transition-all group-hover:opacity-100">

@@ -1,84 +1,132 @@
 @extends('layouts.app')
 
-@section('title', 'Article | Lepres Kikounga')
+@section('title', ($post->meta_title ?: $post->title) . ' | Lepres Kikounga')
+
+@section('description', $post->meta_description ?: $post->excerpt)
+
+@push('head')
+    {{-- Open Graph Meta Tags --}}
+    <meta property="og:title" content="{{ $post->og_title ?: $post->title }}">
+    <meta property="og:description" content="{{ $post->og_description ?: ($post->meta_description ?: $post->excerpt) }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ route('blog.show', $post->slug) }}">
+
+    @if($post->og_image)
+        <meta property="og:image" content="{{ Storage::url($post->og_image) }}">
+    @elseif($post->featured_image)
+        <meta property="og:image" content="{{ Storage::url($post->featured_image) }}">
+    @endif
+
+    <meta property="article:published_time" content="{{ $post->published_at->toIso8601String() }}">
+    <meta property="article:modified_time" content="{{ $post->updated_at->toIso8601String() }}">
+
+    @if($post->meta_keywords)
+        <meta name="keywords" content="{{ $post->meta_keywords }}">
+    @endif
+
+    {{-- Twitter Card Meta Tags --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $post->og_title ?: $post->title }}">
+    <meta name="twitter:description" content="{{ $post->og_description ?: ($post->meta_description ?: $post->excerpt) }}">
+
+    @if($post->og_image)
+        <meta name="twitter:image" content="{{ Storage::url($post->og_image) }}">
+    @elseif($post->featured_image)
+        <meta name="twitter:image" content="{{ Storage::url($post->featured_image) }}">
+    @endif
+
+    {{-- Structured Data (BlogPosting Schema) --}}
+    @php
+        $structuredData = [
+            '@context' => 'https://schema.org',
+            '@type' => 'BlogPosting',
+            'headline' => $post->title,
+            'description' => $post->excerpt,
+            'datePublished' => $post->published_at->toIso8601String(),
+            'dateModified' => $post->updated_at->toIso8601String(),
+            'author' => [
+                '@type' => 'Person',
+                'name' => 'Lepres Kikounga',
+            ],
+            'publisher' => [
+                '@type' => 'Person',
+                'name' => 'Lepres Kikounga',
+            ],
+        ];
+
+        if ($post->featured_image) {
+            $structuredData['image'] = Storage::url($post->featured_image);
+        }
+
+        if ($post->categories->isNotEmpty()) {
+            $structuredData['articleSection'] = $post->categories->first()->name;
+        }
+
+        if ($post->tags->isNotEmpty()) {
+            $structuredData['keywords'] = $post->tags->pluck('name')->join(', ');
+        }
+    @endphp
+    <script type="application/ld+json">{!! json_encode($structuredData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}</script>
+@endpush
 
 @section('content')
     <div class="min-h-screen pt-24">
         <article class="container mx-auto px-6 pb-24">
             <div class="mx-auto max-w-4xl">
-                <a href="/blog" class="mb-8 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
+                <a href="{{ route('blog.index') }}" class="mb-8 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
                     </svg>
                     Retour aux articles
                 </a>
 
-                @php
-                    $articles = [
-                        'scaling-engineering-teams-lessons-learned' => [
-                            'title' => 'Scaling Engineering Teams: Lessons Learned',
-                            'category' => 'Leadership',
-                            'date' => '2025-01-15',
-                            'readTime' => '8 min',
-                            'image' => '/images/engineering-team-collaboration.png',
-                            'content' => "I've scaled engineering teams from 5 to 11+ people at Akieni, trained 3 junior developers to senior level at COWEMA within a year, and learned what works (and what doesn't) the hard way. Here's what I wish I knew earlier.\n\n## The Biggest Mistake: Hiring Too Fast\n\nWhen the team was overwhelmed, my first instinct was to hire. More people = more output, right? Wrong.\n\nI hired 4 developers in 2 months. Onboarding became chaos. Code reviews slowed down. We spent more time explaining context than shipping features. Velocity actually *decreased*.\n\n**What I learned**: Hire in batches of 1-2, with at least 2 months between hires. Give the team time to absorb new members before adding more.\n\n## What Actually Scales Teams\n\n### 1. Structured Onboarding (Not Just a Wiki)\n\nI used to send new hires a Notion doc and say \"ask if you have questions.\" Nobody asked questions. They struggled silently for weeks.\n\nNow I do:\n- **Week 1**: Pair programming with a senior dev (no solo work)\n- **Week 2**: First PR with heavy guidance\n- **Week 3**: Small feature end-to-end\n- **Month 1 review**: Explicit feedback, not \"you're doing fine\"\n\nResult: New hires are productive in 3 weeks instead of 2 months.\n\n### 2. Career Paths That Actually Exist\n\nAt COWEMA, I promoted 3 juniors to senior level. How? I told them exactly what \"senior\" meant:\n- Lead a feature from design to deployment\n- Mentor another developer\n- Participate in architecture decisions\n\nThen I gave them opportunities to do those things. With feedback. No surprises.\n\nCompare that to: \"You'll be senior when you're ready.\" (Translation: never.)\n\n### 3. Process That Doesn't Suck\n\nI've seen teams drown in process (daily standups, sprint planning, retrospectives, roadmap reviews...) and teams with zero process (chaos).\n\nWhat works for me:\n- **Daily async updates** (written, 5 minutes, in Slack). No standing meetings unless blocked.\n- **Weekly 1-on-1s** with each person (30 min, no status updates, just career/blockers)\n- **Sprint planning** only when priorities change (not every 2 weeks for the sake of it)\n- **Retrospectives** when something goes wrong, not on a schedule\n\nLess overhead, more shipping.\n\n## The Hard Part: Letting Go\n\nAs the team grew, I tried to review every PR, attend every planning meeting, approve every decision. I became the bottleneck.\n\n**The shift**: I stopped asking \"Can I trust this person to do X?\" and started asking \"What do they need to do X without me?\"\n\nExample: Backend decisions used to go through me. Now we have a tech spec template, and senior devs approve specs. I review outcomes, not every line of code.\n\nResult: I unblocked the team and got time back for actual strategic work.\n\n## What Success Looks Like\n\nYou know you've scaled successfully when:\n- Junior devs ship features without hand-holding\n- The team onboards new people without you being involved\n- You can take a week off and nothing breaks\n- People make decisions that align with the vision (even when you're not in the room)\n\n## Bottom Line\n\nScaling teams isn't about hiring fast or adding process. It's about:\n1. Hiring intentionally (not desperately)\n2. Onboarding systematically (not \"figure it out\")\n3. Growing people explicitly (not \"they'll figure it out\")\n4. Trusting the team (and giving them tools to succeed)\n\nIf I had to do it again, I'd hire slower, document better, and delegate sooner. The team would've been more effective, and I would've been less burned out."
-                        ],
-                        'modern-architecture-patterns-2025' => [
-                            'title' => 'Modern Architecture Patterns for 2025',
-                            'category' => 'Architecture',
-                            'date' => '2024-12-28',
-                            'readTime' => '12 min',
-                            'image' => '/images/software-architecture-diagram.png',
-                            'content' => "I've migrated legacy infrastructure to AWS with Kubernetes, built microservices that actually made sense, and also built microservices that were a terrible idea. Here's what's working in 2025 based on real experience, not conference talks.\n\n## The Monolith vs Microservices Debate is Over\n\nSpoiler: **Start with a monolith.** Always.\n\nI've seen teams (including mine) jump straight to microservices because \"that's what Netflix does.\" Result? 12 services for 500 users. Deployment hell. Distributed tracing nightmares. Debugging that makes you question your career choices.\n\n**What works**: Build a well-structured monolith first. Use modules, clear boundaries, separate databases if you want. Then extract services *when you have a reason*:\n- This module needs different scaling (high traffic, different SLA)\n- Different teams own different parts\n- You're actually big enough to justify the operational cost\n\nWe did this at Akieni. Started with a Laravel monolith. Extracted a Node.js service for real-time features (WebSockets). Extracted another for background jobs (RabbitMQ). The rest stayed in the monolith. It works.\n\n## Kubernetes: You Probably Don't Need It (But If You Do...)\n\nKubernetes is incredible. It's also overkill for 90% of projects.\n\n**When you don't need it**:\n- You have <10 services\n- Traffic is predictable\n- You don't need auto-scaling\n- Your team hasn't managed Kubernetes before\n\n**When you do need it** (our case at Akieni):\n- Multiple services with different scaling needs\n- Need HA (high availability) and zero-downtime deploys\n- Traffic spikes are unpredictable\n- You have someone who knows Kubernetes (or budget to learn)\n\nWe migrated to Kubernetes and achieved:\n- **99.9% uptime** (previously 99.5%)\n- **Auto-scaling** during peak traffic (saved us during a viral moment)\n- **Reduced costs** by $1.5K/month (optimized resource allocation)\n\nBut it took 3 months to migrate and 2 months to stabilize. Not free.\n\n## Event-Driven Architecture (When It Makes Sense)\n\nEvent-driven systems are great when:\n1. Different parts of your system need to react to the same event\n2. You need eventual consistency (not immediate)\n3. You want to decouple services\n\n**Example from COWEMA**: When a product is listed:\n- Inventory service updates stock\n- Search service indexes the product\n- Notification service alerts followers\n- Analytics service logs the event\n\nWithout events, the \"create product\" endpoint would call 4 services (slow, brittle). With events (RabbitMQ), we publish once, subscribers react independently.\n\n**But** events add complexity:\n- Debugging is harder (\"where did this event come from?\")\n- Ordering is tricky (event A must happen before event B)\n- Failed events need retry logic\n\nUse events when the benefits outweigh the complexity.\n\n## Database Patterns That Actually Work\n\n### One Database per Service (Microservices)\n\nIf you're doing microservices, give each service its own database. Shared databases defeat the purpose.\n\n**Our setup**:\n- User service → PostgreSQL (relational user data)\n- Product service → PostgreSQL (transactional data)\n- Search service → Elasticsearch (optimized for search)\n- Analytics service → MongoDB (flexible schema for events)\n\nYes, this means data duplication. That's fine. Use events to keep things in sync.\n\n### Read Replicas for Performance\n\nWe had slow queries killing our main database. Solution: **read replicas**.\n\n- Writes go to primary database\n- Reads (90% of queries) go to replicas\n- Replicas are geographically distributed for lower latency\n\nResult: 3x faster queries, primary database stopped melting.\n\n## CI/CD: Automate Everything\n\nManual deploys are a crime in 2025. Here's our pipeline:\n\n1. **Push to GitHub** → triggers CI\n2. **Run tests** (unit, integration, linting)\n3. **Build Docker images** if tests pass\n4. **Deploy to staging** automatically\n5. **Run E2E tests** in staging\n6. **Deploy to production** with approval (manual for now, will automate)\n\nDeploys went from 2 hours (manual) to 15 minutes (automated). Rollbacks are one click.\n\n**Tools**: GitHub Actions for CI, Kubernetes for deployment, ArgoCD for GitOps.\n\n## Monitoring: You Can't Fix What You Can't See\n\nWe used to debug by looking at logs. \"Let me SSH into the server and grep...\" Pain.\n\nNow:\n- **Metrics**: Prometheus + Grafana (CPU, memory, request rates)\n- **Logs**: Centralized logging (ELK stack)\n- **Tracing**: Distributed tracing for microservices (Jaeger)\n- **Alerts**: PagerDuty for critical issues (database down, API errors >5%)\n\nWhen something breaks, I know *what*, *where*, and *why* in under 2 minutes.\n\n## What I'd Do Differently\n\n**Start simpler**: We over-engineered early. Should've stayed with monolith longer.\n\n**Invest in observability sooner**: We added monitoring after problems. Should've been day one.\n\n**Document architecture decisions**: Future me (and future team) needed to know *why* we chose X over Y.\n\n## Bottom Line\n\nModern architecture isn't about using the latest tech. It's about:\n1. **Starting simple** (monoliths are fine)\n2. **Scaling when needed** (not prematurely)\n3. **Automating operations** (CI/CD, monitoring, alerts)\n4. **Choosing tools that match your scale** (Kubernetes for 100 users? No.)\n\nBuild for today's problems, not Netflix's problems."
-                        ],
-                        'technical-debt-strategic-approach' => [
-                            'title' => 'Technical Debt: A Strategic Approach',
-                            'category' => 'Strategy',
-                            'date' => '2024-12-10',
-                            'readTime' => '10 min',
-                            'image' => '/images/technical-strategy-planning.jpg',
-                            'content' => "Technical debt gets a bad reputation. Managers hear \"technical debt\" and think \"engineers want to rewrite everything for fun.\" Engineers hear \"ship fast\" and think \"management doesn't care about quality.\" Both are wrong.\n\nI've shipped features with intentional debt (and it was the right call). I've also let debt accumulate until it killed velocity. Here's how to think about technical debt strategically.\n\n## Not All Debt is Bad\n\nWhen I built COWEMA Marketplace, we had 6 months to launch or lose funding. We made deliberate trade-offs:\n\n**Debt we took on**:\n- Skipped multi-language support (hardcoded French)\n- No admin dashboard (managed data via database directly)\n- Minimal test coverage (focused on critical paths)\n- Basic search (no filters, just keyword matching)\n\n**Result**: Shipped on time, got users, secured funding.\n\n**Debt we paid later**:\n- Added admin dashboard when manual DB edits became unsustainable (month 3)\n- Improved search when users complained (month 5)\n- Added tests when bugs started breaking production (month 6)\n\nIf we'd built everything \"properly\" from the start, we'd have run out of money before launching.\n\n## When to Take on Debt (Intentionally)\n\n### 1. Time-to-Market is Critical\n\nExample: A competitor announced a similar feature. We had 2 weeks to ship or lose our edge.\n\n**Fast approach**: Hardcoded logic, skipped edge cases, deployed.\n\n**Proper approach**: Generic solution, handled all edge cases, 6 weeks.\n\nWe shipped fast. Won the users. Refactored later.\n\n### 2. You're Testing a Hypothesis\n\nAt Lord-Market, we added a \"favorites\" feature. Would users use it? No idea.\n\n**Fast approach**: Stored favorites in local storage (client-side). 2 days.\n\n**Proper approach**: Backend API, database, sync across devices. 2 weeks.\n\nWe shipped the fast version. Users loved it. *Then* we built it properly with backend sync.\n\nIf users hadn't used it, we'd have deleted 100 lines of code instead of a whole backend feature.\n\n### 3. Requirements Are Uncertain\n\nEarly COWEMA, we weren't sure how product categories should work. Build a complex taxonomy system? Or keep it simple?\n\nWe kept it simple (flat categories). Learned from user behavior. Built the taxonomy later when we understood the actual need.\n\n## When Debt Becomes a Problem\n\n### Warning Sign #1: \"We Can't Ship Without Breaking Something\"\n\nAt one point, every deployment to COWEMA broke something. Why? No tests, tightly coupled code, no staging environment.\n\n**Fix**: Stopped all features for 2 weeks. Added critical tests, set up staging, decoupled core modules.\n\nVelocity dropped short-term, but we could ship confidently after.\n\n### Warning Sign #2: \"New Features Take 3x Longer Than They Should\"\n\nAdding a simple feature (\"show related products\") took 2 weeks because:\n- Product model was a mess (20 random fields, no clear structure)\n- No proper API for product queries\n- Frontend was tightly coupled to backend structure\n\n**Fix**: Refactored product model, built a clean API, introduced a data layer.\n\nNext similar feature took 2 days instead of 2 weeks.\n\n### Warning Sign #3: \"Only One Person Can Touch This Code\"\n\nIf a critical part of the system is \"owned\" by one person and nobody else dares touch it, that's debt.\n\nAt COWEMA, the payment module was like this. Only I understood it. Bus factor of 1.\n\n**Fix**: Pair programming sessions, documentation, code review, refactoring for clarity.\n\n## How to Manage Debt Strategically\n\n### 1. Write It Down\n\nWhen you take on debt, document it:\n\n```markdown\n// TODO: Hardcoded for French. Add i18n when we expand to other countries.\n// See ticket #342 for context.\n```\n\nWhy you took the shortcut matters. Future you (or future team) will thank you.\n\n### 2. Track It Like Features\n\nWe use a \"Tech Debt\" board in Jira. Every intentional shortcut gets a ticket with:\n- What we skipped\n- Why we skipped it\n- Impact (low/medium/high)\n- When to revisit\n\nDebt isn't invisible. It's tracked, prioritized, and addressed.\n\n### 3. Budget Time for Paydown\n\nAt Akieni, we allocate **20% of sprint capacity to tech debt**. Not \"if we have time\" (we never do). It's planned.\n\nThis prevents debt from piling up until it's a crisis.\n\n### 4. Prioritize by Pain, Not Perfection\n\nNot all debt needs fixing. Focus on:\n- **High-pain debt**: Slows down development, causes bugs\n- **High-leverage debt**: Fixing it unlocks future work\n\nIgnore:\n- **Low-pain debt**: Ugly code that works fine\n- **Speculative debt**: \"We might need to scale this someday\"\n\n## Real Example: Refactoring the Product Search\n\nCOWEMA's search was bad. Basic keyword matching, no filters, slow queries.\n\n**Option 1**: Rewrite with Elasticsearch (2 months)\n\n**Option 2**: Optimize existing search with indexes and better queries (1 week)\n\nWe chose Option 2. It solved 80% of the pain for 20% of the effort.\n\nWhen we scaled to 50K+ products, *then* we moved to Elasticsearch.\n\n## Bottom Line\n\nTechnical debt isn't good or bad. It's a trade-off.\n\n**Good debt**:\n- Taken intentionally\n- Documented\n- Paid down before it compounds\n\n**Bad debt**:\n- Taken accidentally (\"we didn't know better\")\n- Ignored until it's a crisis\n- Never prioritized\n\n**The goal isn't zero debt**. It's managing debt strategically—knowing when to take it on, when to pay it down, and when to ignore it.\n\nShip fast when it matters. Refactor when it hurts. Don't rewrite for perfection."
-                        ]
-                    ];
-
-                    $article = $articles[$slug] ?? null;
-                @endphp
-
-                @if(!$article)
-                    <div class="py-24 text-center">
-                        <h1 class="mb-4 text-4xl font-bold">Article non trouvé</h1>
-                        <p class="text-muted-foreground">Cet article n'existe pas ou a été supprimé.</p>
-                    </div>
-                @else
-                    <div class="mb-8">
+                <div class="mb-8">
+                    @if($post->categories->isNotEmpty())
                         <span class="mb-4 inline-block rounded-full bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
-                            {{ $article['category'] }}
+                            {{ $post->categories->first()->name }}
                         </span>
-                        <h1 class="mb-6 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl lg:text-6xl">
-                            {{ $article['title'] }}
-                        </h1>
-                        <div class="flex items-center gap-6 text-sm text-muted-foreground">
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>
-                                </svg>
-                                {{ \Carbon\Carbon::parse($article['date'])->isoFormat('D MMMM YYYY') }}
-                            </div>
+                    @endif
+                    <h1 class="mb-6 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl lg:text-6xl">
+                        {{ $post->title }}
+                    </h1>
+                    <div class="flex items-center gap-6 text-sm text-muted-foreground">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>
+                            </svg>
+                            {{ $post->published_at->isoFormat('D MMMM YYYY') }}
+                        </div>
+                        @if($post->read_time)
                             <div class="flex items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
                                 </svg>
-                                {{ $article['readTime'] }}
+                                {{ $post->read_time }}
                             </div>
+                        @endif
+                    </div>
+                </div>
+
+                @if($post->featured_image)
+                    <div class="relative mb-12 aspect-21/9 overflow-hidden rounded-2xl">
+                        <img src="{{ Storage::url($post->featured_image) }}" alt="{{ $post->title }}" class="h-full w-full object-cover">
+                    </div>
+                @endif
+
+                <div class="prose prose-lg prose-slate dark:prose-invert max-w-none">
+                    {!! Str::markdown($post->content) !!}
+                </div>
+
+                @if($post->tags->isNotEmpty())
+                    <div class="mt-12 pt-8 border-t border-border">
+                        <h3 class="mb-4 text-sm font-semibold text-muted-foreground">Tags</h3>
+                        <div class="flex flex-wrap gap-2">
+                            @foreach($post->tags as $tag)
+                                <span class="rounded-full bg-muted px-3 py-1 text-sm text-muted-foreground">
+                                    {{ $tag->name }}
+                                </span>
+                            @endforeach
                         </div>
-                    </div>
-
-                    <div class="relative mb-12 aspect-[21/9] overflow-hidden rounded-2xl">
-                        <img src="{{ $article['image'] }}" alt="{{ $article['title'] }}" class="h-full w-full object-cover">
-                    </div>
-
-                    <div class="prose prose-lg prose-slate dark:prose-invert max-w-none">
-                        {!! Str::markdown($article['content']) !!}
                     </div>
                 @endif
             </div>
