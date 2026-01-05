@@ -244,10 +244,40 @@ function initScrollAnimations() {
     animatedElements.forEach(el => observer.observe(el));
 }
 
+// Back to Top Button
+function initBackToTop() {
+    const backToTopButton = document.getElementById('back-to-top');
+    if (!backToTopButton) return;
+
+    // Show/hide button based on scroll position
+    const handleScroll = () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
+            backToTopButton.classList.add('opacity-100', 'pointer-events-auto');
+        } else {
+            backToTopButton.classList.add('opacity-0', 'pointer-events-none');
+            backToTopButton.classList.remove('opacity-100', 'pointer-events-auto');
+        }
+    };
+
+    // Scroll to top smoothly when clicked
+    backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Listen to scroll events
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+}
+
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initNavigation();
     initHeroCanvas();
     initScrollAnimations();
+    initBackToTop();
 });
