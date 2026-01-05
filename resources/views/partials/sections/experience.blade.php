@@ -17,25 +17,30 @@
                             'title' => 'VP of Engineering',
                             'company' => 'Akieni',
                             'location' => 'Brazzaville',
-                            'period' => 'April 2025 – Present',
+                            'period' => 'March 2025 – Present',
                             'achievements' => [
-                                'Manage 11+ engineers across DevOps, Backend, Frontend, UI/UX',
-                                'Reduced cloud costs by $1,500/month (~21%) through AWS migration',
-                                'Achieved 99.9% uptime with Kubernetes-based HA infrastructure',
-                                'Led architecture for E-payment System and Biometric One Database Platform'
+                                'Lead 17+ engineers (Backend, Frontend, Mobile, DevOps)',
+                                'Executive member driving technical strategy',
+                                'Scaled team from 7 to 17+ engineers',
+                                'Established engineering processes and structure',
+                                'Integrated Academy talent with mentorship',
+                                'Lead R&D and product development',
+                                'Oversee enterprise systems delivery'
                             ],
-                            'technologies' => ['AdonisJS', 'NestJS', 'React.js', 'PostgreSQL', 'RabbitMQ', 'Kubernetes']
+                            'technologies' => ['Technical Strategy', 'People Management', 'Process Design', 'R&D Leadership', 'Cross-functional Alignment', 'Hiring & Onboarding']
                         ],
                         [
                             'title' => 'Engineering Manager',
                             'company' => 'Akieni',
                             'location' => 'Brazzaville',
-                            'period' => 'April 2024 – March 2025',
+                            'period' => 'April 2024 – February 2025',
                             'achievements' => [
-                                'Delivered CAMU (Universal Health Insurance System) after 2+ years stalled',
-                                'Built CNSS GED middleware with Django and Next.js',
-                                'Mentored 2 junior developers to mid-level',
-                                'Supervised 5 developers and 2 DevOps engineers'
+                                'Lead engineering team from 0 to 7+ engineers (Backend, Frontend, DevOps, Mobile)',
+                                'Delivered critical enterprise system after 2+ years stalled',
+                                'Reduced infrastructure costs by 21% through AWS migration and optimization',
+                                'Achieved 99.9% uptime with Kubernetes-based high-availability architecture',
+                                'Built integration middleware connecting government services',
+                                'Mentored 2 junior developers to mid-level within 18 months'
                             ],
                             'technologies' => ['Django', 'SpringBoot', 'React', 'Redux', 'GraphQL', 'Next.js']
                         ],
@@ -45,11 +50,14 @@
                             'location' => 'Brazzaville',
                             'period' => 'September 2023 – March 2024',
                             'achievements' => [
-                                'Maintained TAR2 internal platform for 47 country offices',
+                                'Maintained internal tools for 47 WHO Africa member states',
+                                'Database management and optimization (SQL Server)',
+                                'Developed data collection tools',
                                 'Reduced report generation time by 40% with automated pipelines',
-                                'Built interactive PowerBI dashboards'
+                                'Built interactive PowerBI dashboards',
+                                'Provided technical support across the region'
                             ],
-                            'technologies' => ['ASP.NET Core', 'Blazor', 'PowerBI']
+                            'technologies' => ['ASP.NET Core', 'Blazor', 'SQL Server', 'PowerBI']
                         ],
                         [
                             'title' => 'CTO & Co-Founder',
@@ -57,12 +65,25 @@
                             'location' => 'Brazzaville',
                             'period' => 'March 2020 – May 2023',
                             'achievements' => [
-                                'Built full tech stack from scratch',
-                                'Scaled platform to 30K+ users',
-                                'Recruited and trained 3 junior devs to senior level within a year',
-                                'Shipped Marketplace and VEC vendor management apps'
+                                'Co-founded and scaled e-commerce platform from 0 to 30K+ users',
+                                'Built tech stack and shipped Marketplace + VEC apps',
+                                'Developed internal tools for reporting and back-office operations',
+                                'Recruited and mentored 3 junior devs to senior level'
                             ],
                             'technologies' => ['Laravel', 'Flutter', 'Kotlin', 'CakePHP', 'MariaDB']
+                        ],
+                        [
+                            'title' => 'Freelance Developer',
+                            'company' => 'Self-employed',
+                            'location' => 'Pointe-Noire',
+                            'period' => '2016 – 2020',
+                            'achievements' => [
+                                'Delivered 20+ projects for local and international clients',
+                                'Built Lord-Market marketplace app (10K+ downloads)',
+                                'Developed mobile and web solutions across various industries',
+                                'Established client base leading to COWEMA founding'
+                            ],
+                            'technologies' => ['PHP', 'Java', 'MySQL', 'VB.NET', 'C#.NET', 'Android', 'WordPress']
                         ]
                     ];
                 @endphp
@@ -72,7 +93,7 @@
                         <div class="flex flex-col gap-8 lg:flex-row {{ $index % 2 === 1 ? 'lg:flex-row-reverse' : '' }}">
                             <div class="absolute left-8 top-0 z-10 h-4 w-4 -translate-x-1/2 rounded-full bg-primary ring-4 ring-background lg:left-1/2"></div>
 
-                            <div class="flex-1 {{ $index % 2 === 1 ? 'lg:text-right' : '' }}">
+                            <div class="flex-1">
                                 <div class="ml-12 lg:ml-0">
                                     <div class="group rounded-2xl border border-border bg-card p-8 transition-all duration-300 hover:border-primary/20 hover:bg-card/50 hover:shadow-xl hover:backdrop-blur-sm {{ $index % 2 === 1 ? 'lg:ml-8' : 'lg:mr-8' }}">
                                         <div class="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
