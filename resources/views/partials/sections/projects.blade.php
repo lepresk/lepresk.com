@@ -1,12 +1,12 @@
-<section id="projets" class="bg-muted/30 py-32">
+<section id="projects" class="bg-muted/30 py-32">
     <div class="container mx-auto px-6">
         <div class="mb-16 text-center">
             <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">PORTFOLIO</div>
             <h2 class="mb-4 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl">
-                Projets sélectionnés
+                Selected Projects
             </h2>
             <p class="mx-auto max-w-2xl text-pretty text-muted-foreground">
-                Quelques réalisations qui illustrent mon expertise
+                A few projects that illustrate my expertise
             </p>
         </div>
 
@@ -14,44 +14,44 @@
             @php
                 $projects = [
                     [
-                        'slug' => 'lord-market',
-                        'title' => 'Lord Market',
-                        'category' => 'Mobile',
-                        'tags' => ['Flutter', 'Android', 'CakePHP'],
-                        'image' => '/images/mobile-marketplace-app-interface.jpg',
-                        'description' => 'Marketplace mobile cross-platform'
-                    ],
-                    [
-                        'slug' => 'shopamusic',
-                        'title' => 'Shopamusic',
-                        'category' => 'Web',
-                        'tags' => ['React', 'Node.js', 'WordPress'],
-                        'image' => '/images/music-streaming-platform.png',
-                        'description' => 'Plateforme de streaming musical'
-                    ],
-                    [
-                        'slug' => 'solution-capa',
-                        'title' => 'Solution CAPA',
-                        'category' => 'Mobile & Desktop',
-                        'tags' => ['.NET', 'Android', 'PHP'],
-                        'image' => '/images/medical-app-interface.png',
-                        'description' => 'App médicale pour suivi de grossesse'
-                    ],
-                    [
-                        'slug' => 'cowema-annonce',
-                        'title' => 'Cowema Annonce',
-                        'category' => 'Mobile',
-                        'tags' => ['Flutter', 'PHP', 'Laravel'],
+                        'slug' => 'cowema-marketplace',
+                        'title' => 'COWEMA Marketplace',
+                        'category' => 'Mobile & Web',
+                        'tags' => ['Flutter', 'Laravel', 'PostgreSQL'],
                         'image' => '/images/classifieds-app-interface.jpg',
-                        'description' => 'Plateforme de petites annonces'
+                        'description' => 'E-commerce marketplace serving 30K+ users across Central Africa'
                     ],
                     [
-                        'slug' => 'freeze',
-                        'title' => 'Freeze',
-                        'category' => 'Desktop',
-                        'tags' => ['.NET', 'WPF', 'C#'],
-                        'image' => '/images/pos-system-interface.jpg',
-                        'description' => 'Logiciel de gestion de caisse et stock'
+                        'slug' => 'cowema-vec',
+                        'title' => 'COWEMA VEC',
+                        'category' => 'Mobile',
+                        'tags' => ['Flutter', 'Laravel', 'REST API'],
+                        'image' => '/images/mobile-marketplace-app-interface.jpg',
+                        'description' => 'Vendor management app for marketplace sellers'
+                    ],
+                    [
+                        'slug' => 'lord-market',
+                        'title' => 'Lord-Market',
+                        'category' => 'Mobile',
+                        'tags' => ['Flutter', 'CakePHP', 'MySQL'],
+                        'image' => '/images/mobile-marketplace-app-interface.jpg',
+                        'description' => 'Mobile marketplace app with real-time messaging'
+                    ],
+                    [
+                        'slug' => 'mylibcg',
+                        'title' => 'MylibCG',
+                        'category' => 'Web',
+                        'tags' => ['React', 'Node.js', 'MongoDB'],
+                        'image' => '/images/software-architecture-diagram.png',
+                        'description' => 'Digital library platform for Congolese content'
+                    ],
+                    [
+                        'slug' => 'personal-portfolio',
+                        'title' => 'Personal Portfolio',
+                        'category' => 'Web',
+                        'tags' => ['Laravel', 'Tailwind CSS', 'Vite'],
+                        'image' => '/images/code-review-collaboration.jpg',
+                        'description' => 'Modern portfolio built with Laravel 12 and Tailwind v4'
                     ]
                 ];
             @endphp

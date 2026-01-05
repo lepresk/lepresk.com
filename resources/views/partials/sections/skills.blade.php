@@ -1,9 +1,9 @@
-<section id="competences" class="py-32 bg-muted/30">
+<section id="skills" class="py-32 bg-muted/30">
     <div class="container mx-auto px-6">
         <div class="mb-16 text-center">
-            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">COMPÉTENCES</div>
+            <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">SKILLS</div>
             <h2 class="mb-4 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl">
-                Technologies maîtrisées
+                Proficient Technologies
             </h2>
         </div>
 
@@ -11,34 +11,34 @@
             @php
                 $skillCategories = [
                     [
+                        'title' => 'Leadership & Management',
+                        'icon' => 'users',
+                        'skills' => ['Team Management', 'Agile / Scrum', 'Technical Strategy', 'Hiring & Mentorship', 'Engineering Culture']
+                    ],
+                    [
                         'title' => 'Backend Development',
                         'icon' => 'server',
-                        'skills' => ['PHP / Laravel', 'Node.js', 'Express.js', '.NET / C#', 'AdonisJS']
+                        'skills' => ['PHP / Laravel', 'Node.js / NestJS', 'Python / Django', '.NET / C#', 'CakePHP']
                     ],
                     [
                         'title' => 'Frontend Development',
                         'icon' => 'code',
-                        'skills' => ['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Vue.js']
+                        'skills' => ['React / Next.js', 'Vue.js', 'TypeScript', 'Tailwind CSS', 'Redux']
                     ],
                     [
                         'title' => 'Mobile Development',
                         'icon' => 'smartphone',
-                        'skills' => ['Flutter', 'Android / Kotlin', 'React Native', 'Cross-platform']
+                        'skills' => ['Flutter', 'Android (Kotlin)', 'React Native', 'Cross-platform Apps']
                     ],
                     [
-                        'title' => 'Database & Infrastructure',
+                        'title' => 'Database',
                         'icon' => 'database',
-                        'skills' => ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Docker']
+                        'skills' => ['PostgreSQL', 'MySQL / MariaDB', 'MongoDB', 'Redis', 'SQL Server']
                     ],
                     [
-                        'title' => 'CMS & Platforms',
-                        'icon' => 'globe',
-                        'skills' => ['WordPress', 'Strapi', 'Contentful', 'Custom CMS']
-                    ],
-                    [
-                        'title' => 'Architecture & Tools',
+                        'title' => 'DevOps & Cloud',
                         'icon' => 'blocks',
-                        'skills' => ['Microservices', 'CI/CD', 'AWS', 'Git', 'REST APIs']
+                        'skills' => ['Docker', 'Kubernetes', 'AWS', 'CI/CD Pipelines', 'GitHub Actions']
                     ]
                 ];
             @endphp
@@ -47,7 +47,11 @@
                 <div class="group rounded-2xl border border-border bg-card p-6 transition-all duration-500 hover:border-primary hover:shadow-lg hover:backdrop-blur-xl hover:bg-card/80 skill-card translate-y-8 opacity-0">
                     <div class="mb-4 flex items-center gap-3">
                         <div class="rounded-lg bg-primary/10 p-2 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                            @if ($category['icon'] === 'server')
+                            @if ($category['icon'] === 'users')
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            @elseif ($category['icon'] === 'server')
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/>
                                 </svg>

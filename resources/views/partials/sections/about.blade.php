@@ -1,4 +1,4 @@
-<section id="a-propos" class="py-32 bg-muted/30">
+<section id="about" class="py-32 bg-muted/30">
     <div class="container mx-auto px-6">
         <div class="grid gap-16 lg:grid-cols-2">
             <div>

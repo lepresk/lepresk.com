@@ -29,7 +29,7 @@
             <div class="text-center text-sm">
                 <span class="text-muted-foreground">&copy; {{ date('Y') }} </span>
                 <span class="font-semibold text-primary">Lepresk</span>
-                <span class="text-muted-foreground">. Tous droits réservés</span>
+                <span class="text-muted-foreground">. All rights reserved</span>
             </div>
 
             <!-- Crafted By -->

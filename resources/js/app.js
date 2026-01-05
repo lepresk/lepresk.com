@@ -72,7 +72,7 @@ function initNavigation() {
 
     // Update active section based on scroll position
     const updateActiveSection = () => {
-        const sections = ['accueil', 'a-propos', 'experience', 'services', 'competences', 'projets', 'contact'];
+        const sections = ['home', 'about', 'experience', 'services', 'skills', 'projects', 'contact'];
         const scrollPosition = window.scrollY + window.innerHeight / 3;
 
         for (const sectionId of sections) {

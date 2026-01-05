@@ -1,4 +1,4 @@
-<section id="accueil" class="relative flex min-h-screen items-center overflow-hidden">
+<section id="home" class="relative flex min-h-screen items-center overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5"></div>
 
     <canvas id="hero-canvas" class="absolute inset-0 h-full w-full opacity-60"></canvas>
@@ -8,7 +8,7 @@
             <div>
                 <div class="mb-6 overflow-hidden">
                     <p class="animate-fade-in-up text-xl font-bold uppercase tracking-wide text-primary md:text-2xl">
-                        Salut, je suis
+                        Hi, I'm
                     </p>
                 </div>
 

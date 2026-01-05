@@ -5,23 +5,23 @@
         </a>
 
         <div class="hidden items-center gap-8 lg:flex">
-            <a href="/#accueil" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="accueil">
-                Accueil
+            <a href="/#home" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="home">
+                Home
             </a>
-            <a href="/#a-propos" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="a-propos">
-                À propos
+            <a href="/#about" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="about">
+                About
             </a>
             <a href="/#experience" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="experience">
-                Expérience
+                Experience
             </a>
             <a href="/#services" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="services">
                 Services
             </a>
-            <a href="/#competences" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="competences">
-                Compétences
+            <a href="/#skills" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="skills">
+                Skills
             </a>
-            <a href="/#projets" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="projets">
-                Projets
+            <a href="/#projects" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="projects">
+                Projects
             </a>
             <a href="/blog" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full">
                 Blog
@@ -67,23 +67,23 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 z-50 bg-background/95 backdrop-blur-xl transition-all duration-300 lg:hidden opacity-0 invisible">
         <div id="mobile-menu-content" class="flex h-full flex-col items-center justify-center gap-8 transition-all duration-500 -translate-y-8">
-            <a href="/#accueil" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="accueil">
-                Accueil
+            <a href="/#home" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="home">
+                Home
             </a>
-            <a href="/#a-propos" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="a-propos">
-                À propos
+            <a href="/#about" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="about">
+                About
             </a>
             <a href="/#experience" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="experience">
-                Expérience
+                Experience
             </a>
             <a href="/#services" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="services">
                 Services
             </a>
-            <a href="/#competences" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="competences">
-                Compétences
+            <a href="/#skills" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="skills">
+                Skills
             </a>
-            <a href="/#projets" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="projets">
-                Projets
+            <a href="/#projects" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="projects">
+                Projects
             </a>
             <a href="/blog" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground">
                 Blog
