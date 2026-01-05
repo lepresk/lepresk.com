@@ -148,22 +148,26 @@
 
   html {
     scroll-behavior: smooth;
+    scrollbar-color: oklch(var(--primary) / 0.3) oklch(var(--muted) / 0.5);
+    scrollbar-width: thin;
   }
 
   *::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
   }
 
   *::-webkit-scrollbar-track {
-    background: transparent;
+    background: oklch(var(--muted) / 0.5);
+    border-radius: 5px;
   }
 
   *::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.3);
-    border-radius: 4px;
+    background: oklch(var(--primary) / 0.6);
+    border-radius: 5px;
+    border: 2px solid oklch(var(--background));
   }
 
   *::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground) / 0.5);
+    background: oklch(var(--primary) / 0.8);
   }
 }
