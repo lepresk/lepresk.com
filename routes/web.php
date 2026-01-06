@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\WorkController;
 use Illuminate\Contracts\View\View;
@@ -18,10 +19,7 @@ Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/projets/{slug}', [WorkController::class, 'show'])->name('projects.show');
 
 // Contact form
-Route::post('/contact', function () {
-    // TODO: Implement contact form handling
-    return redirect('/')->with('success', 'Message envoyé avec succès!');
-});
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 // Language switching
 Route::post('/language/{locale}', [LanguageController::class, 'switch'])

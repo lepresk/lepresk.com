@@ -279,6 +279,107 @@ function initBackToTop() {
     handleScroll(); // Initial check
 }
 
+// Contact Form Handler
+function initContactForm() {
+    const form = document.querySelector('form[action="/contact"]');
+    if (!form) return;
+
+    const messageContainer = document.createElement('div');
+    messageContainer.className = 'mb-6';
+    form.insertBefore(messageContainer, form.firstChild);
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.innerHTML;
+
+        // Disable button and show loading
+        submitButton.disabled = true;
+        submitButton.innerHTML = `
+            <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span>Envoi en cours...</span>
+        `;
+
+        // Clear previous messages
+        messageContainer.innerHTML = '';
+
+        try {
+            const formData = new FormData(form);
+            const response = await fetch('/contact', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Show success message
+                messageContainer.innerHTML = `
+                    <div class="rounded-lg border border-green-500/20 bg-green-500/10 p-4 text-green-700 dark:text-green-400">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
+                            </svg>
+                            <span class="font-medium">${data.message}</span>
+                        </div>
+                    </div>
+                `;
+
+                // Reset form
+                form.reset();
+
+                // Scroll to message
+                messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                // Show error message
+                messageContainer.innerHTML = `
+                    <div class="rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-700 dark:text-red-400">
+                        <div class="flex items-start gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5">
+                                <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
+                            </svg>
+                            <div class="flex-1">
+                                <p>${data.message}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Scroll to error
+                messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        } catch (error) {
+            // Show error message
+            messageContainer.innerHTML = `
+                <div class="rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-700 dark:text-red-400">
+                    <div class="flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5">
+                            <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
+                        </svg>
+                        <div class="flex-1">
+                            <p>Une erreur est survenue. Veuillez réessayer ou nous contacter directement à info@lepresk.com</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Scroll to error
+            messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } finally {
+            // Re-enable button
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+        }
+    });
+}
+
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
@@ -286,4 +387,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroCanvas();
     initScrollAnimations();
     initBackToTop();
+    initContactForm();
 });

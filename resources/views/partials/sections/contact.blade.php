@@ -63,6 +63,7 @@
 
             <form action="/contact" method="POST" class="space-y-6 lg:col-span-3 contact-form translate-x-12 opacity-0">
                 @csrf
+                {{-- Messages will be injected here by JavaScript --}}
                 <div class="grid gap-6 sm:grid-cols-2">
                     <div>
                         <label for="name" class="mb-2 block text-sm font-medium">{{ __('contact.form_name') }}</label>
