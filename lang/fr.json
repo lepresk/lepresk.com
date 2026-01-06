@@ -11,15 +11,15 @@
     "hero.greeting": "Salut, je suis",
     "hero.role": "VP of Engineering & Conseiller Technique",
     "hero.tagline": "Architecture • Leadership • Stratégie",
-    "hero.description": "10 ans à diriger des équipes d'ingénierie et construire des systèmes scalables. Actuellement VP of Engineering chez Akieni, ex-CTO chez Cowema. J'aide les organisations à bâtir des infrastructures techniques robustes, optimiser leurs opérations et faire évoluer leurs capacités d'ingénierie.",
+    "hero.description": "10 ans de leadership en ingénierie et systèmes scalables. VP of Engineering chez Akieni, ex-CTO chez Cowema. J'aide les organisations à construire des infrastructures techniques robustes, optimiser les opérations et scaler leurs capacités d'ingénierie.",
     "hero.cta_primary": "Découvrez comment je peux vous aider",
     "hero.cta_secondary": "Discutons-en",
 
     "about.label": "À PROPOS",
     "about.heading": "Bâtir des équipes et des systèmes qui évoluent",
-    "about.description_1": "J'ai passé la dernière décennie à construire et diriger des équipes d'ingénierie en Afrique. Commencé comme développeur freelance en 2015, devenu CTO chez Cowema où j'ai développé une plateforme marketplace de zéro à 30K+ utilisateurs, et maintenant VP of Engineering chez Akieni où je manage 18+ ingénieurs (Backend, Frontend, Mobile, UI/UX).",
-    "about.description_2": "Mon focus est de construire des systèmes de qualité entreprise avec ASP.NET Core, Django, Laravel, Next.js/React, Node.js, Flutter et Kotlin—puis de faire évoluer les équipes qui les maintiennent. J'ai formé plusieurs développeurs juniors au niveau senior, débloqué des projets gouvernementaux bloqués, et livré tout type de projets, des apps mobiles aux plateformes d'infrastructure critiques.",
-    "about.description_3": "Je travaille sur toute la stack et je suis aussi à l'aise pour définir une stratégie technique en salle de réunion que pour livrer du code à 2h du matin. Si vous faites évoluer une équipe, modernisez votre stack, ou avez besoin d'un leadership technique pour livrer quelque chose de critique, parlons-en.",
+    "about.description_1": "J'ai passé la dernière décennie à construire et diriger des équipes d'ingénierie en Afrique. Développeur freelance en 2015, puis CTO chez Cowema (plateforme marketplace 0 à 30K+ utilisateurs), maintenant VP of Engineering chez Akieni gérant 18+ ingénieurs (Backend, Frontend, Mobile, UI/UX).",
+    "about.description_2": "Mon focus : construire des systèmes de qualité entreprise avec ASP.NET Core, Django, Laravel, Next.js/React, Node.js, Flutter, Kotlin—puis scaler les équipes qui les maintiennent. J'ai formé des développeurs juniors au niveau senior, débloqué des projets gouvernementaux, livré des apps mobiles aux plateformes d'infrastructure critiques.",
+    "about.description_3": "Je travaille sur toute la stack—aussi à l'aise pour définir la stratégie technique en salle de réunion que pour livrer du code à 2h du matin. Scalez une équipe, modernisez votre stack, besoin de leadership technique pour livrer du critique ? Parlons-en.",
     "about.stat_years": "Années de Leadership Tech",
     "about.stat_engineers": "Ingénieurs Encadrés",
     "about.stat_users": "Utilisateurs Impactés",
@@ -43,8 +43,8 @@
     "experience.engineering_manager.achievement_1": "Direction d'une équipe d'ingénierie de 0 à 7+ ingénieurs (Backend, Frontend, DevOps, Mobile)",
     "experience.engineering_manager.achievement_2": "Livré un système d'entreprise critique après 2+ ans de blocage",
     "experience.engineering_manager.achievement_3": "Réduit les coûts d'infrastructure de 21% via migration AWS et optimisation",
-    "experience.engineering_manager.achievement_4": "Atteint 99.9% de disponibilité avec architecture haute disponibilité basée sur Kubernetes",
-    "experience.engineering_manager.achievement_5": "Construit un middleware d'intégration connectant les services gouvernementaux",
+    "experience.engineering_manager.achievement_4": "99.9% disponibilité avec architecture haute dispo Kubernetes",
+    "experience.engineering_manager.achievement_5": "Middleware d'intégration pour services gouvernementaux",
     "experience.engineering_manager.achievement_6": "Mentoré 2 développeurs juniors au niveau intermédiaire en 18 mois",
 
     "experience.technical_officer.title": "Technical Officer, Data and Operations",
@@ -52,7 +52,7 @@
     "experience.technical_officer.achievement_1": "Maintenance d'outils internes pour 47 États membres de l'OMS Afrique",
     "experience.technical_officer.achievement_2": "Gestion et optimisation de bases de données (SQL Server)",
     "experience.technical_officer.achievement_3": "Développement d'outils de collecte de données",
-    "experience.technical_officer.achievement_4": "Réduit le temps de génération de rapports de 40% avec des pipelines automatisés",
+    "experience.technical_officer.achievement_4": "Automatisé la génération de rapports : -40% temps via pipelines",
     "experience.technical_officer.achievement_5": "Construit des tableaux de bord PowerBI interactifs",
     "experience.technical_officer.achievement_6": "Fourni un support technique à travers la région",
 
@@ -72,27 +72,27 @@
 
     "services.label": "SERVICES",
     "services.heading": "Comment je peux vous aider",
-    "services.description": "Accompagnement stratégique et exécution pratique pour vos défis techniques",
+    "services.description": "Guidance stratégique et exécution concrète pour vos challenges techniques",
 
     "services.technical_strategy.title": "Stratégie Technique",
     "services.technical_strategy.subtitle": "Architecture & Planification",
-    "services.technical_strategy.description": "Vous hésitez entre microservices et monolithes ? Évaluez une nouvelle stack ? Planifiez une migration ? Je vous aide à prendre des décisions techniques alignées avec vos objectifs business et évolutives de manière durable. J'ai architecturé des systèmes pour des agences gouvernementales, des marketplaces de 30K+ utilisateurs, et des plateformes d'entreprise—laissez-moi vous aider à construire une roadmap qui fonctionne vraiment.",
+    "services.technical_strategy.description": "Microservices ou monolithes ? Nouvelle stack ? Migration ? Je prends des décisions techniques alignées business qui scalent durablement. J'ai architecturé des systèmes pour des agences gouvernementales, des marketplaces 30K+ utilisateurs, des plateformes d'entreprise. Laissez-moi vous aider à construire une roadmap qui fonctionne vraiment.",
 
     "services.engineering_leadership.title": "Leadership en Ingénierie",
     "services.engineering_leadership.subtitle": "Construction & Gestion d'Équipes",
-    "services.engineering_leadership.description": "Besoin de faire évoluer votre équipe tout en maintenant la qualité ? J'ai fait croître des équipes de 7 à 17+ ingénieurs chez Akieni, formé des juniors au niveau senior chez COWEMA, et construit des processus de recrutement qui fonctionnent. Que vous structuriez votre première équipe ou que vous dépassiez 10 ingénieurs, je vous aide à grandir sans chaos.",
+    "services.engineering_leadership.description": "Scaler votre équipe en gardant la qualité ? J'ai fait croître des équipes de 7 à 17+ ingénieurs chez Akieni, formé des juniors au niveau senior chez COWEMA, construit des processus de recrutement efficaces. Que vous structuriez votre première équipe ou que vous dépassiez 10 ingénieurs, je vous aide à grandir sans chaos.",
 
     "services.system_design.title": "Conception Système & Migration",
     "services.system_design.subtitle": "Infrastructure & DevOps",
-    "services.system_design.description": "Modernisez votre infrastructure ou planifiez une migration complexe ? J'ai migré des systèmes legacy vers AWS avec Kubernetes, architecturé des plateformes haute disponibilité, et construit des pipelines CI/CD qui livrent de manière fiable. Je choisis des technologies qui résolvent votre problème—des décisions pragmatiques plutôt que du battage médiatique.",
+    "services.system_design.description": "Infrastructure à moderniser ? Migration complexe ? J'ai migré des systèmes legacy vers AWS avec Kubernetes, architecturé des plateformes haute disponibilité, construit des pipelines CI/CD fiables. Je choisis les technologies qui résolvent votre problème—pragmatisme, pas de hype.",
 
     "services.fullstack_development.title": "Développement Full-Stack",
     "services.fullstack_development.subtitle": "Laravel, ASP.NET Core, Node.js, React, Flutter",
-    "services.fullstack_development.description": "Besoin de développement pratique pour livrer votre produit ? Je construis des solutions complètes—des apps marketplace servant 30K+ utilisateurs, des apps mobiles avec Flutter, des plateformes d'entreprise avec Laravel, ASP.NET Core, et Node.js. Du backend au mobile, de la base de données à l'UI, j'écris du code qui fonctionne et reste maintenable.",
+    "services.fullstack_development.description": "Développement pour livrer votre produit ? Je construis des solutions complètes—apps marketplace 30K+ utilisateurs, apps mobiles Flutter, plateformes d'entreprise Laravel/ASP.NET Core/Node.js. Du backend au mobile, de la base de données à l'UI, code fonctionnel et maintenable.",
 
     "services.technical_consulting.title": "Conseil Technique",
     "services.technical_consulting.subtitle": "Revue de Code & Conseil",
-    "services.technical_consulting.description": "Face à une décision technique complexe ou besoin de validation de votre approche ? Je fournis du conseil pratique : revues d'architecture, audits de code, évaluation de technologies, et guidance stratégique. Pensez à moi comme votre conseiller technique qui a vraiment construit ce que vous essayez de construire.",
+    "services.technical_consulting.description": "Décision technique complexe ? Besoin de validation ? Je fournis du conseil pratique : revues d'architecture, audits de code, évaluation de technologies, guidance stratégique. Pensez à moi comme à votre conseiller technique qui a vraiment construit ce que vous essayez de construire.",
 
     "skills.label": "COMPÉTENCES",
     "skills.heading": "Technologies Maîtrisées",
@@ -115,8 +115,8 @@
     "contact.form_submit": "Envoyer le message",
 
     "footer.copyright": "Tous droits réservés",
-    "footer.crafted": "Fait main et conçu avec",
-    "footer.by": "par",
+    "footer.crafted": "Hand made & crafted with",
+    "footer.by": "by",
 
     "back_to_top": "Retour en haut",
 
