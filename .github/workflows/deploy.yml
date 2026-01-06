@@ -47,11 +47,11 @@ jobs:
           LOG_LEVEL=debug
 
           DB_CONNECTION=mariadb
-          DB_HOST=${{ secrets.DB_HOST }}
-          DB_PORT=${{ secrets.DB_PORT }}
-          DB_DATABASE=${{ secrets.DB_DATABASE }}
-          DB_USERNAME=${{ secrets.DB_USERNAME }}
-          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          DB_HOST="${{ secrets.DB_HOST }}"
+          DB_PORT="${{ secrets.DB_PORT }}"
+          DB_DATABASE="${{ secrets.DB_DATABASE }}"
+          DB_USERNAME="${{ secrets.DB_USERNAME }}"
+          DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
 
           SESSION_DRIVER=database
           SESSION_LIFETIME=120
@@ -69,7 +69,7 @@ jobs:
           MAIL_MAILER=resend
           MAIL_FROM_ADDRESS=no-reply@lepresk.com
           MAIL_FROM_NAME=LepresK
-          RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
+          RESEND_API_KEY="${{ secrets.RESEND_API_KEY }}"
           EOF
 
       # Étape 4 : Synchronisation des fichiers et déploiement
