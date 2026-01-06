@@ -12,9 +12,12 @@
     <meta name="author" content="Lepres Kikounga">
 
     <!-- Hreflang Tags -->
-    <link rel="alternate" hreflang="en" href="{{ url()->current() }}" />
-    <link rel="alternate" hreflang="fr" href="{{ url()->current() }}" />
+    <link rel="alternate" hreflang="en" href="{{ url()->current() }}{{ parse_url(url()->current(), PHP_URL_QUERY) ? '&' : '?' }}lang=en" />
+    <link rel="alternate" hreflang="fr" href="{{ url()->current() }}{{ parse_url(url()->current(), PHP_URL_QUERY) ? '&' : '?' }}lang=fr" />
     <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}" />
+
+    <!-- Language Declaration -->
+    <meta http-equiv="content-language" content="{{ app()->getLocale() }}" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -23,6 +26,13 @@
     <meta property="og:title" content="@yield('title', __('meta.home.title'))">
     <meta property="og:description" content="@yield('description', __('meta.home.description'))">
     <meta property="og:site_name" content="Lepres Kikounga Portfolio">
+    <meta property="og:image" content="{{ asset('/images/profile.webp') }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', __('meta.home.title'))">
+    <meta name="twitter:description" content="@yield('description', __('meta.home.description'))">
+    <meta name="twitter:image" content="{{ asset('/images/profile.webp') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,6 +60,7 @@
             'sameAs' => [
                 'https://linkedin.com/in/lepres-kikounga-438911133',
                 'https://linkedin.com/in/lepresk',
+                'https://x.com/lepresk1',
                 'https://github.com/lepresk',
                 'https://youtube.com/@lepresk',
                 'https://facebook.com/lepresk',

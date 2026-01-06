@@ -14,6 +14,9 @@ final class SecurityHeaders
     {
         $response = $next($request);
 
+        // Masquer la technologie utilisée (sécurité)
+        $response->headers->remove('X-Powered-By');
+
         // Protection contre le clickjacking
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
 

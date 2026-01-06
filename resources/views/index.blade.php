@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Lepres Kikounga | VP of Engineering & Tech Advisor')
+@section('title', __('meta.home.title'))
 
-@section('description', 'Portfolio de Lepres Kikounga - VP of Engineering avec 8+ ans d\'expérience. Ex-CTO at Cowema. Spécialisé en architecture système, leadership technique et stratégie technologique.')
+@section('description', __('meta.home.description'))
 
 @section('content')
     @include('partials.sections.hero')

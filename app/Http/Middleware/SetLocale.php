@@ -16,16 +16,21 @@ final class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // 1. Check cookie first (highest priority)
-        $locale = $request->cookie('locale');
+        // 1. Check URL parameter first (highest priority for SEO)
+        $locale = $request->query('lang');
 
-        // 2. Fallback to browser language if cookie doesn't exist
+        // 2. Check cookie if URL param doesn't exist
+        if (! $locale || ! in_array($locale, ['en', 'fr'])) {
+            $locale = $request->cookie('locale');
+        }
+
+        // 3. Fallback to browser language if cookie doesn't exist
         if (! $locale) {
             $browserLang = mb_substr($request->server('HTTP_ACCEPT_LANGUAGE') ?? '', 0, 2);
             $locale = in_array($browserLang, ['en', 'fr']) ? $browserLang : 'en';
         }
 
-        // 3. Set application locale
+        // 4. Set application locale
         App::setLocale($locale);
 
         return $next($request);

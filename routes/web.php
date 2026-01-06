@@ -25,3 +25,6 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::post('/language/{locale}', [LanguageController::class, 'switch'])
     ->name('language.switch')
     ->where('locale', 'en|fr');
+
+// Sitemap
+Route::get('/sitemap.xml', App\Http\Controllers\SitemapController::class);

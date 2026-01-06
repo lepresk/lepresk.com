@@ -120,8 +120,11 @@
 
     "back_to_top": "Retour en haut",
 
+    "share.title": "Partager",
+    "share.copied": "Lien copié dans le presse-papiers !",
+
     "meta.home.title": "Lepres Kikounga | VP of Engineering & Conseiller Technique",
-    "meta.home.description": "Portfolio de Lepres Kikounga - VP of Engineering avec 10+ ans d'expérience. Ex-CTO chez Cowema. Spécialisé en architecture système, leadership technique et stratégie technologique.",
+    "meta.home.description": "VP of Engineering avec 10+ ans d'expérience. Ex-CTO chez Cowema. Architecture système, leadership technique et stratégie technologique.",
     "meta.blog.title": "Blog | Lepres Kikounga",
     "meta.blog.description": "Réflexions techniques, pensées sur le leadership et histoires d'ingénierie",
     "meta.project.title": "Projet | Lepres Kikounga",
