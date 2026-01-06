@@ -7,7 +7,6 @@ namespace App\Filament\Resources\Works\Schemas;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -48,13 +47,14 @@ final class WorkForm
 
                                 MarkdownEditor::make('content')
                                     ->required()
+                                    ->fileAttachmentsDisk('public')
+                                    ->fileAttachmentsDirectory('portfolio')
                                     ->columnSpanFull(),
                             ]),
 
                         // Tab 2: Media
                         Tabs\Tab::make('Media')
                             ->schema([
-
 
                                 FileUpload::make('image_gallery')
                                     ->label('Image Gallery')

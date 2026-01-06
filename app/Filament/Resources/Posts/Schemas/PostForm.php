@@ -7,7 +7,6 @@ namespace App\Filament\Resources\Posts\Schemas;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
-use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -34,7 +33,7 @@ final class PostForm
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn(string $state, callable $set) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn (string $state, callable $set) => $set('slug', Str::slug($state))),
 
                                 TextInput::make('slug')
                                     ->required()
@@ -48,6 +47,8 @@ final class PostForm
 
                                 MarkdownEditor::make('content')
                                     ->required()
+                                    ->fileAttachmentsDisk('public')
+                                    ->fileAttachmentsDirectory('blog')
                                     ->columnSpanFull(),
                             ]),
 

@@ -6,6 +6,8 @@ namespace App\Models;
 
 use Carbon\CarbonInterface;
 use Database\Factories\UserFactory;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,7 +23,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
-final class User extends Authenticatable implements MustVerifyEmail
+final class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -49,5 +51,10 @@ final class User extends Authenticatable implements MustVerifyEmail
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->email === "admin@mail.com";
     }
 }
