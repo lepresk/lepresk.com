@@ -29,11 +29,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    <!-- Icons -->
-    <link rel="icon" href="/icon-light-32x32.png" media="(prefers-color-scheme: light)">
-    <link rel="icon" href="/icon-dark-32x32.png" media="(prefers-color-scheme: dark)">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/apple-icon.png">
+    <!-- Favicons -->
+    <link rel="icon" href="/favicons/cropped-logo-1-32x32.png" sizes="32x32">
+    <link rel="icon" href="/favicons/cropped-logo-1-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/favicons/cropped-logo-1-180x180.png">
+    <meta name="msapplication-TileImage" content="/favicons/cropped-logo-1-270x270.png">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
