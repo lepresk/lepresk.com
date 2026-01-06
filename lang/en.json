@@ -9,9 +9,9 @@
     "nav.contact": "Contact",
 
     "hero.greeting": "Hi, I'm",
-    "hero.role": "VP of Engineering & Tech Advisor",
+    "hero.role": "Engineering Lead & Tech Advisor",
     "hero.tagline": "Architecture • Leadership • Strategy",
-    "hero.description": "10 years leading engineering teams and building scalable systems. Currently VP of Engineering at Akieni, ex-CTO at Cowema. I help organizations build robust tech infrastructure, optimize operations, and scale their engineering capabilities.",
+    "hero.description": "I've been building scalable systems for 10+ years. Currently VP of Engineering at Akieni, ex-CTO at Cowema. I help organizations build robust tech infrastructure, optimize operations, and scale their engineering capabilities.",
     "hero.cta_primary": "See how I can help",
     "hero.cta_secondary": "Let's talk",
 
@@ -101,6 +101,12 @@
     "projects.heading": "Selected Projects",
     "projects.description": "A few projects that illustrate my expertise",
 
+    "news.label": "NEWS",
+    "news.heading": "Latest Publications",
+    "news.description": "Insights on technical leadership, architecture and engineering strategy",
+    "news.view_all": "View all articles",
+    "news.read_article": "Read article",
+
     "contact.label": "CONTACT",
     "contact.heading": "Got an idea? Let's talk about it",
     "contact.info_heading": "Information",
@@ -123,8 +129,8 @@
     "share.title": "Share",
     "share.copied": "Link copied to clipboard!",
 
-    "meta.home.title": "Lepres Kikounga | VP of Engineering & Tech Advisor",
-    "meta.home.description": "VP of Engineering with 10+ years of experience. Ex-CTO at Cowema. System architecture, technical leadership and technology strategy.",
+    "meta.home.title": "Lepres Kikounga | Engineering Lead & Tech Advisor",
+    "meta.home.description": "I've been building scalable systems for 10+ years. Currently VP of Engineering at Akieni, leading 17+ engineers.",
     "meta.blog.title": "Blog | Lepres Kikounga",
     "meta.blog.description": "Technical insights, leadership thoughts, and engineering stories",
     "meta.project.title": "Project | Lepres Kikounga",

@@ -2,16 +2,16 @@
     <div class="container mx-auto px-6">
         <div class="mb-16 flex items-end justify-between">
             <div>
-                <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">ACTUALITÉS</div>
+                <div class="mb-4 text-sm font-medium tracking-wider text-muted-foreground">{{ __('news.label') }}</div>
                 <h2 class="mb-4 text-balance font-bold leading-tight tracking-tighter text-4xl md:text-5xl">
-                    Dernières publications
+                    {{ __('news.heading') }}
                 </h2>
                 <p class="max-w-2xl text-pretty text-muted-foreground">
-                    Réflexions sur le leadership technique, l'architecture et la stratégie d'ingénierie
+                    {{ __('news.description') }}
                 </p>
             </div>
             <a href="/blog" class="hidden items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80 md:flex">
-                Voir tous les articles
+                {{ __('news.view_all') }}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                 </svg>
@@ -68,7 +68,7 @@
                         @endif
 
                         <div class="mt-4 flex items-center gap-2 text-sm font-medium text-primary">
-                            Lire l'article
+                            {{ __('news.read_article') }}
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1">
                                 <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                             </svg>
@@ -80,7 +80,7 @@
 
         <div class="mt-8 text-center md:hidden">
             <a href="/blog" class="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80">
-                Voir tous les articles
+                {{ __('news.view_all') }}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                 </svg>

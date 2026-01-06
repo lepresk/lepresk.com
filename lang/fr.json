@@ -9,9 +9,9 @@
     "nav.contact": "Contact",
 
     "hero.greeting": "Salut, je suis",
-    "hero.role": "VP of Engineering & Conseiller Technique",
+    "hero.role": "Engineering Lead & Conseiller Technique",
     "hero.tagline": "Architecture • Leadership • Stratégie",
-    "hero.description": "10 ans de leadership en ingénierie et systèmes scalables. VP of Engineering chez Akieni, ex-CTO chez Cowema. J'aide les organisations à construire des infrastructures techniques robustes, optimiser les opérations et scaler leurs capacités d'ingénierie.",
+    "hero.description": "Je construis des systèmes scalables depuis 10+ ans. VP of Engineering chez Akieni, ex-CTO chez Cowema. J'aide les organisations à construire des infrastructures techniques robustes, optimiser les opérations et scaler leurs capacités d'ingénierie.",
     "hero.cta_primary": "Découvrez comment je peux vous aider",
     "hero.cta_secondary": "Discutons-en",
 
@@ -101,6 +101,12 @@
     "projects.heading": "Projets Sélectionnés",
     "projects.description": "Quelques réalisations qui illustrent mon expertise",
 
+    "news.label": "ACTUALITÉS",
+    "news.heading": "Dernières publications",
+    "news.description": "Réflexions sur le leadership technique, l'architecture et la stratégie d'ingénierie",
+    "news.view_all": "Voir tous les articles",
+    "news.read_article": "Lire l'article",
+
     "contact.label": "CONTACT",
     "contact.heading": "Une idée ? Parlons-en",
     "contact.info_heading": "Informations",
@@ -123,8 +129,8 @@
     "share.title": "Partager",
     "share.copied": "Lien copié dans le presse-papiers !",
 
-    "meta.home.title": "Lepres Kikounga | VP of Engineering & Conseiller Technique",
-    "meta.home.description": "VP of Engineering avec 10+ ans d'expérience. Ex-CTO chez Cowema. Architecture système, leadership technique et stratégie technologique.",
+    "meta.home.title": "Lepres Kikounga | Engineering Lead & Conseiller Technique",
+    "meta.home.description": "Je construis des systèmes scalables depuis 10+ ans. VP of Engineering chez Akieni, dirigeant 17+ ingénieurs.",
     "meta.blog.title": "Blog | Lepres Kikounga",
     "meta.blog.description": "Réflexions techniques, pensées sur le leadership et histoires d'ingénierie",
     "meta.project.title": "Projet | Lepres Kikounga",

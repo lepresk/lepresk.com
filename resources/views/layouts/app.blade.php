@@ -8,7 +8,7 @@
     <title>@yield('title', __('meta.home.title'))</title>
 
     <meta name="description" content="@yield('description', __('meta.home.description'))">
-    <meta name="keywords" content="VP of Engineering, CTO, Tech Advisor, Engineering Leadership, System Architecture, Laravel, React, Flutter, .NET, Next.js">
+    <meta name="keywords" content="Lepresk, VP of Engineering, CTO, Tech Advisor, Engineering Leadership, System Architecture, Laravel, React, Flutter, .NET, Next.js">
     <meta name="author" content="Lepres Kikounga">
 
     <!-- Hreflang Tags -->
