@@ -16,7 +16,7 @@ final class BlogController
             ->latest()
             ->paginate(12);
 
-        return view('blog.index', compact('posts'));
+        return view('blog.index', ['posts' => $posts]);
     }
 
     public function show(string $slug): View
@@ -26,6 +26,6 @@ final class BlogController
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return view('blog.show', compact('post'));
+        return view('blog.show', ['post' => $post]);
     }
 }

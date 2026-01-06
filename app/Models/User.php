@@ -23,7 +23,7 @@ use Illuminate\Notifications\Notifiable;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
-final class User extends Authenticatable implements MustVerifyEmail, FilamentUser
+final class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
@@ -55,6 +55,6 @@ final class User extends Authenticatable implements MustVerifyEmail, FilamentUse
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->email === "admin@mail.com";
+        return $this->email === 'admin@mail.com';
     }
 }

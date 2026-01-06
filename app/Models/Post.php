@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\CarbonInterface;
 use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -93,7 +94,8 @@ final class Post extends Model
      * @param  Builder<Post>  $query
      * @return Builder<Post>
      */
-    public function scopePublished(Builder $query): Builder
+    #[Scope]
+    protected function published(Builder $query): Builder
     {
         return $query->where('status', 'published')
             ->whereNotNull('published_at')
@@ -104,7 +106,8 @@ final class Post extends Model
      * @param  Builder<Post>  $query
      * @return Builder<Post>
      */
-    public function scopeLatest(Builder $query): Builder
+    #[Scope]
+    protected function latest(Builder $query): Builder
     {
         return $query->orderBy('published_at', 'desc');
     }
@@ -112,7 +115,7 @@ final class Post extends Model
     // Auto-generate slug on creation
     protected static function booted(): void
     {
-        self::creating(function (Post $post) {
+        self::creating(function (Post $post): void {
             if (empty($post->slug)) {
                 $post->slug = Str::slug($post->title);
             }

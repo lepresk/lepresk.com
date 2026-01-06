@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\CarbonInterface;
 use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -60,7 +61,8 @@ final class Category extends Model
      * @param  Builder<Category>  $query
      * @return Builder<Category>
      */
-    public function scopeForPosts(Builder $query): Builder
+    #[Scope]
+    protected function forPosts(Builder $query): Builder
     {
         return $query->whereIn('type', ['post', 'both']);
     }
@@ -69,7 +71,8 @@ final class Category extends Model
      * @param  Builder<Category>  $query
      * @return Builder<Category>
      */
-    public function scopeForWorks(Builder $query): Builder
+    #[Scope]
+    protected function forWorks(Builder $query): Builder
     {
         return $query->whereIn('type', ['work', 'both']);
     }
@@ -77,7 +80,7 @@ final class Category extends Model
     // Auto-generate slug on creation
     protected static function booted(): void
     {
-        self::creating(function (Category $category) {
+        self::creating(function (Category $category): void {
             if (empty($category->slug)) {
                 $category->slug = Str::slug($category->name);
             }

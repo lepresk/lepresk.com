@@ -13,9 +13,7 @@ final class LanguageController
      */
     public function switch(string $locale): RedirectResponse
     {
-        if (! in_array($locale, ['en', 'fr'])) {
-            abort(400);
-        }
+        abort_unless(in_array($locale, ['en', 'fr']), 400);
 
         return redirect()->back()
             ->withCookie(cookie('locale', $locale, 525600)); // 1 year

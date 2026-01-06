@@ -65,7 +65,7 @@ final class SeedProductionData extends Command
         ];
 
         foreach ($categories as $category) {
-            Category::create($category);
+            Category::query()->create($category);
         }
 
         $this->info('✓ Categories seeded');
@@ -84,7 +84,7 @@ final class SeedProductionData extends Command
         ];
 
         foreach ($tags as $tag) {
-            Tag::create(['name' => $tag]);
+            Tag::query()->create(['name' => $tag]);
         }
 
         $this->info('✓ Tags seeded');
@@ -97,7 +97,7 @@ final class SeedProductionData extends Command
         $posts = $this->getPostsData();
 
         foreach ($posts as $postData) {
-            $post = Post::create([
+            $post = Post::query()->create([
                 'title' => $postData['title'],
                 'excerpt' => $postData['excerpt'],
                 'content' => $postData['content'],
@@ -113,7 +113,7 @@ final class SeedProductionData extends Command
             $post->categories()->attach($categories);
 
             // Attach tags
-            $tags = Tag::whereIn('name', $postData['tags'])->get();
+            $tags = Tag::query()->whereIn('name', $postData['tags'])->get();
             $post->tags()->attach($tags);
         }
 
@@ -127,7 +127,7 @@ final class SeedProductionData extends Command
         $works = $this->getWorksData();
 
         foreach ($works as $index => $workData) {
-            $work = Work::create([
+            $work = Work::query()->create([
                 'title' => $workData['title'],
                 'description' => $workData['description'],
                 'content' => $workData['content'],
@@ -143,7 +143,7 @@ final class SeedProductionData extends Command
             $work->categories()->attach($categories);
 
             // Attach tags
-            $tags = Tag::whereIn('name', $workData['tags'])->get();
+            $tags = Tag::query()->whereIn('name', $workData['tags'])->get();
             $work->tags()->attach($tags);
         }
 

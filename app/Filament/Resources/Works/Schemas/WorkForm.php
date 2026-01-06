@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Works\Schemas;
 
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
@@ -27,13 +28,13 @@ final class WorkForm
                     ->columnSpan(2)
                     ->tabs([
                         // Tab 1: Content
-                        Tabs\Tab::make('Content')
+                        Tab::make('Content')
                             ->schema([
                                 TextInput::make('title')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
-                                    ->afterStateUpdated(fn(string $state, callable $set) => $set('slug', Str::slug($state))),
+                                    ->afterStateUpdated(fn (string $state, callable $set) => $set('slug', Str::slug($state))),
 
                                 TextInput::make('slug')
                                     ->required()
@@ -53,7 +54,7 @@ final class WorkForm
                             ]),
 
                         // Tab 2: Media
-                        Tabs\Tab::make('Media')
+                        Tab::make('Media')
                             ->schema([
 
                                 FileUpload::make('image_gallery')
@@ -70,7 +71,7 @@ final class WorkForm
                             ]),
 
                         // Tab 3: Taxonomy
-                        Tabs\Tab::make('Taxonomy')
+                        Tab::make('Taxonomy')
                             ->schema([
                                 Select::make('categories')
                                     ->relationship('categories', 'name')
@@ -104,7 +105,7 @@ final class WorkForm
                             ]),
 
                         // Tab 4: SEO
-                        Tabs\Tab::make('SEO')
+                        Tab::make('SEO')
                             ->schema([
                                 Section::make('Meta Tags')
                                     ->schema([

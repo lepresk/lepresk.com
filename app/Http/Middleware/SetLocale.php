@@ -20,7 +20,7 @@ final class SetLocale
         $locale = $request->cookie('locale');
 
         // 2. Fallback to browser language if cookie doesn't exist
-        if (!$locale) {
+        if (! $locale) {
             $browserLang = mb_substr($request->server('HTTP_ACCEPT_LANGUAGE') ?? '', 0, 2);
             $locale = in_array($browserLang, ['en', 'fr']) ? $browserLang : 'en';
         }

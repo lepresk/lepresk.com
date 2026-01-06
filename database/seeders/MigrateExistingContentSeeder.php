@@ -43,7 +43,7 @@ final class MigrateExistingContentSeeder extends Seeder
 
         $categories = [];
         foreach ($categoryData as $data) {
-            $categories[$data['slug']] = Category::create($data);
+            $categories[$data['slug']] = Category::query()->create($data);
         }
 
         return $categories;
@@ -159,7 +159,7 @@ final class MigrateExistingContentSeeder extends Seeder
             $category = $categories[$categorySlug] ?? null;
             unset($postData['category']);
 
-            $post = Post::create([
+            $post = Post::query()->create([
                 'title' => $postData['title'],
                 'slug' => $postData['slug'],
                 'excerpt' => $postData['excerpt'],
@@ -242,7 +242,7 @@ final class MigrateExistingContentSeeder extends Seeder
             $category = $categories[$categorySlug] ?? null;
             unset($workData['category'], $workData['tags']);
 
-            $work = Work::create([
+            $work = Work::query()->create([
                 'title' => $workData['title'],
                 'slug' => $workData['slug'],
                 'description' => $workData['description'],
@@ -259,10 +259,7 @@ final class MigrateExistingContentSeeder extends Seeder
 
             // Create and attach tags
             foreach ($tags as $tagName) {
-                $tag = Tag::firstOrCreate(
-                    ['name' => $tagName],
-                    ['slug' => Str::slug($tagName)]
-                );
+                $tag = Tag::query()->firstOrCreate(['name' => $tagName], ['slug' => Str::slug($tagName)]);
                 $work->tags()->attach($tag);
             }
         }

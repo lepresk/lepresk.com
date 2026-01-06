@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
@@ -27,7 +28,7 @@ final class PostForm
                     ->columnSpan(2)
                     ->tabs([
                         // Tab 1: Content
-                        Tabs\Tab::make('Content')
+                        Tab::make('Content')
                             ->schema([
                                 TextInput::make('title')
                                     ->required()
@@ -53,7 +54,7 @@ final class PostForm
                             ]),
 
                         // Tab 3: Taxonomy
-                        Tabs\Tab::make('Taxonomy')
+                        Tab::make('Taxonomy')
                             ->schema([
                                 Select::make('categories')
                                     ->relationship('categories', 'name')
@@ -87,7 +88,7 @@ final class PostForm
                             ]),
 
                         // Tab 4: SEO
-                        Tabs\Tab::make('SEO')
+                        Tab::make('SEO')
                             ->schema([
                                 Section::make('Meta Tags')
                                     ->schema([

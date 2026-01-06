@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\CarbonInterface;
 use Database\Factories\WorkFactory;
 use Illuminate\Database\Eloquent\Builder;
@@ -95,7 +96,8 @@ final class Work extends Model
      * @param  Builder<Work>  $query
      * @return Builder<Work>
      */
-    public function scopePublished(Builder $query): Builder
+    #[Scope]
+    protected function published(Builder $query): Builder
     {
         return $query->where('status', 'published')
             ->whereNotNull('published_at')
@@ -106,7 +108,8 @@ final class Work extends Model
      * @param  Builder<Work>  $query
      * @return Builder<Work>
      */
-    public function scopeOrdered(Builder $query): Builder
+    #[Scope]
+    protected function ordered(Builder $query): Builder
     {
         return $query->orderBy('order', 'asc');
     }
@@ -114,7 +117,7 @@ final class Work extends Model
     // Auto-generate slug on creation
     protected static function booted(): void
     {
-        self::creating(function (Work $work) {
+        self::creating(function (Work $work): void {
             if (empty($work->slug)) {
                 $work->slug = Str::slug($work->title);
             }

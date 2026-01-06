@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Work>
+ * @extends Factory<Work>
  */
 final class WorkFactory extends Factory
 {
@@ -39,7 +39,7 @@ final class WorkFactory extends Factory
 
     public function published(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => 'published',
             'published_at' => fake()->dateTimeBetween('-1 year', 'now'),
         ]);

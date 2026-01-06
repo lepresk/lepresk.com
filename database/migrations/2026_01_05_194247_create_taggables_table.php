@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('taggables', function (Blueprint $table) {
+        Schema::create('taggables', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('tag_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('taggable_id');

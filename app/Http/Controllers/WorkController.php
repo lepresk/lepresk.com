@@ -16,6 +16,6 @@ final class WorkController
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return view('projects.show', compact('work'));
+        return view('projects.show', ['work' => $work]);
     }
 }

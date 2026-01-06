@@ -51,7 +51,7 @@ final class Tag extends Model
     // Auto-generate slug on creation
     protected static function booted(): void
     {
-        self::creating(function (Tag $tag) {
+        self::creating(function (Tag $tag): void {
             if (empty($tag->slug)) {
                 $tag->slug = Str::slug($tag->name);
             }
