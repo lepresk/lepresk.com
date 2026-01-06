@@ -71,6 +71,18 @@
     @endphp
     </script>
 
+    @if(app()->environment('production'))
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C4FM23VJJ4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-C4FM23VJJ4');
+    </script>
+    @endif
+
     @stack('head')
 </head>
 <body class="font-sans antialiased">
