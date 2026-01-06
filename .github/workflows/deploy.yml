@@ -78,7 +78,7 @@ jobs:
           echo "Déploiement sur le serveur mutualisé"
 
           # Définir les variables
-          APP_DIR=/home/u759356917/public_html/portfolio
+          APP_DIR=/home/u759356917/public_html
           SSH_DEST=${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
 
           # Vérifier localement que composer.json existe
@@ -97,7 +97,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -p 65002 $SSH_DEST << 'EOF'
             set -e
 
-            cd /home/u759356917/public_html/portfolio
+            cd /home/u759356917/public_html
 
             # Créer les répertoires nécessaires et définir les permissions
             mkdir -p bootstrap/cache
