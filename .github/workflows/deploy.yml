@@ -1,0 +1,133 @@
+name: Deploy Laravel Application
+
+on:
+  push:
+    branches:
+      - main  # Déclenche le workflow sur un push dans la branche main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Récupération du code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Configuration de la clé SSH
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Étape 3 : Préparation du fichier .env
+      - name: Generate .env file
+        run: |
+          echo "Génération du fichier .env"
+          cat <<EOF > .env
+          APP_NAME=LepresK
+          APP_ENV=production
+          APP_KEY=${{ secrets.APP_KEY }}
+          APP_DEBUG=false
+          APP_URL=${{ secrets.APP_URL }}
+
+          APP_LOCALE=fr
+          APP_FALLBACK_LOCALE=en
+          APP_FAKER_LOCALE=en_US
+
+          APP_MAINTENANCE_DRIVER=file
+
+          PHP_CLI_SERVER_WORKERS=4
+
+          BCRYPT_ROUNDS=12
+
+          LOG_CHANNEL=stack
+          LOG_STACK=single
+          LOG_DEPRECATIONS_CHANNEL=null
+          LOG_LEVEL=debug
+
+          DB_CONNECTION=mariadb
+          DB_HOST=${{ secrets.DB_HOST }}
+          DB_PORT=${{ secrets.DB_PORT }}
+          DB_DATABASE=${{ secrets.DB_DATABASE }}
+          DB_USERNAME=${{ secrets.DB_USERNAME }}
+          DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+
+          SESSION_DRIVER=database
+          SESSION_LIFETIME=120
+          SESSION_ENCRYPT=false
+          SESSION_PATH=/
+          SESSION_DOMAIN=null
+
+          BROADCAST_CONNECTION=log
+          FILESYSTEM_DISK=local
+          QUEUE_CONNECTION=database
+
+          CACHE_STORE=database
+          CACHE_PREFIX=
+
+          MAIL_MAILER=resend
+          MAIL_FROM_ADDRESS=no-reply@lepresk.com
+          MAIL_FROM_NAME=LepresK
+          RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
+          EOF
+
+      # Étape 4 : Synchronisation des fichiers et déploiement
+      - name: Deploy Application
+        run: |
+          echo "Déploiement sur le serveur mutualisé"
+
+          # Définir les variables
+          APP_DIR=/home/u759356917/public_html/portfolio
+          SSH_DEST=${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
+
+          # Vérifier localement que composer.json existe
+          if [ ! -f "composer.json" ]; then
+            echo "Erreur : composer.json introuvable dans le répertoire local."
+            exit 1
+          fi
+
+          # Synchronisation des fichiers avec rsync (exécuté localement)
+          rsync -avz --delete --exclude-from='.gitignore' --exclude-from='.sync-ignore' -e "ssh -o StrictHostKeyChecking=no -p 65002" ./ $SSH_DEST:$APP_DIR/
+
+          # Copier le fichier .env généré
+          scp -o StrictHostKeyChecking=no -P 65002 .env $SSH_DEST:$APP_DIR/.env
+
+          # Exécution des commandes Laravel sur le serveur
+          ssh -o StrictHostKeyChecking=no -p 65002 $SSH_DEST << 'EOF'
+            set -e
+
+            cd /home/u759356917/public_html/portfolio
+
+            nvm install node
+            nvm use node
+            npm install -g pnpm
+            pnpm i
+            pnpm build
+
+            # Vérifier que composer.json existe dans le dossier de l'application
+            if [ ! -f "composer.json" ]; then
+              echo "Erreur : fichier composer.json introuvable dans $APP_DIR"
+              exit 1
+            fi
+
+            # Télécharger composer.phar si nécessaire
+            if [ ! -f "composer.phar" ]; then
+              echo "Composer n'est pas disponible, téléchargement de composer.phar..."
+              curl -sS https://getcomposer.org/installer | php
+            fi
+
+            # Utiliser composer.phar pour installer les dépendances
+            php composer.phar install --no-dev --optimize-autoloader
+
+            # Commandes Laravel
+            php artisan migrate --force
+            php artisan optimize:clear
+            php artisan optimize
+            php artisan filament:optimize-clear
+            php artisan filament:optimize
+            # php artisan view:clear
+            # php artisan view:cache
+          EOF
+
+          echo "Déploiement terminé avec succès !"
