@@ -35,13 +35,13 @@
                             'icon' => 'users-three'
                         ],
                         [
-                            'value' => '30K+',
+                            'value' => '100K+',
                             'label' => __('about.stat_users'),
                             'gradient' => 'bg-gradient-to-br from-emerald-500 to-emerald-600',
                             'icon' => 'users'
                         ],
                         [
-                            'value' => '10+',
+                            'value' => '30+',
                             'label' => __('about.stat_projects'),
                             'gradient' => 'bg-gradient-to-br from-orange-500 to-orange-600',
                             'icon' => 'briefcase'

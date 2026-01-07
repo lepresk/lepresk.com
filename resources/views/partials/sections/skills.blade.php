@@ -36,7 +36,7 @@
                         'skills' => ['PostgreSQL', 'MySQL / MariaDB', 'MongoDB', 'Redis', 'SQL Server']
                     ],
                     [
-                        'title' => 'DevOps & Cloud',
+                        'title' => 'Platform & Infrastructure',
                         'icon' => 'blocks',
                         'skills' => ['Docker', 'Linux', 'CI/CD Pipelines', 'GitHub Actions']
                     ]
