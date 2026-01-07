@@ -23,12 +23,12 @@
                     [
                         'title' => 'Frontend Development',
                         'icon' => 'code',
-                        'skills' => ['React / Next.js', 'Vue.js', 'TypeScript', 'Tailwind CSS', 'Redux']
+                        'skills' => ['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Redux']
                     ],
                     [
                         'title' => 'Mobile Development',
                         'icon' => 'smartphone',
-                        'skills' => ['Flutter', 'Android (Kotlin)', 'React Native', 'Cross-platform Apps']
+                        'skills' => ['Flutter', 'Android (Kotlin)', 'Cross-platform Apps']
                     ],
                     [
                         'title' => 'Database',
