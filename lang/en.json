@@ -83,8 +83,8 @@
     "services.engineering_leadership.description": "Need to scale your team while maintaining quality? I've scaled teams from 7 to 17+ engineers at Akieni, trained juniors to senior level at COWEMA, and built hiring processes that work. Whether you're structuring your first team or scaling past 10 engineers, I help you grow without chaos.",
 
     "services.system_design.title": "System Design & Migration",
-    "services.system_design.subtitle": "Infrastructure & DevOps",
-    "services.system_design.description": "Modernizing infrastructure or planning a complex migration? I've migrated legacy systems to AWS with Kubernetes, architected high-availability platforms, and built CI/CD pipelines that ship reliably. I choose technologies that solve your problem—pragmatic decisions over hype.",
+    "services.system_design.subtitle": "Software Architecture & Design Patterns",
+    "services.system_design.description": "Modernizing your application or planning a complex migration? I've architected scalable software systems, designed microservices architectures, and migrated monolithic applications to modern patterns. From domain-driven design to clean architecture, I build solutions that evolve with your business—pragmatic decisions over hype.",
 
     "services.fullstack_development.title": "Full-Stack Development",
     "services.fullstack_development.subtitle": "Laravel, ASP.NET Core, Node.js, React, Flutter",

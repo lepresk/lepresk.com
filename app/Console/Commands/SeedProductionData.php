@@ -77,7 +77,7 @@ final class SeedProductionData extends Command
 
         $tags = [
             'Laravel', 'PHP', 'ASP.NET Core', 'Node.js', 'React', 'Flutter',
-            'Kotlin', 'AWS', 'Kubernetes', 'Docker', 'CI/CD', 'API',
+            'Kotlin', 'Docker', 'CI/CD', 'API',
             'Microservices', 'Architecture', 'Leadership', 'Team Building',
             'Mobile', 'Web', 'Backend', 'Frontend', 'Full-Stack',
             'E-Commerce', 'Enterprise', 'Tutorial', 'Best Practices',

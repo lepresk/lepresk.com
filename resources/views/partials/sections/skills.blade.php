@@ -38,7 +38,7 @@
                     [
                         'title' => 'DevOps & Cloud',
                         'icon' => 'blocks',
-                        'skills' => ['Docker', 'Kubernetes', 'AWS', 'CI/CD Pipelines', 'GitHub Actions']
+                        'skills' => ['Docker', 'Linux', 'CI/CD Pipelines', 'GitHub Actions']
                     ]
                 ];
             @endphp
