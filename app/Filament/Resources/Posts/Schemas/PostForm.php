@@ -150,6 +150,7 @@ final class PostForm
                         FileUpload::make('featured_image')
                             ->image()
                             ->directory('posts/featured-images')
+                            ->disk('public')
                             ->visibility('public')
                             ->maxSize(2048)
                             ->columnSpanFull(),
