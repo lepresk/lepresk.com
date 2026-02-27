@@ -395,6 +395,9 @@ document.addEventListener('DOMContentLoaded', () => {
 import Prism from 'prismjs';
 import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
 
+// Base (must come first)
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-markup-templating';
 // Web / Backend
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-typescript';
@@ -409,7 +412,6 @@ import 'prismjs/components/prism-kotlin';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-dart';
-import 'prismjs/components/prism-markup';
 
 function initSyntaxHighlighting() {
     document.querySelectorAll('.prose pre').forEach(pre => {
