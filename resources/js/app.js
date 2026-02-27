@@ -388,4 +388,32 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initBackToTop();
     initContactForm();
+    initSyntaxHighlighting();
 });
+
+// Syntax Highlighting
+import Prism from 'prismjs';
+import 'prismjs/plugins/line-numbers/prism-line-numbers.js';
+
+// Web / Backend
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-php';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-sql';
+import 'prismjs/components/prism-yaml';
+// Mobile / JVM
+import 'prismjs/components/prism-kotlin';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-csharp';
+import 'prismjs/components/prism-dart';
+import 'prismjs/components/prism-markup';
+
+function initSyntaxHighlighting() {
+    document.querySelectorAll('.prose pre').forEach(pre => {
+        pre.classList.add('line-numbers');
+    });
+    Prism.highlightAll();
+}
