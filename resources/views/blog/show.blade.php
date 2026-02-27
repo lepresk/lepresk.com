@@ -12,9 +12,9 @@
     <meta property="og:url" content="{{ route('blog.show', $post->slug) }}">
 
     @if($post->og_image)
-        <meta property="og:image" content="{{ Storage::url($post->og_image) }}">
+        <meta property="og:image" content="{{ url(Storage::url($post->og_image)) }}">
     @elseif($post->featured_image)
-        <meta property="og:image" content="{{ Storage::url($post->featured_image) }}">
+        <meta property="og:image" content="{{ url(Storage::url($post->featured_image)) }}">
     @endif
 
     <meta property="article:published_time" content="{{ $post->published_at->toIso8601String() }}">
@@ -30,9 +30,9 @@
     <meta name="twitter:description" content="{{ $post->og_description ?: ($post->meta_description ?: $post->excerpt) }}">
 
     @if($post->og_image)
-        <meta name="twitter:image" content="{{ Storage::url($post->og_image) }}">
+        <meta name="twitter:image" content="{{ url(Storage::url($post->og_image)) }}">
     @elseif($post->featured_image)
-        <meta name="twitter:image" content="{{ Storage::url($post->featured_image) }}">
+        <meta name="twitter:image" content="{{ url(Storage::url($post->featured_image)) }}">
     @endif
 
     {{-- Structured Data (BlogPosting Schema) --}}
@@ -55,7 +55,7 @@
         ];
 
         if ($post->featured_image) {
-            $structuredData['image'] = Storage::url($post->featured_image);
+            $structuredData['image'] = url(Storage::url($post->featured_image));
         }
 
         if ($post->categories->isNotEmpty()) {

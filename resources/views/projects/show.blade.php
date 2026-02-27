@@ -12,9 +12,9 @@
     <meta property="og:url" content="{{ route('projects.show', $work->slug) }}">
 
     @if($work->og_image)
-        <meta property="og:image" content="{{ Storage::url($work->og_image) }}">
+        <meta property="og:image" content="{{ url(Storage::url($work->og_image)) }}">
     @elseif($work->featured_image)
-        <meta property="og:image" content="{{ Storage::url($work->featured_image) }}">
+        <meta property="og:image" content="{{ url(Storage::url($work->featured_image)) }}">
     @endif
 
     @if($work->meta_keywords)
@@ -27,9 +27,9 @@
     <meta name="twitter:description" content="{{ $work->og_description ?: ($work->meta_description ?: $work->description) }}">
 
     @if($work->og_image)
-        <meta name="twitter:image" content="{{ Storage::url($work->og_image) }}">
+        <meta name="twitter:image" content="{{ url(Storage::url($work->og_image)) }}">
     @elseif($work->featured_image)
-        <meta name="twitter:image" content="{{ Storage::url($work->featured_image) }}">
+        <meta name="twitter:image" content="{{ url(Storage::url($work->featured_image)) }}">
     @endif
 
     {{-- Structured Data (CreativeWork Schema) --}}
@@ -53,7 +53,7 @@
         ];
 
         if ($work->featured_image) {
-            $structuredData['image'] = Storage::url($work->featured_image);
+            $structuredData['image'] = url(Storage::url($work->featured_image));
         }
 
         if ($work->tags->isNotEmpty()) {
