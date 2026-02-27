@@ -23,6 +23,7 @@ final class PostsTable
         return $table
             ->columns([
                 ImageColumn::make('featured_image')
+                    ->disk('public')
                     ->square()
                     ->label('Image'),
 

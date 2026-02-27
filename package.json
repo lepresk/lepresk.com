@@ -9,16 +9,16 @@
     },
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.19",
-        "@tailwindcss/vite": "^4.1.18",
+        "@tailwindcss/vite": "^4.2.1",
         "concurrently": "^9.2.1",
-        "laravel-vite-plugin": "^2.0.1",
-        "npm-check-updates": "^19.3.1",
-        "playwright": "^1.57.0",
-        "prettier": "^3.7.4",
+        "laravel-vite-plugin": "^2.1.0",
+        "npm-check-updates": "^19.6.2",
+        "playwright": "^1.58.2",
+        "prettier": "^3.8.1",
         "prettier-plugin-organize-imports": "^4.3.0",
         "prettier-plugin-tailwindcss": "^0.7.2",
-        "tailwindcss": "^4.1.18",
-        "vite": "^7.3.0"
+        "tailwindcss": "^4.2.1",
+        "vite": "^7.3.1"
     },
     "dependencies": {
         "prism-themes": "^1.9.0",
