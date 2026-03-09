@@ -31,7 +31,7 @@ final class ContactFormMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('no-reply@lepresk.com', 'Lepresk Contact Form'),
+            from: new Address(config('contact.from.address'), config('contact.from.name')),
             replyTo: [new Address($this->data['email'], $this->data['name'])],
             subject: 'Contact Form: '.$this->data['subject'],
         );

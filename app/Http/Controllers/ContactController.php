@@ -37,8 +37,8 @@ final class ContactController
 
         try {
             // Send email to primary address
-            Mail::to('info@lepresk.com')
-                ->cc('lepresk@gmail.com')
+            Mail::to(config('contact.to'))
+                ->cc(config('contact.cc'))
                 ->send(new ContactFormMail($validated));
 
             // Hit rate limiter
@@ -57,7 +57,7 @@ final class ContactController
 
             return response()->json([
                 'success' => false,
-                'message' => __('There was an error sending your message. Please try again later or contact us directly at info@lepresk.com'),
+                'message' => __('There was an error sending your message. Please try again later or contact us directly at :email', ['email' => config('contact.public_email')]),
             ], 500);
         }
     }
