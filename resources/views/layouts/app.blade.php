@@ -20,19 +20,27 @@
     <meta http-equiv="content-language" content="{{ app()->getLocale() }}" />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="{{ app()->getLocale() === 'fr' ? 'fr_FR' : 'en_US' }}">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="@yield('title', __('meta.home.title'))">
-    <meta property="og:description" content="@yield('description', __('meta.home.description'))">
-    <meta property="og:site_name" content="Lepres Kikounga Portfolio | VP of Engineering, CTO, Tech Advisor">
-    <meta property="og:image" content="@yield('og_image', asset('/images/profile.webp'))">
+    @hasSection('og_meta')
+        @yield('og_meta')
+    @else
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="{{ app()->getLocale() === 'fr' ? 'fr_FR' : 'en_US' }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:title" content="@yield('title', __('meta.home.title'))">
+        <meta property="og:description" content="@yield('description', __('meta.home.description'))">
+        <meta property="og:site_name" content="Lepres Kikounga Portfolio | VP of Engineering, CTO, Tech Advisor">
+        <meta property="og:image" content="{{ asset('/images/profile.webp') }}">
+    @endif
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('title', __('meta.home.title'))">
-    <meta name="twitter:description" content="@yield('description', __('meta.home.description'))">
-    <meta name="twitter:image" content="@yield('og_image', asset('/images/profile.webp'))">
+    @hasSection('twitter_meta')
+        @yield('twitter_meta')
+    @else
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="@yield('title', __('meta.home.title'))">
+        <meta name="twitter:description" content="@yield('description', __('meta.home.description'))">
+        <meta name="twitter:image" content="{{ asset('/images/profile.webp') }}">
+    @endif
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

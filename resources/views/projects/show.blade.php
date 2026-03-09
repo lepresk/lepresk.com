@@ -4,32 +4,32 @@
 
 @section('description', $work->meta_description ?: $work->description)
 
-@push('head')
-    {{-- Open Graph Meta Tags --}}
+@php
+    $ogImage = $work->og_image
+        ? url(Storage::url($work->og_image))
+        : ($work->featured_image ? url(Storage::url($work->featured_image)) : asset('/images/profile.webp'));
+@endphp
+
+@section('og_meta')
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="{{ app()->getLocale() === 'fr' ? 'fr_FR' : 'en_US' }}">
+    <meta property="og:url" content="{{ route('projects.show', $work->slug) }}">
     <meta property="og:title" content="{{ $work->og_title ?: $work->title }}">
     <meta property="og:description" content="{{ $work->og_description ?: ($work->meta_description ?: $work->description) }}">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ route('projects.show', $work->slug) }}">
+    <meta property="og:site_name" content="Lepres Kikounga Portfolio | VP of Engineering, CTO, Tech Advisor">
+    <meta property="og:image" content="{{ $ogImage }}">
+@endsection
 
-    @if($work->og_image)
-        <meta property="og:image" content="{{ url(Storage::url($work->og_image)) }}">
-    @elseif($work->featured_image)
-        <meta property="og:image" content="{{ url(Storage::url($work->featured_image)) }}">
-    @endif
-
-    @if($work->meta_keywords)
-        <meta name="keywords" content="{{ $work->meta_keywords }}">
-    @endif
-
-    {{-- Twitter Card Meta Tags --}}
+@section('twitter_meta')
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $work->og_title ?: $work->title }}">
     <meta name="twitter:description" content="{{ $work->og_description ?: ($work->meta_description ?: $work->description) }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
+@endsection
 
-    @if($work->og_image)
-        <meta name="twitter:image" content="{{ url(Storage::url($work->og_image)) }}">
-    @elseif($work->featured_image)
-        <meta name="twitter:image" content="{{ url(Storage::url($work->featured_image)) }}">
+@push('head')
+    @if($work->meta_keywords)
+        <meta name="keywords" content="{{ $work->meta_keywords }}">
     @endif
 
     {{-- Structured Data (CreativeWork Schema) --}}

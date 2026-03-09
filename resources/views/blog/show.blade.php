@@ -4,35 +4,34 @@
 
 @section('description', $post->meta_description ?: $post->excerpt)
 
-@push('head')
-    {{-- Open Graph Meta Tags --}}
+@php
+    $ogImage = $post->og_image
+        ? url(Storage::url($post->og_image))
+        : ($post->featured_image ? url(Storage::url($post->featured_image)) : asset('/images/profile.webp'));
+@endphp
+
+@section('og_meta')
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="{{ app()->getLocale() === 'fr' ? 'fr_FR' : 'en_US' }}">
+    <meta property="og:url" content="{{ route('blog.show', $post->slug) }}">
     <meta property="og:title" content="{{ $post->og_title ?: $post->title }}">
     <meta property="og:description" content="{{ $post->og_description ?: ($post->meta_description ?: $post->excerpt) }}">
-    <meta property="og:type" content="article">
-    <meta property="og:url" content="{{ route('blog.show', $post->slug) }}">
-
-    @if($post->og_image)
-        <meta property="og:image" content="{{ url(Storage::url($post->og_image)) }}">
-    @elseif($post->featured_image)
-        <meta property="og:image" content="{{ url(Storage::url($post->featured_image)) }}">
-    @endif
-
+    <meta property="og:site_name" content="Lepres Kikounga Portfolio | VP of Engineering, CTO, Tech Advisor">
+    <meta property="og:image" content="{{ $ogImage }}">
     <meta property="article:published_time" content="{{ $post->published_at->toIso8601String() }}">
     <meta property="article:modified_time" content="{{ $post->updated_at->toIso8601String() }}">
+@endsection
 
-    @if($post->meta_keywords)
-        <meta name="keywords" content="{{ $post->meta_keywords }}">
-    @endif
-
-    {{-- Twitter Card Meta Tags --}}
+@section('twitter_meta')
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $post->og_title ?: $post->title }}">
     <meta name="twitter:description" content="{{ $post->og_description ?: ($post->meta_description ?: $post->excerpt) }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
+@endsection
 
-    @if($post->og_image)
-        <meta name="twitter:image" content="{{ url(Storage::url($post->og_image)) }}">
-    @elseif($post->featured_image)
-        <meta name="twitter:image" content="{{ url(Storage::url($post->featured_image)) }}">
+@push('head')
+    @if($post->meta_keywords)
+        <meta name="keywords" content="{{ $post->meta_keywords }}">
     @endif
 
     {{-- Structured Data (BlogPosting Schema) --}}
