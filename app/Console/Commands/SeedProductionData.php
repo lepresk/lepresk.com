@@ -150,6 +150,9 @@ final class SeedProductionData extends Command
         $this->info('✓ Portfolio works seeded');
     }
 
+    /**
+     * @return array<int, array{title: string, excerpt: string, read_time: string, days_ago: int, categories: list<string>, tags: list<string>, content: string}>
+     */
     private function getPostsData(): array
     {
         return [
@@ -1178,6 +1181,9 @@ MARKDOWN
         ];
     }
 
+    /**
+     * @return array<int, array{title: string, description: string, days_ago: int, categories: list<string>, tags: list<string>, content: string}>
+     */
     private function getWorksData(): array
     {
         return [

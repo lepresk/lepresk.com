@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\CarbonInterface;
-use Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,7 +39,7 @@ use Illuminate\Support\Str;
  */
 final class Post extends Model
 {
-    /** @use HasFactory<PostFactory> */
+    /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
@@ -88,30 +87,6 @@ final class Post extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    // Query Scopes
-
-    /**
-     * @param  Builder<Post>  $query
-     * @return Builder<Post>
-     */
-    #[Scope]
-    protected function published(Builder $query): Builder
-    {
-        return $query->where('status', 'published')
-            ->whereNotNull('published_at')
-            ->where('published_at', '<=', now());
-    }
-
-    /**
-     * @param  Builder<Post>  $query
-     * @return Builder<Post>
-     */
-    #[Scope]
-    protected function latest(Builder $query): Builder
-    {
-        return $query->orderBy('published_at', 'desc');
-    }
-
     // Auto-generate slug on creation
     protected static function booted(): void
     {
@@ -120,5 +95,27 @@ final class Post extends Model
                 $post->slug = Str::slug($post->title);
             }
         });
+    }
+
+    // Query Scopes
+
+    /**
+     * @param  Builder<Post>  $query
+     */
+    #[Scope]
+    protected function published(Builder $query): void
+    {
+        $query->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
+    }
+
+    /**
+     * @param  Builder<Post>  $query
+     */
+    #[Scope]
+    protected function latest(Builder $query): void
+    {
+        $query->latest('published_at');
     }
 }

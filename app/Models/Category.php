@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\CarbonInterface;
-use Database\Factories\CategoryFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,7 +26,7 @@ use Illuminate\Support\Str;
  */
 final class Category extends Model
 {
-    /** @use HasFactory<CategoryFactory> */
+    /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -55,28 +54,6 @@ final class Category extends Model
         return $this->belongsToMany(Work::class, 'category_work');
     }
 
-    // Query Scopes
-
-    /**
-     * @param  Builder<Category>  $query
-     * @return Builder<Category>
-     */
-    #[Scope]
-    protected function forPosts(Builder $query): Builder
-    {
-        return $query->whereIn('type', ['post', 'both']);
-    }
-
-    /**
-     * @param  Builder<Category>  $query
-     * @return Builder<Category>
-     */
-    #[Scope]
-    protected function forWorks(Builder $query): Builder
-    {
-        return $query->whereIn('type', ['work', 'both']);
-    }
-
     // Auto-generate slug on creation
     protected static function booted(): void
     {
@@ -85,5 +62,25 @@ final class Category extends Model
                 $category->slug = Str::slug($category->name);
             }
         });
+    }
+
+    // Query Scopes
+
+    /**
+     * @param  Builder<Category>  $query
+     */
+    #[Scope]
+    protected function forPosts(Builder $query): void
+    {
+        $query->whereIn('type', ['post', 'both']);
+    }
+
+    /**
+     * @param  Builder<Category>  $query
+     */
+    #[Scope]
+    protected function forWorks(Builder $query): void
+    {
+        $query->whereIn('type', ['work', 'both']);
     }
 }

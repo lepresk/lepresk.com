@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\WorkController;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Route;
@@ -27,4 +28,4 @@ Route::post('/language/{locale}', [LanguageController::class, 'switch'])
     ->where('locale', 'en|fr');
 
 // Sitemap
-Route::get('/sitemap.xml', App\Http\Controllers\SitemapController::class);
+Route::get('/sitemap.xml', SitemapController::class);

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Scope;
 use Carbon\CarbonInterface;
-use Database\Factories\WorkFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -41,7 +40,7 @@ use Illuminate\Support\Str;
  */
 final class Work extends Model
 {
-    /** @use HasFactory<WorkFactory> */
+    /** @use HasFactory<\Database\Factories\WorkFactory> */
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
@@ -91,29 +90,6 @@ final class Work extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    // Query Scopes
-    /**
-     * @param  Builder<Work>  $query
-     * @return Builder<Work>
-     */
-    #[Scope]
-    protected function published(Builder $query): Builder
-    {
-        return $query->where('status', 'published')
-            ->whereNotNull('published_at')
-            ->where('published_at', '<=', now());
-    }
-
-    /**
-     * @param  Builder<Work>  $query
-     * @return Builder<Work>
-     */
-    #[Scope]
-    protected function ordered(Builder $query): Builder
-    {
-        return $query->orderBy('order', 'asc');
-    }
-
     // Auto-generate slug on creation
     protected static function booted(): void
     {
@@ -122,5 +98,26 @@ final class Work extends Model
                 $work->slug = Str::slug($work->title);
             }
         });
+    }
+
+    // Query Scopes
+    /**
+     * @param  Builder<Work>  $query
+     */
+    #[Scope]
+    protected function published(Builder $query): void
+    {
+        $query->where('status', 'published')
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
+    }
+
+    /**
+     * @param  Builder<Work>  $query
+     */
+    #[Scope]
+    protected function ordered(Builder $query): void
+    {
+        $query->orderBy('order', 'asc');
     }
 }

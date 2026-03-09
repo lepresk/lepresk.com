@@ -25,6 +25,9 @@ final class MigrateExistingContentSeeder extends Seeder
         $this->migrateWorks($categories);
     }
 
+    /**
+     * @return array<string, Category>
+     */
     private function createCategories(): array
     {
         $categoryData = [
@@ -49,6 +52,9 @@ final class MigrateExistingContentSeeder extends Seeder
         return $categories;
     }
 
+    /**
+     * @param  array<string, Category>  $categories
+     */
     private function migrateBlogPosts(array $categories): void
     {
         $posts = [
@@ -176,6 +182,9 @@ final class MigrateExistingContentSeeder extends Seeder
         }
     }
 
+    /**
+     * @param  array<string, Category>  $categories
+     */
     private function migrateWorks(array $categories): void
     {
         $works = [
