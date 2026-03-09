@@ -21,6 +21,6 @@ final class AppServiceProvider extends ServiceProvider
 
     private function bootModelsDefaults(): void
     {
-        Model::unguard();
+        Model::shouldBeStrict(! app()->isProduction());
     }
 }

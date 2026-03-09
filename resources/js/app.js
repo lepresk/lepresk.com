@@ -279,6 +279,46 @@ function initBackToTop() {
     handleScroll(); // Initial check
 }
 
+function showContactMessage(container, type, message) {
+    const isSuccess = type === 'success';
+    const colorClass = isSuccess
+        ? 'border-green-500/20 bg-green-500/10 text-green-700 dark:text-green-400'
+        : 'border-red-500/20 bg-red-500/10 text-red-700 dark:text-red-400';
+    const iconPath = isSuccess
+        ? '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>'
+        : '<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = `rounded-lg border ${colorClass} p-4`;
+
+    const flex = document.createElement('div');
+    flex.className = isSuccess ? 'flex items-center gap-2' : 'flex items-start gap-2';
+
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '20');
+    svg.setAttribute('height', '20');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    if (!isSuccess) svg.classList.add('mt-0.5');
+    svg.innerHTML = iconPath;
+
+    const text = document.createElement(isSuccess ? 'span' : 'p');
+    if (isSuccess) text.className = 'font-medium';
+    text.textContent = message;
+
+    flex.appendChild(svg);
+    flex.appendChild(text);
+    wrapper.appendChild(flex);
+
+    container.innerHTML = '';
+    container.appendChild(wrapper);
+    container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 // Contact Form Handler
 function initContactForm() {
     const form = document.querySelector('form[action="/contact"]');
@@ -320,58 +360,13 @@ function initContactForm() {
             const data = await response.json();
 
             if (data.success) {
-                // Show success message
-                messageContainer.innerHTML = `
-                    <div class="rounded-lg border border-green-500/20 bg-green-500/10 p-4 text-green-700 dark:text-green-400">
-                        <div class="flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/>
-                            </svg>
-                            <span class="font-medium">${data.message}</span>
-                        </div>
-                    </div>
-                `;
-
-                // Reset form
+                showContactMessage(messageContainer, 'success', data.message);
                 form.reset();
-
-                // Scroll to message
-                messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
-                // Show error message
-                messageContainer.innerHTML = `
-                    <div class="rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-700 dark:text-red-400">
-                        <div class="flex items-start gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5">
-                                <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
-                            </svg>
-                            <div class="flex-1">
-                                <p>${data.message}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-
-                // Scroll to error
-                messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                showContactMessage(messageContainer, 'error', data.message);
             }
         } catch (error) {
-            // Show error message
-            messageContainer.innerHTML = `
-                <div class="rounded-lg border border-red-500/20 bg-red-500/10 p-4 text-red-700 dark:text-red-400">
-                    <div class="flex items-start gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5">
-                            <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
-                        </svg>
-                        <div class="flex-1">
-                            <p>Une erreur est survenue. Veuillez réessayer ou nous contacter directement à info@lepresk.com</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            // Scroll to error
-            messageContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            showContactMessage(messageContainer, 'error', 'Une erreur est survenue. Veuillez réessayer.');
         } finally {
             // Re-enable button
             submitButton.disabled = false;
