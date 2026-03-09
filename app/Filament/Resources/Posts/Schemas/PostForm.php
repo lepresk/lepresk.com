@@ -53,7 +53,7 @@ final class PostForm
                                     ->columnSpanFull(),
                             ]),
 
-                        // Tab 3: Taxonomy
+                        // Tab 2: Taxonomy
                         Tab::make('Taxonomy')
                             ->schema([
                                 Select::make('categories')
@@ -87,7 +87,7 @@ final class PostForm
                                     ->columnSpanFull(),
                             ]),
 
-                        // Tab 4: SEO
+                        // Tab 3: SEO
                         Tab::make('SEO')
                             ->schema([
                                 Section::make('Meta Tags')

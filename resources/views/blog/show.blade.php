@@ -18,7 +18,9 @@
     <meta property="og:description" content="{{ $post->og_description ?: ($post->meta_description ?: $post->excerpt) }}">
     <meta property="og:site_name" content="Lepres Kikounga Portfolio | VP of Engineering, CTO, Tech Advisor">
     <meta property="og:image" content="{{ $ogImage }}">
+    @if($post->published_at)
     <meta property="article:published_time" content="{{ $post->published_at->toIso8601String() }}">
+    @endif
     <meta property="article:modified_time" content="{{ $post->updated_at->toIso8601String() }}">
 @endsection
 
@@ -41,7 +43,7 @@
             '@type' => 'BlogPosting',
             'headline' => $post->title,
             'description' => $post->excerpt,
-            'datePublished' => $post->published_at->toIso8601String(),
+            'datePublished' => $post->published_at?->toIso8601String(),
             'dateModified' => $post->updated_at->toIso8601String(),
             'author' => [
                 '@type' => 'Person',
@@ -69,6 +71,18 @@
 @endpush
 
 @section('content')
+    @if(!empty($preview))
+        <div class="bg-amber-500 text-black text-center py-2 text-sm font-semibold">
+            Preview Mode —
+            @if($post->status === 'draft')
+                This post is a draft
+            @elseif($post->published_at?->isFuture())
+                Scheduled for {{ $post->published_at->isoFormat('D MMMM YYYY [at] HH:mm') }}
+            @else
+                This post is not published yet
+            @endif
+        </div>
+    @endif
     <div class="min-h-screen pt-24">
         <article class="container mx-auto px-6 pb-24">
             <div class="mx-auto max-w-4xl">
@@ -93,7 +107,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/>
                             </svg>
-                            {{ $post->published_at->isoFormat('D MMMM YYYY') }}
+                            {{ $post->published_at?->isoFormat('D MMMM YYYY') ?? 'Draft' }}
                         </div>
                         @if($post->read_time)
                             <div class="flex items-center gap-2">

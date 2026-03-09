@@ -6,26 +6,52 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 final class BlogController
 {
-    public function index(): View
+    public function index(): Response
     {
-        $posts = Post::published()
+        /** @var int $page */
+        $page = request()->input('page', 1);
+
+        $posts = Cache::rememberForever("blog.index.page:{$page}", fn () => Post::published()
             ->with(['categories', 'tags'])
             ->latest()
-            ->paginate(12);
+            ->paginate(12));
 
-        return view('blog.index', ['posts' => $posts]);
+        /** @var \Illuminate\View\View $view */
+        $view = view('blog.index', ['posts' => $posts]);
+
+        return response($view)
+            ->header('Cache-Control', 'public, max-age=86400, s-maxage=86400');
     }
 
-    public function show(string $slug): View
+    public function show(string $slug): Response
     {
-        $post = Post::published()
+        /** @var Post $post */
+        $post = Cache::rememberForever("post.slug:{$slug}", fn () => Post::published()
             ->with(['categories', 'tags'])
             ->where('slug', $slug)
-            ->firstOrFail();
+            ->firstOrFail());
 
-        return view('blog.show', ['post' => $post]);
+        /** @var \Illuminate\View\View $view */
+        $view = view('blog.show', ['post' => $post]);
+
+        return response($view)
+            ->header('Cache-Control', 'public, max-age=86400, s-maxage=86400');
+    }
+
+    public function preview(Request $request, int $id): View
+    {
+        abort_unless($request->hasValidSignature(), 403);
+
+        $post = Post::query()
+            ->with(['categories', 'tags'])
+            ->findOrFail($id);
+
+        return view('blog.show', ['post' => $post, 'preview' => true]);
     }
 }

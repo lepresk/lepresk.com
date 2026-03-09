@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Observers\PostObserver;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -37,6 +39,7 @@ use Illuminate\Support\Str;
  * @property-read Collection<int, Category> $categories
  * @property-read Collection<int, Tag> $tags
  */
+#[ObservedBy(PostObserver::class)]
 final class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
