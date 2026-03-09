@@ -25,14 +25,14 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', __('meta.home.title'))">
     <meta property="og:description" content="@yield('description', __('meta.home.description'))">
-    <meta property="og:site_name" content="Lepres Kikounga Portfolio">
-    <meta property="og:image" content="{{ asset('/images/profile.webp') }}">
+    <meta property="og:site_name" content="Lepres Kikounga Portfolio | VP of Engineering, CTO, Tech Advisor">
+    <meta property="og:image" content="@yield('og_image', asset('/images/profile.webp'))">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('title', __('meta.home.title'))">
     <meta name="twitter:description" content="@yield('description', __('meta.home.description'))">
-    <meta name="twitter:image" content="{{ asset('/images/profile.webp') }}">
+    <meta name="twitter:image" content="@yield('og_image', asset('/images/profile.webp'))">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +64,8 @@
                 'https://github.com/lepresk',
                 'https://youtube.com/@lepresk',
                 'https://facebook.com/lepresk',
-                'https://t.me/lepresk'
+                'https://t.me/lepresk',
+                'https://dev.to/lepresk',
             ],
             'inLanguage' => ['en', 'fr']
         ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
