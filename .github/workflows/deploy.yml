@@ -3,27 +3,23 @@ name: Deploy Laravel Application
 on:
   push:
     branches:
-      - main  # Déclenche le workflow sur un push dans la branche main
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Étape 1 : Récupération du code
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Étape 2 : Configuration de la clé SSH
       - name: Install SSH Key
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # Étape 3 : Préparation du fichier .env
       - name: Generate .env file
         run: |
-          echo "Génération du fichier .env"
           cat <<EOF > .env
           APP_NAME=LepresK
           APP_ENV=production
@@ -70,42 +66,40 @@ jobs:
           MAIL_FROM_ADDRESS=no-reply@lepresk.com
           MAIL_FROM_NAME=LepresK
           RESEND_API_KEY="${{ secrets.RESEND_API_KEY }}"
+
+          ADMIN_EMAIL="${{ secrets.ADMIN_EMAIL }}"
+          CONTACT_TO_EMAIL="${{ secrets.CONTACT_TO_EMAIL }}"
+          CONTACT_CC_EMAIL="${{ secrets.CONTACT_CC_EMAIL }}"
+          CONTACT_FROM_EMAIL=no-reply@lepresk.com
+          CONTACT_FROM_NAME="Lepresk Contact Form"
+          CONTACT_PUBLIC_EMAIL="${{ secrets.CONTACT_PUBLIC_EMAIL }}"
+          CONTACT_PUBLIC_PHONE="${{ secrets.CONTACT_PUBLIC_PHONE }}"
           EOF
 
-      # Étape 4 : Synchronisation des fichiers et déploiement
       - name: Deploy Application
         run: |
-          echo "Déploiement sur le serveur mutualisé"
-
-          # Définir les variables
           APP_DIR=/home/u759356917/public_html
           SSH_DEST=${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
 
-          # Vérifier localement que composer.json existe
           if [ ! -f "composer.json" ]; then
-            echo "Erreur : composer.json introuvable dans le répertoire local."
+            echo "Error: composer.json not found locally."
             exit 1
           fi
 
-          # Synchronisation des fichiers avec rsync (exécuté localement)
           rsync -avz --delete --exclude-from='.gitignore' --exclude-from='.sync-ignore' -e "ssh -o StrictHostKeyChecking=no -p 65002" ./ $SSH_DEST:$APP_DIR/
 
-          # Copier le fichier .env généré
           scp -o StrictHostKeyChecking=no -P 65002 .env $SSH_DEST:$APP_DIR/.env
 
-          # Exécution des commandes Laravel sur le serveur
           ssh -o StrictHostKeyChecking=no -p 65002 $SSH_DEST << 'EOF'
             set -e
 
             cd /home/u759356917/public_html
 
-            # Créer les répertoires nécessaires et définir les permissions
             mkdir -p bootstrap/cache
             mkdir -p storage/framework/{sessions,views,cache}
             mkdir -p storage/logs
             chmod -R 775 bootstrap/cache
             chmod -R 775 storage
-
 
             nvm install node
             nvm use node
@@ -113,29 +107,22 @@ jobs:
             pnpm i
             pnpm build
 
-            # Vérifier que composer.json existe dans le dossier de l'application
             if [ ! -f "composer.json" ]; then
-              echo "Erreur : fichier composer.json introuvable dans $APP_DIR"
+              echo "Error: composer.json not found in $APP_DIR"
               exit 1
             fi
 
-            # Télécharger composer.phar si nécessaire
             if [ ! -f "composer.phar" ]; then
-              echo "Composer n'est pas disponible, téléchargement de composer.phar..."
               curl -sS https://getcomposer.org/installer | php
             fi
 
-            # Utiliser composer.phar pour installer les dépendances
             php composer.phar install --no-dev --optimize-autoloader
 
-            # Commandes Laravel
             php artisan migrate --force
             php artisan optimize:clear
             php artisan optimize
             php artisan filament:optimize-clear
             php artisan filament:optimize
-            # php artisan view:clear
-            # php artisan view:cache
           EOF
 
-          echo "Déploiement terminé avec succès !"
+          echo "Deployment completed successfully!"
