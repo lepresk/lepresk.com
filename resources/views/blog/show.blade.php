@@ -31,7 +31,7 @@
 
     @if($post->og_image)
         <meta name="twitter:image" content="{{ url(Storage::url($post->og_image)) }}">
-    @elseif($post->featured_image)
+    @else
         <meta name="twitter:image" content="{{ url(Storage::url($post->featured_image)) }}">
     @endif
 
@@ -109,7 +109,7 @@
 
                 @if($post->featured_image)
                     <div class="relative mb-12 aspect-21/9 overflow-hidden rounded-2xl">
-                        <img src="{{ Storage::url($post->featured_image) }}" alt="{{ $post->title }}" class="h-full w-full object-cover">
+                        <img src="{{ url(Storage::url($post->featured_image)) }}" alt="{{ $post->title }}" class="h-full w-full object-cover">
                     </div>
                 @endif
 
