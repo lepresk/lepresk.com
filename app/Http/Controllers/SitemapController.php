@@ -13,7 +13,7 @@ final class SitemapController
     public function __invoke(): Response
     {
         $posts = Post::published()
-            ->latest()
+            ->latestPublished()
             ->get(['slug', 'updated_at']);
 
         $projects = Work::published()

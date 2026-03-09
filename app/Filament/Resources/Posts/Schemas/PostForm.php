@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use App\Models\Post;
+use Closure;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
@@ -15,6 +17,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 final class PostForm
@@ -39,7 +42,20 @@ final class PostForm
                                 TextInput::make('slug')
                                     ->required()
                                     ->maxLength(255)
-                                    ->unique(ignoreRecord: true),
+                                    ->rule(fn (?Post $record): Closure => function (string $attribute, mixed $value, Closure $fail) use ($record): void {
+                                        if (! is_string($value)) {
+                                            return;
+                                        }
+
+                                        $taken = Post::query()
+                                            ->when($record !== null, fn (Builder $query): Builder => $query->whereKeyNot($record?->getKey()))
+                                            ->whereSlug($value)
+                                            ->exists();
+
+                                        if ($taken) {
+                                            $fail('This slug is already used by another post.');
+                                        }
+                                    }),
 
                                 Textarea::make('excerpt')
                                     ->rows(3)

@@ -4,6 +4,21 @@
 
 @section('description', $post->meta_description ?: $post->excerpt)
 
+@section('canonical', route('blog.show', $post->slug))
+
+@section('hreflang')
+    @foreach(config('app.available_locales') as $altLocale)
+        @if($post->hasTranslation('slug', $altLocale))
+            <link rel="alternate" hreflang="{{ $altLocale }}"
+                  href="{{ route('blog.show', ['slug' => $post->getTranslation('slug', $altLocale), 'lang' => $altLocale]) }}" />
+        @endif
+    @endforeach
+    @if($post->hasTranslation('slug', config('app.fallback_locale')))
+        <link rel="alternate" hreflang="x-default"
+              href="{{ route('blog.show', $post->getTranslation('slug', config('app.fallback_locale'))) }}" />
+    @endif
+@endsection
+
 @php
     $ogImage = $post->og_image
         ? url(Storage::url($post->og_image))
@@ -90,7 +105,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
                     </svg>
-                    Retour aux articles
+                    {{ __('blog.back_to_articles') }}
                 </a>
 
                 <div class="mb-8">

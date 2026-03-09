@@ -16,19 +16,24 @@ final class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
+        /** @var array<int, string> $available */
+        $available = config('app.available_locales', []);
+
         /** @var string|null $locale */
         $locale = $request->query('lang');
 
-        if (! is_string($locale) || ! in_array($locale, ['en', 'fr'])) {
+        if (! is_string($locale) || ! in_array($locale, $available, true)) {
             /** @var string|null $locale */
             $locale = $request->cookie('locale');
         }
 
-        if (! is_string($locale) || ! in_array($locale, ['en', 'fr'])) {
+        if (! is_string($locale) || ! in_array($locale, $available, true)) {
             /** @var string $acceptLang */
             $acceptLang = $request->server('HTTP_ACCEPT_LANGUAGE', '');
             $browserLang = mb_substr($acceptLang, 0, 2);
-            $locale = in_array($browserLang, ['en', 'fr']) ? $browserLang : 'en';
+            /** @var string $fallback */
+            $fallback = config('app.fallback_locale', 'en');
+            $locale = in_array($browserLang, $available, true) ? $browserLang : $fallback;
         }
 
         App::setLocale($locale);
