@@ -12,24 +12,15 @@ final class SecurityHeaders
 {
     public function handle(Request $request, Closure $next): Response
     {
+        /** @var Response $response */
         $response = $next($request);
 
-        // Masquer la technologie utilisée (sécurité)
         $response->headers->remove('X-Powered-By');
-
-        // Protection contre le clickjacking
         $response->headers->set('X-Frame-Options', 'SAMEORIGIN');
-
-        // Empêche le MIME sniffing
         $response->headers->set('X-Content-Type-Options', 'nosniff');
-
-        // Politique de référence stricte
         $response->headers->set('Referrer-Policy', 'strict-origin-when-cross-origin');
-
-        // Désactive les fonctionnalités inutiles du navigateur
         $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
 
-        // Force HTTPS (HSTS) - 1 an
         if ($request->secure()) {
             $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
         }

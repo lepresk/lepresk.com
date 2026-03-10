@@ -27,7 +27,7 @@ final class ContactController
             ], 429);
         }
 
-        // Validate form data
+        /** @var array{name: string, email: string, subject: string, message: string} $validated */
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
@@ -36,12 +36,10 @@ final class ContactController
         ]);
 
         try {
-            // Send email to primary address
             Mail::to(config('contact.to'))
                 ->cc(config('contact.cc'))
                 ->send(new ContactFormMail($validated));
 
-            // Hit rate limiter
             RateLimiter::hit($key);
 
             return response()->json([
@@ -49,15 +47,17 @@ final class ContactController
                 'message' => __('Thank you for your message! We will get back to you soon.'),
             ]);
         } catch (Exception $e) {
-            // Log the error
             logger()->error('Contact form submission failed', [
                 'error' => $e->getMessage(),
                 'email' => $validated['email'],
             ]);
 
+            /** @var string $publicEmail */
+            $publicEmail = config('contact.public_email');
+
             return response()->json([
                 'success' => false,
-                'message' => __('There was an error sending your message. Please try again later or contact us directly at :email', ['email' => config('contact.public_email')]),
+                'message' => __('There was an error sending your message. Please try again later or contact us directly at :email', ['email' => $publicEmail]),
             ], 500);
         }
     }

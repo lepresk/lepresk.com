@@ -15,7 +15,7 @@ final class LanguageController
     {
         abort_unless(in_array($locale, ['en', 'fr']), 400);
 
-        return redirect()->back()
+        return back()
             ->withCookie(cookie('locale', $locale, 525600)); // 1 year
     }
 }

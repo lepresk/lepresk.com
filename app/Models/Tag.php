@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Carbon\CarbonInterface;
-use Database\Factories\TagFactory;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,7 +22,7 @@ use Illuminate\Support\Str;
  */
 final class Tag extends Model
 {
-    /** @use HasFactory<TagFactory> */
+    /** @use HasFactory<\Database\Factories\TagFactory> */
     use HasFactory;
 
     protected $fillable = [
