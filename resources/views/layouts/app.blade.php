@@ -11,6 +11,9 @@
     <meta name="keywords" content="Lepresk, VP of Engineering, CTO, Tech Advisor, Engineering Leadership, System Architecture, Laravel, React, Flutter, .NET, Next.js">
     <meta name="author" content="Lepres Kikounga">
 
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}" />
+
     <!-- Hreflang Tags -->
     <link rel="alternate" hreflang="en" href="{{ url()->current() }}{{ parse_url(url()->current(), PHP_URL_QUERY) ? '&' : '?' }}lang=en" />
     <link rel="alternate" hreflang="fr" href="{{ url()->current() }}{{ parse_url(url()->current(), PHP_URL_QUERY) ? '&' : '?' }}lang=fr" />
