@@ -134,5 +134,18 @@
     "meta.blog.title": "Blog | Lepres Kikounga",
     "meta.blog.description": "Réflexions techniques, pensées sur le leadership et histoires d'ingénierie",
     "meta.project.title": "Projet | Lepres Kikounga",
-    "meta.project.description": "Étude de cas détaillée et implémentation technique"
+    "meta.project.description": "Étude de cas détaillée et implémentation technique",
+
+    "error.404.title": "Page introuvable | Lepres Kikounga",
+    "error.404.heading": "Oups ! Perdu dans l'espace",
+    "error.404.description": "La page que vous cherchez n'existe pas ou a été déplacée.",
+    "error.404.go_home": "Retour à l'accueil",
+    "error.404.go_blog": "Lire le blog",
+    "error.404.go_contact": "Me contacter",
+
+    "error.500.title": "Erreur serveur | Lepres Kikounga",
+    "error.500.heading": "Quelque chose s'est mal passé",
+    "error.500.description": "Nous rencontrons des difficultés techniques. Veuillez réessayer dans un instant.",
+    "error.500.try_again": "Réessayer",
+    "error.500.go_home": "Retour à l'accueil"
 }

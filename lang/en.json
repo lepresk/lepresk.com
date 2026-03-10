@@ -134,5 +134,18 @@
     "meta.blog.title": "Blog | Lepres Kikounga",
     "meta.blog.description": "Technical insights, leadership thoughts, and engineering stories",
     "meta.project.title": "Project | Lepres Kikounga",
-    "meta.project.description": "Detailed case study and technical implementation"
+    "meta.project.description": "Detailed case study and technical implementation",
+
+    "error.404.title": "Page Not Found | Lepres Kikounga",
+    "error.404.heading": "Oops! Lost in space",
+    "error.404.description": "The page you're looking for doesn't exist or has been moved.",
+    "error.404.go_home": "Back to Home",
+    "error.404.go_blog": "Read the Blog",
+    "error.404.go_contact": "Contact Me",
+
+    "error.500.title": "Server Error | Lepres Kikounga",
+    "error.500.heading": "Something went wrong",
+    "error.500.description": "We're experiencing technical difficulties. Please try again in a moment.",
+    "error.500.try_again": "Try Again",
+    "error.500.go_home": "Back to Home"
 }
