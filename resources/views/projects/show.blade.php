@@ -109,14 +109,29 @@
                 @if($work->image_gallery && count($work->image_gallery) > 0)
                     <div class="mt-12 pt-8 border-t border-border">
                         <h3 class="mb-6 text-2xl font-bold">Gallery</h3>
-                        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                            @foreach($work->image_gallery as $image)
-                                <div class="relative aspect-4/3 overflow-hidden rounded-xl bg-muted">
-                                    <img src="{{ Storage::url($image) }}" alt="{{ $work->title }}" class="h-full w-full object-cover transition-transform duration-300 hover:scale-110">
-                                </div>
+                        <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3" data-lightbox-gallery>
+                            @foreach($work->image_gallery as $index => $image)
+                                <button
+                                    type="button"
+                                    class="group relative aspect-4/3 cursor-zoom-in overflow-hidden rounded-xl bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                                    data-lightbox-item
+                                    data-lightbox-index="{{ $index }}"
+                                    data-lightbox-src="{{ Storage::url($image) }}"
+                                    data-lightbox-alt="{{ $work->title }} — image {{ $index + 1 }}"
+                                    aria-label="Agrandir l'image {{ $index + 1 }} sur {{ count($work->image_gallery) }}"
+                                >
+                                    <img src="{{ Storage::url($image) }}" alt="{{ $work->title }} — image {{ $index + 1 }}" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110">
+                                    <span class="absolute inset-0 flex items-center justify-center bg-background/40 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                                        <svg class="h-10 w-10 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />
+                                        </svg>
+                                    </span>
+                                </button>
                             @endforeach
                         </div>
                     </div>
+
+                    @include('partials.lightbox')
                 @endif
             </div>
         </article>

@@ -375,6 +375,146 @@ function initContactForm() {
     });
 }
 
+// Gallery Lightbox
+function initLightbox() {
+    const gallery = document.querySelector('[data-lightbox-gallery]');
+    const overlay = document.querySelector('[data-lightbox-overlay]');
+
+    if (!gallery || !overlay) {
+        return;
+    }
+
+    const items = Array.from(gallery.querySelectorAll('[data-lightbox-item]'));
+
+    if (items.length === 0) {
+        return;
+    }
+
+    const image = overlay.querySelector('[data-lightbox-image]');
+    const caption = overlay.querySelector('[data-lightbox-caption]');
+    const counter = overlay.querySelector('[data-lightbox-counter]');
+    const closeButton = overlay.querySelector('[data-lightbox-close]');
+    const prevButton = overlay.querySelector('[data-lightbox-prev]');
+    const nextButton = overlay.querySelector('[data-lightbox-next]');
+
+    let currentIndex = 0;
+    let lastFocusedElement = null;
+    let touchStartX = 0;
+
+    const isOpen = () => !overlay.hidden;
+
+    const preload = (index) => {
+        const item = items[(index + items.length) % items.length];
+        new Image().src = item.dataset.lightboxSrc;
+    };
+
+    const show = (index) => {
+        currentIndex = (index + items.length) % items.length;
+
+        const item = items[currentIndex];
+        image.src = item.dataset.lightboxSrc;
+        image.alt = item.dataset.lightboxAlt || '';
+        caption.textContent = item.dataset.lightboxAlt || '';
+        counter.textContent = `${currentIndex + 1} / ${items.length}`;
+
+        if (items.length > 1) {
+            preload(currentIndex + 1);
+            preload(currentIndex - 1);
+        }
+    };
+
+    const open = (index) => {
+        lastFocusedElement = document.activeElement;
+        show(index);
+
+        overlay.hidden = false;
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+
+        closeButton.focus();
+    };
+
+    const close = () => {
+        overlay.hidden = true;
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+        image.src = '';
+
+        if (lastFocusedElement) {
+            lastFocusedElement.focus();
+            lastFocusedElement = null;
+        }
+    };
+
+    const trapFocus = (event) => {
+        const focusable = Array.from(overlay.querySelectorAll('button')).filter(button => !button.hidden);
+
+        if (focusable.length === 0) {
+            return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    };
+
+    if (items.length < 2) {
+        prevButton.hidden = true;
+        nextButton.hidden = true;
+    }
+
+    items.forEach((item, index) => {
+        item.addEventListener('click', () => open(index));
+    });
+
+    closeButton.addEventListener('click', close);
+    prevButton.addEventListener('click', () => show(currentIndex - 1));
+    nextButton.addEventListener('click', () => show(currentIndex + 1));
+
+    overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) {
+            close();
+        }
+    });
+
+    overlay.addEventListener('touchstart', (event) => {
+        touchStartX = event.changedTouches[0].screenX;
+    }, { passive: true });
+
+    overlay.addEventListener('touchend', (event) => {
+        const deltaX = event.changedTouches[0].screenX - touchStartX;
+
+        if (items.length > 1 && Math.abs(deltaX) > 50) {
+            show(deltaX < 0 ? currentIndex + 1 : currentIndex - 1);
+        }
+    }, { passive: true });
+
+    document.addEventListener('keydown', (event) => {
+        if (!isOpen()) {
+            return;
+        }
+
+        if (event.key === 'Escape') {
+            close();
+        } else if (event.key === 'ArrowRight' && items.length > 1) {
+            show(currentIndex + 1);
+        } else if (event.key === 'ArrowLeft' && items.length > 1) {
+            show(currentIndex - 1);
+        } else if (event.key === 'Tab') {
+            trapFocus(event);
+        }
+    });
+}
+
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
@@ -384,6 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initBackToTop();
     initContactForm();
     initSyntaxHighlighting();
+    initLightbox();
 });
 
 // Syntax Highlighting
