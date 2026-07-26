@@ -22,6 +22,7 @@ final class WorksTable
         return $table
             ->columns([
                 ImageColumn::make('featured_image')
+                    ->disk('public')
                     ->square()
                     ->label('Image'),
 

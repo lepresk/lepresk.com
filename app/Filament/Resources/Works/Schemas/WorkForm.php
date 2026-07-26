@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Works\Schemas;
 
-use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
@@ -14,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
@@ -61,6 +61,7 @@ final class WorkForm
                                     ->label('Image Gallery')
                                     ->image()
                                     ->directory('works/galleries')
+                                    ->disk('public')
                                     ->visibility('public')
                                     ->multiple()
                                     ->reorderable()
@@ -137,6 +138,7 @@ final class WorkForm
                                         FileUpload::make('og_image')
                                             ->image()
                                             ->directory('works/og-images')
+                                            ->disk('public')
                                             ->visibility('public')
                                             ->columnSpanFull(),
                                     ]),
@@ -170,6 +172,7 @@ final class WorkForm
                         FileUpload::make('featured_image')
                             ->image()
                             ->directory('works/featured-images')
+                            ->disk('public')
                             ->visibility('public')
                             ->maxSize(2048)
                             ->columnSpanFull(),

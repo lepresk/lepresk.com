@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Posts\Schemas;
 
-use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\MarkdownEditor;
@@ -14,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Group;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
 
@@ -120,6 +120,7 @@ final class PostForm
                                         FileUpload::make('og_image')
                                             ->image()
                                             ->directory('posts/og-images')
+                                            ->disk('public')
                                             ->visibility('public')
                                             ->columnSpanFull(),
                                     ]),
