@@ -26,7 +26,8 @@ final class BlogController
         $view = view('blog.index', ['posts' => $posts]);
 
         return response($view)
-            ->header('Cache-Control', 'public, max-age=86400, s-maxage=86400');
+            ->header('Cache-Control', 'private, max-age=86400')
+            ->header('Vary', 'Cookie');
     }
 
     public function show(string $slug): Response
@@ -41,7 +42,8 @@ final class BlogController
         $view = view('blog.show', ['post' => $post]);
 
         return response($view)
-            ->header('Cache-Control', 'public, max-age=86400, s-maxage=86400');
+            ->header('Cache-Control', 'private, max-age=86400')
+            ->header('Vary', 'Cookie');
     }
 
     public function preview(Request $request, int $id): View

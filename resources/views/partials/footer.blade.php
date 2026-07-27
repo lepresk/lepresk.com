@@ -32,19 +32,9 @@
 
             <!-- Language Switcher -->
             <div class="flex items-center gap-2">
-                <form action="{{ route('language.switch', 'en') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="text-sm font-medium transition-colors cursor-pointer {{ app()->getLocale() === 'en' ? 'text-primary' : 'text-muted-foreground hover:text-primary' }}">
-                        EN
-                    </button>
-                </form>
+                <a href="{{ route('language.switch', 'en') }}" rel="nofollow" class="text-sm font-medium transition-colors {{ app()->getLocale() === 'en' ? 'text-primary' : 'text-muted-foreground hover:text-primary' }}">EN</a>
                 <span class="text-sm text-muted-foreground">|</span>
-                <form action="{{ route('language.switch', 'fr') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="text-sm font-medium transition-colors cursor-pointer {{ app()->getLocale() === 'fr' ? 'text-primary' : 'text-muted-foreground hover:text-primary' }}">
-                        FR
-                    </button>
-                </form>
+                <a href="{{ route('language.switch', 'fr') }}" rel="nofollow" class="text-sm font-medium transition-colors {{ app()->getLocale() === 'fr' ? 'text-primary' : 'text-muted-foreground hover:text-primary' }}">FR</a>
             </div>
 
             <!-- Copyright -->

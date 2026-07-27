@@ -24,7 +24,7 @@ Route::get('/projets/{slug}', [WorkController::class, 'show'])->name('projects.s
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 // Language switching
-Route::post('/language/{locale}', [LanguageController::class, 'switch'])
+Route::get('/language/{locale}', [LanguageController::class, 'switch'])
     ->name('language.switch')
     ->where('locale', 'en|fr');
 
