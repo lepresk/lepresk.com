@@ -145,6 +145,7 @@ final class PostForm
 
                                 TextInput::make('read_time')
                                     ->placeholder('8 min')
+                                    ->helperText('Laisser vide pour le calculer automatiquement à partir du contenu.')
                                     ->maxLength(20),
                             ]),
 
