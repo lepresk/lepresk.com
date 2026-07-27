@@ -23,3 +23,11 @@ it('never mentions a forbidden typographic character in its own instructions', f
         expect($instructions)->not->toContain($character);
     }
 });
+
+it('demands accents rather than banning them', function (): void {
+    $instructions = (new ArticleTranslator)->instructions();
+
+    expect($instructions)->toContain('accents included')
+        ->and($instructions)->toContain('never about letters')
+        ->and($instructions)->not->toContain('Use only ordinary keyboard characters');
+});

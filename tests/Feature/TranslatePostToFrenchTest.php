@@ -269,3 +269,34 @@ it('falls back on the translated title when the model returns no slug', function
 
     expect($post->fresh()->getTranslation('slug', 'fr'))->toBe('un-titre-francais');
 });
+
+it('refuses a translation that came back without accents', function (): void {
+    $post = englishPost(['content' => str_repeat('Some english source sentence. ', 30)]);
+
+    fakeTranslations(str_repeat('Le probleme, c est que les equipes ne se rendent pas compte. ', 20));
+
+    expect(fn () => (new TranslatePostToFrench)($post))
+        ->toThrow(RuntimeException::class, 'almost no accent');
+
+    expect($post->fresh()->hasTranslation('content', 'fr'))->toBeFalse();
+});
+
+it('accepts a properly accented translation', function (): void {
+    $post = englishPost(['content' => str_repeat('Some english source sentence. ', 30)]);
+
+    fakeTranslations(str_repeat('Le problème, c\'est que les équipes ne s\'en rendent pas compte. ', 20));
+
+    (new TranslatePostToFrench)($post);
+
+    expect($post->fresh()->hasTranslation('content', 'fr'))->toBeTrue();
+});
+
+it('does not judge a short translation on its accents', function (): void {
+    $post = englishPost(['content' => 'Short source.']);
+
+    fakeTranslations('Source courte.');
+
+    (new TranslatePostToFrench)($post);
+
+    expect($post->fresh()->getTranslation('content', 'fr'))->toBe('Source courte.');
+});

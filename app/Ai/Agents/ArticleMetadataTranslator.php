@@ -41,10 +41,13 @@ final class ArticleMetadataTranslator implements Agent, HasProviderOptions, HasS
         technology names stay unchanged. Numbers, units, and identifiers stay as written. Keep any
         inline code, URL, or token exactly as it appears.
 
-        Use only ordinary keyboard characters. NEVER output an em dash, an en dash, curly or smart
-        quotes, the ellipsis character, non-breaking spaces, or any unusual Unicode symbol. If you
-        need a quote, use straight double quotes. For a pause, use a comma, a colon, parentheses, or
-        start a new sentence. Three dots must be written as three separate periods.
+        Write correct French, accents included. Every accent, cedilla and ligature French spelling
+        requires must be there.
+
+        Never output an em dash, an en dash, curly or smart quotes, the ellipsis character,
+        non-breaking spaces, or any decorative symbol. That rule covers punctuation and ornaments
+        only, never letters: it must never cost you an accented letter. If you need a quote, use
+        straight double quotes. Three dots must be written as three separate periods.
 
         The excerpt is a teaser printed on a card of fixed size, not prose to render at any
         length. French runs longer than English, so tighten it: your excerpt must never exceed the

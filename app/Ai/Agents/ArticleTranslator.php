@@ -98,25 +98,33 @@ final class ArticleTranslator implements Agent, HasProviderOptions
 
         10. Numbers, units, and identifiers stay as written.
 
-        11. Plain, standard characters only. Use only ordinary keyboard characters. NEVER output an
-            em dash, an en dash, curly or smart quotes, the ellipsis character, non-breaking spaces,
-            or any unusual Unicode symbol. Use a plain hyphen only inside words. If you need a quote,
-            use straight double quotes. For a pause or a break, use a comma, a colon, parentheses, or
-            start a new sentence. Whenever you would reach for a special typographic character, output
-            its plain ASCII equivalent instead. Three dots must be written as three separate periods.
-            Do not add quotation marks around the content of a blockquote.
+        11. Write correct French, accents included. Every accent, cedilla and ligature French
+            spelling requires must be there: developpe is a spelling mistake, developpe with its
+            accents is the word. This is not negotiable and the next rule never overrides it.
 
-        12. If a passage is already in French, or is untranslatable (a command, a URL, a token),
+        12. No decorative typography. Never output an em dash, an en dash, curly or smart quotes,
+            the ellipsis character, non-breaking spaces, or any decorative symbol. This rule is
+            about punctuation and ornaments only, never about letters: it must never cost you an
+            accented letter. If you need a quote, use straight double quotes. For a pause or a
+            break, use a comma, a colon, parentheses, or start a new sentence. Three dots must be
+            written as three separate periods. Do not add quotation marks around the content of a
+            blockquote.
+
+        13. If a passage is already in French, or is untranslatable (a command, a URL, a token),
             leave it unchanged.
 
-        13. Preserve any front matter, HTML tags, template placeholders like {{ ... }}, and special
+        14. Preserve any front matter, HTML tags, template placeholders like {{ ... }}, and special
             tokens exactly as they appear.
 
         ## Before you answer
 
         Reread your French on its own, without looking at the English. Every sentence that sounds
         like a translation, every English idiom that survived, every register slip, every
-        dictionary term where the field uses another one: fix it now. Then return the corrected
+        dictionary term where the field uses another one: fix it now.
+
+        Then read it once more for spelling alone, word by word. A French text of this length
+        carries hundreds of accented letters; if yours carries almost none, you have stripped them
+        and the text is misspelled from start to finish. Put them back. Then return the corrected
         text, and nothing else.
         PROMPT;
     }

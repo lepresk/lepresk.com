@@ -51,6 +51,16 @@ final class TranslatePostToFrench
     private const int SLUG_MAX_LENGTH = 60;
 
     /**
+     * Below that, an article is too short for the ratio to mean anything.
+     */
+    private const int MIN_PROSE_FOR_ACCENT_CHECK = 400;
+
+    /**
+     * French prose sits around 3 percent of accented letters.
+     */
+    private const float MIN_ACCENT_RATIO = 0.005;
+
+    /**
      * Translate a post into French, leaving the source locale untouched.
      *
      * An existing french version is kept unless $overwrite is set, and its slug
@@ -75,6 +85,7 @@ final class TranslatePostToFrench
         $translatedContent = $this->clean((new ArticleTranslator)->prompt($content)->text);
 
         $this->assertImagesArePreserved($content, $translatedContent);
+        $this->assertFrenchIsAccented($translatedContent);
 
         $metadata = $this->translateMetadata($post, $locale);
 
@@ -142,6 +153,32 @@ final class TranslatePostToFrench
 
         if ($lost !== []) {
             throw new RuntimeException('The translation dropped these images: '.implode(', ', $lost));
+        }
+    }
+
+    /**
+     * A french text of any length carries accents. Almost none means the model
+     * stripped them, which is a misspelling of every second word, so the
+     * translation is refused rather than published.
+     *
+     * Prose runs around three percent of accented letters; the floor here is six
+     * times lower, low enough that a code heavy article stays clear of it.
+     */
+    private function assertFrenchIsAccented(string $translation): void
+    {
+        $prose = (string) preg_replace(['/```.*?```/su', '/`[^`]*`/u'], '', $translation);
+        $length = mb_strlen($prose);
+
+        if ($length < self::MIN_PROSE_FOR_ACCENT_CHECK) {
+            return;
+        }
+
+        $accents = preg_match_all('/[\x{00C0}-\x{00FF}\x{0152}\x{0153}]/u', $prose);
+
+        if ($accents / $length < self::MIN_ACCENT_RATIO) {
+            throw new RuntimeException(
+                "The translation came back with almost no accent ({$accents} for {$length} characters), so it is misspelled throughout.",
+            );
         }
     }
 
