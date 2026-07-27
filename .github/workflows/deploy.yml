@@ -77,24 +77,41 @@ jobs:
           EOF
 
       - name: Deploy Application
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          SSH_DEST: ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
+          APP_DIR: ${{ secrets.APP_DIR }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
         run: |
-          APP_DIR=/home/u759356917/public_html
-          SSH_DEST=${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
-
           if [ ! -f "composer.json" ]; then
             echo "Error: composer.json not found locally."
             exit 1
           fi
 
-          rsync -avz --delete --exclude-from='.gitignore' --exclude-from='.sync-ignore' -e "ssh -o StrictHostKeyChecking=no -p 65002" ./ $SSH_DEST:$APP_DIR/
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
 
-          scp -o StrictHostKeyChecking=no -P 65002 .env $SSH_DEST:$APP_DIR/.env
+          if [ -n "$SSH_KNOWN_HOSTS" ]; then
+            printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else
+            echo "::warning::SSH_KNOWN_HOSTS is not set, trusting the host key returned by ssh-keyscan for this run."
+            ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" > ~/.ssh/known_hosts 2>/dev/null
+          fi
 
-          ssh -o StrictHostKeyChecking=no -p 65002 $SSH_DEST << 'EOF'
+          chmod 600 ~/.ssh/known_hosts
+
+          SSH_OPTS="-p $SSH_PORT -o LogLevel=ERROR -o StrictHostKeyChecking=yes"
+
+          rsync -az --quiet --delete --exclude-from='.gitignore' --exclude-from='.sync-ignore' -e "ssh $SSH_OPTS" ./ "$SSH_DEST:$APP_DIR/"
+
+          scp -q -P "$SSH_PORT" -o LogLevel=ERROR -o StrictHostKeyChecking=yes .env "$SSH_DEST:$APP_DIR/.env"
+
+          ssh $SSH_OPTS "$SSH_DEST" APP_DIR="$APP_DIR" 'bash -ls' << 'EOF'
             set -e
             export CI=true
 
-            cd /home/u759356917/public_html
+            cd "$APP_DIR"
 
             mkdir -p bootstrap/cache
             mkdir -p storage/framework/{sessions,views,cache}
@@ -109,7 +126,7 @@ jobs:
             pnpm build
 
             if [ ! -f "composer.json" ]; then
-              echo "Error: composer.json not found in $APP_DIR"
+              echo "Error: composer.json not found in the application directory"
               exit 1
             fi
 
