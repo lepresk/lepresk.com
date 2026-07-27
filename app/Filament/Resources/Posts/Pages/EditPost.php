@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Posts\Pages;
 
+use App\Filament\Actions\TranslatePostAction;
 use App\Filament\Resources\Posts\PostResource;
 use App\Models\Post;
 use Filament\Actions\Action;
@@ -32,6 +33,7 @@ final class EditPost extends EditRecord
                     ['id' => $record->id],
                 ))
                 ->openUrlInNewTab(),
+            TranslatePostAction::make(),
             DeleteAction::make(),
             ForceDeleteAction::make(),
             RestoreAction::make(),

@@ -67,6 +67,8 @@ jobs:
           MAIL_FROM_NAME=LepresK
           RESEND_API_KEY="${{ secrets.RESEND_API_KEY }}"
 
+          ANTHROPIC_API_KEY="${{ secrets.ANTHROPIC_API_KEY }}"
+
           ADMIN_EMAIL="${{ secrets.ADMIN_EMAIL }}"
           CONTACT_TO_EMAIL="${{ secrets.CONTACT_TO_EMAIL }}"
           CONTACT_CC_EMAIL="${{ secrets.CONTACT_CC_EMAIL }}"
