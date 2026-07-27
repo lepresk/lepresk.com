@@ -1,94 +1,116 @@
-<p align="center">
-  <img src="art/cover.jpg" alt="lepresk.com" width="100%">
-</p>
+# lepresk.com
 
-<p align="center">
-  Portfolio and blog of Lepres Kikounga, live at <a href="https://lepresk.com">lepresk.com</a>.
-</p>
+![lepresk.com](art/cover.jpg)
 
----
+Personal portfolio and technical blog, live at [lepresk.com](https://lepresk.com).
 
-A bilingual site built on Laravel 12 and Filament 4. Articles are written in English in the admin panel, then translated into French by Claude from that same interface, without leaving the back office.
+Built with Laravel 12 and Filament 4. Articles are written in English in the admin panel and can be translated into French with Claude from the same interface.
 
 ## Features
 
-### Bilingual blog, one URL per article
+### Bilingual content
 
-Title, slug, excerpt, content and SEO metadata are translatable (`spatie/laravel-translatable`, JSON columns). The language comes from the `?lang=` parameter, then the cookie, then the `Accept-Language` header. The URL scheme stays `/blog/{slug}` with no language prefix: an article answers to both its English and its French slug, and falls back to the default language when a translation is missing.
+- Translatable title, slug, excerpt, content and SEO metadata (`spatie/laravel-translatable`, JSON columns)
+- Language resolved from the `?lang=` parameter, then the `locale` cookie, then the `Accept-Language` header
+- No language prefix in URLs. An article answers to both its English and its French slug
+- Falls back to the default language when a translation is missing
 
-### Automatic EN to FR translation
+### AI translation
 
-An admin action generates the French version of an article, and a second one regenerates it. Two `laravel/ai` agents run on `claude-sonnet-5`: one translates the markdown body, the other returns every short field plus a short French slug in a single structured call.
+An admin action translates an article into French, and a second one regenerates an existing translation. Two `laravel/ai` agents run on `claude-sonnet-5`: one for the markdown body, one for the short fields and the French slug.
 
-What the translation guarantees, enforced in PHP rather than trusted to the model:
+Validation is applied in PHP before anything is saved:
 
-- **images survive** — the URLs of the source are compared with the ones that came back, and the article is left untouched if any went missing
-- **French keeps its accents** — a translation whose accented letter ratio collapses is refused, not published
-- **typography stays plain** — em dashes, curly quotes and non-breaking spaces are replaced by their plain equivalents
-- **the slug stays short and readable** — elided particles removed, 60 characters maximum cut on a word boundary, uniqueness checked across every language
-- **a published URL never moves** — regenerating keeps the existing French slug
+- Image URLs from the source must all be present in the translation
+- The ratio of accented letters must be consistent with French text
+- Em dashes, curly quotes and non-breaking spaces are replaced with plain equivalents
+- Slugs are limited to 60 characters, cut on a word boundary, and checked for uniqueness across languages
+- Regenerating a translation keeps the existing French slug so published URLs do not change
 
-The translator's instructions carry the prompt cache breakpoint, since the article itself differs on every call.
+### Blog
 
-### Computed read time
-
-Left empty, it is derived from the content at 200 words per minute, and recomputed when the content changes as long as the value was not typed by hand.
+- Markdown content with syntax highlighting (Prism)
+- Read time computed from the content at 200 words per minute when left empty
+- Categories and tags
+- Draft preview through a signed URL
 
 ### Portfolio
 
-Projects with an image gallery, opened in a full screen lightbox: keyboard navigation, touch swipe, counter, scroll locking and focus restored on close. No JavaScript dependency added.
+- Projects with categories, tags and a featured image
+- Image gallery with a lightbox: keyboard navigation, touch swipe, counter, scroll lock, focus restore
 
-### Filament admin
+### Admin panel
 
-Protected panel for articles, projects, categories and tags. Language switcher on the list, create and edit pages. Signed URL preview of a draft, cache flushing, translation actions.
+- Filament 4, protected by authentication
+- Language switcher on list, create and edit pages
+- Translation and cache flush actions
 
 ### Caching
 
-The rendered HTML is cached server side with the language in the key, so parsing an article's markdown is not repeated on every visit. `App\Cache\BlogCache` is the only place that builds those keys, and invalidation covers create, edit, translate, delete, restore and force delete, for every slug in every language.
+Rendered HTML is cached server side with the language in the cache key. `App\Cache\BlogCache` builds every key. Invalidation runs on create, update, translate, delete, restore and force delete, for each slug in each language.
 
-Pages are not cached in the browser: both languages answer on the same URL and the host strips the `Vary` header.
+Browser caching is disabled on blog pages because both languages are served from the same URL and the host strips the `Vary` header.
 
 ### SEO
 
-`canonical` and `hreflang` per article, alternates limited to translations that actually exist, XML sitemap per language, Open Graph and Twitter Card, `BlogPosting` structured data. Custom 404, 419 and 500 pages.
+- `canonical` and `hreflang` per article, limited to existing translations
+- XML sitemap with one entry per translated slug
+- Open Graph and Twitter Card metadata
+- `BlogPosting` structured data
+- Custom 404, 419 and 500 pages
 
-## Stack
+## Requirements
 
-| | |
-|---|---|
-| Backend | PHP 8.4, Laravel 12, Filament 4 |
-| Frontend | Blade, Tailwind 4, Vite 7, framework-free JavaScript |
-| AI | `laravel/ai` on Claude Sonnet 5 |
-| Database | MariaDB in production, SQLite in tests |
-| Quality | Pest 4, PHPStan `level: max` through Larastan, Pint, Rector |
+- PHP 8.4
+- Node 24
+- Composer and pnpm
+- SQLite for local development, MariaDB in production
 
-## Development
+## Installation
 
 ```bash
 composer install
 pnpm install
-cp .env.example .env && php artisan key:generate
+cp .env.example .env
+php artisan key:generate
+touch database/database.sqlite
 php artisan migrate
 php artisan storage:link
 composer run dev
 ```
 
-`ANTHROPIC_API_KEY` is required for the translation actions, not for the rest of the site.
+Set `ANTHROPIC_API_KEY` in `.env` to enable the translation actions. The rest of the site works without it.
 
-## Tests
+## Testing
 
 ```bash
-php artisan test                       # 77 tests
-php artisan test --testsuite=Browser   # Playwright, needs npx playwright install
-vendor/bin/pint --dirty
+php artisan test                        # feature and unit tests
+php artisan test --testsuite=Browser    # requires npx playwright install
+vendor/bin/pint --dirty                 # code style
 vendor/bin/phpstan analyse --memory-limit=2G
 ```
 
-AI agents are faked across the suite: `preventStrayPrompts()` guarantees no test reaches the network.
+AI agents are faked in the test suite. `preventStrayPrompts()` ensures no test performs a network call.
+
+## Tech stack
+
+| Layer | Tools |
+| --- | --- |
+| Backend | PHP 8.4, Laravel 12, Filament 4 |
+| Frontend | Blade, Tailwind 4, Vite 7, vanilla JavaScript |
+| AI | `laravel/ai`, Claude Sonnet 5 |
+| Database | MariaDB in production, SQLite in tests |
+| Quality | Pest 4, Larastan (PHPStan level max), Pint, Rector |
 
 ## Deployment
 
-On a push to `main`, GitHub Actions builds the assets on the runner, rsyncs the source and the compiled assets to the shared host, then runs the migrations and the optimization commands. Assets are not built on the server: esbuild allocates enough memory to be killed there, and an interrupted build left the site without a Vite manifest.
+Pushing to `main` triggers a GitHub Actions workflow that:
+
+1. Builds the assets on the runner
+2. Rsyncs the source and compiled assets to the server
+3. Runs `composer install`, migrations and optimization commands
+
+Assets are built on the runner rather than on the shared host, where esbuild runs out of memory.
 
 ## License
 
