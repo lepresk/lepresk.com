@@ -84,6 +84,7 @@ final class PostsTable
                 ActionGroup::make([
                     EditAction::make(),
                     TranslatePostAction::make(),
+                    TranslatePostAction::rewrite(),
                     DeleteAction::make(),
                     ForceDeleteAction::make(),
                     RestoreAction::make(),

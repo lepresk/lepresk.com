@@ -46,13 +46,23 @@ final class TranslatePostToFrench
     ];
 
     /**
-     * Translate a post into French, leaving the source locale untouched.
+     * A french URL nobody wants to read out loud starts around there.
      */
-    public function __invoke(Post $post): Post
+    private const int SLUG_MAX_LENGTH = 60;
+
+    /**
+     * Translate a post into French, leaving the source locale untouched.
+     *
+     * An existing french version is kept unless $overwrite is set, and its slug
+     * survives a rewrite either way: the french URL may already be published and
+     * indexed, so it is not silently replaced behind the reader's back.
+     */
+    public function __invoke(Post $post, bool $overwrite = false): Post
     {
         $locale = $this->sourceLocale();
+        $existingSlug = $post->getTranslation('slug', 'fr', false);
 
-        if ($post->hasTranslation('content', 'fr')) {
+        if (! $overwrite && $post->hasTranslation('content', 'fr')) {
             return $post;
         }
 
@@ -71,10 +81,14 @@ final class TranslatePostToFrench
         $post->setTranslation('content', 'fr', $translatedContent);
 
         foreach ($metadata as $field => $value) {
-            $post->setTranslation($field, 'fr', $value);
+            if ($field !== 'slug') {
+                $post->setTranslation($field, 'fr', $value);
+            }
         }
 
-        $post->setTranslation('slug', 'fr', $this->availableSlug($metadata['title'], $post));
+        $post->setTranslation('slug', 'fr', is_string($existingSlug) && $existingSlug !== ''
+            ? $existingSlug
+            : $this->availableSlug($metadata['slug'] ?? $metadata['title'], $post));
 
         $post->save();
 
@@ -104,7 +118,7 @@ final class TranslatePostToFrench
 
         $translated = [];
 
-        foreach (array_keys($source) as $field) {
+        foreach ([...array_keys($source), 'slug'] as $field) {
             $value = $data[$field] ?? null;
 
             if (is_string($value) && $value !== '') {
@@ -153,9 +167,24 @@ final class TranslatePostToFrench
         );
     }
 
-    private function availableSlug(string $title, Post $post): string
+    /**
+     * The model proposes the slug, this keeps it a valid and unique one.
+     */
+    private function availableSlug(string $candidate, Post $post): string
     {
-        $base = Str::slug($title);
+        $base = Str::slug($this->withoutElidedParticles($candidate));
+
+        if (mb_strlen($base) > self::SLUG_MAX_LENGTH) {
+            $base = mb_strimwidth($base, 0, self::SLUG_MAX_LENGTH, '');
+            $base = (string) preg_replace('/-[^-]*$/', '', $base);
+        }
+
+        $base = mb_trim($base, '-');
+
+        if ($base === '') {
+            $base = 'article-'.$post->id;
+        }
+
         $slug = $base;
         $suffix = 1;
 
@@ -164,6 +193,14 @@ final class TranslatePostToFrench
         }
 
         return $slug;
+    }
+
+    /**
+     * Without this, "Verification d'empreintes" slugs into "verification-dempreintes".
+     */
+    private function withoutElidedParticles(string $value): string
+    {
+        return (string) preg_replace('/\b(?:qu|[dlnjmtcs])[\x{2019}\']/iu', '', $value);
     }
 
     private function sourceLocale(): string
