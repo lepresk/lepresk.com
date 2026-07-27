@@ -47,6 +47,21 @@ final class ArticleMetadataTranslator implements Agent, HasProviderOptions, HasS
         start a new sentence. Three dots must be written as three separate periods.
 
         The meta_keywords field is a comma separated list: keep it a comma separated list.
+
+        The slug field is not a translation. Build a short french URL slug for the article:
+
+        - keep only the words that carry the subject, usually three to six of them
+        - drop filler words: articles, prepositions, and elided particles such as de, du, des,
+          le, la, les, un, une, en, avec, dans, pour, sur, et, au, aux, d, l, qu
+        - drop anything parenthetical, numeric qualifiers, and subtitle noise that does not help
+          someone recognise the article from the URL alone
+        - lowercase, words separated by single hyphens, no accent, no apostrophe, no other
+          punctuation, ASCII only
+        - aim for under 60 characters
+
+        For "Fingerprint Verification in ASP.NET Core with SourceAFIS (1:1 Matching)" a good slug
+        is verification-empreintes-aspnet-core-sourceafis, not
+        verification-dempreintes-digitales-en-aspnet-core-avec-sourceafis-correspondance-11.
         PROMPT;
     }
 
@@ -57,6 +72,7 @@ final class ArticleMetadataTranslator implements Agent, HasProviderOptions, HasS
     {
         return [
             'title' => $schema->string()->required(),
+            'slug' => $schema->string()->required(),
             'excerpt' => $schema->string(),
             'meta_title' => $schema->string(),
             'meta_description' => $schema->string(),
