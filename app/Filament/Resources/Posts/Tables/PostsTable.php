@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Posts\Tables;
 
+use App\Filament\Actions\TranslatePostAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -76,6 +77,7 @@ final class PostsTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
+                TranslatePostAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([

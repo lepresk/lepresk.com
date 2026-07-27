@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+{!! '<'.'?xml version="1.0" encoding="UTF-8"?'.'>' !!}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
@@ -34,12 +34,24 @@
 
     <!-- Blog Posts -->
 @foreach ($posts as $post)
+@foreach (config('app.available_locales') as $locale)
+@if ($post->hasTranslation('slug', $locale))
     <url>
-        <loc>https://lepresk.com/blog/{{ $post->slug }}</loc>
+        <loc>{{ route('blog.show', ['slug' => $post->getTranslation('slug', $locale), 'lang' => $locale]) }}</loc>
         <lastmod>{{ $post->updated_at->toW3cString() }}</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.7</priority>
+@foreach (config('app.available_locales') as $altLocale)
+@if ($post->hasTranslation('slug', $altLocale))
+        <xhtml:link rel="alternate" hreflang="{{ $altLocale }}" href="{{ route('blog.show', ['slug' => $post->getTranslation('slug', $altLocale), 'lang' => $altLocale]) }}"/>
+@endif
+@endforeach
+@if ($post->hasTranslation('slug', config('app.fallback_locale')))
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('blog.show', $post->getTranslation('slug', config('app.fallback_locale'))) }}"/>
+@endif
     </url>
+@endif
+@endforeach
 @endforeach
 
     <!-- Projects -->

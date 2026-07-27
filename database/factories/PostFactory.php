@@ -17,19 +17,20 @@ final class PostFactory extends Factory
 
     public function definition(): array
     {
-        $title = fake()->sentence(6);
+        $titleEn = fake()->sentence(6);
+        $titleFr = fake('fr_FR')->sentence(6);
 
         return [
-            'title' => $title,
-            'slug' => Str::slug($title),
-            'excerpt' => fake()->paragraph(2),
-            'content' => fake()->paragraphs(10, true),
+            'title' => ['en' => $titleEn, 'fr' => $titleFr],
+            'slug' => ['en' => Str::slug($titleEn), 'fr' => Str::slug($titleFr)],
+            'excerpt' => ['en' => fake()->paragraph(2), 'fr' => fake('fr_FR')->paragraph(2)],
+            'content' => ['en' => fake()->paragraphs(10, true), 'fr' => fake('fr_FR')->paragraphs(10, true)],
             'featured_image' => null,
             'read_time' => fake()->randomElement(['5 min', '8 min', '10 min', '12 min']),
             'status' => 'draft',
             'published_at' => null,
             'meta_title' => null,
-            'meta_description' => fake()->sentence(),
+            'meta_description' => ['en' => fake()->sentence(), 'fr' => fake('fr_FR')->sentence()],
             'meta_keywords' => null,
             'og_title' => null,
             'og_description' => null,

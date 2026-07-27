@@ -1,0 +1,159 @@
+<?php
+
+declare(strict_types=1);
+
+use App\Actions\TranslatePostToFrench;
+use App\Ai\Agents\ArticleMetadataTranslator;
+use App\Ai\Agents\ArticleTranslator;
+use App\Models\Post;
+use Laravel\Ai\Prompts\AgentPrompt;
+
+function englishPost(array $overrides = []): Post
+{
+    $post = Post::factory()->create();
+
+    $post->replaceTranslations('title', ['en' => 'Fingerprint verification']);
+    $post->replaceTranslations('slug', ['en' => 'fingerprint-verification']);
+    $post->replaceTranslations('excerpt', ['en' => 'A short excerpt.']);
+    $post->replaceTranslations('content', ['en' => $overrides['content'] ?? "# Title\n\nThe english body."]);
+    $post->replaceTranslations('meta_description', ['en' => 'The meta description.']);
+    $post->save();
+
+    return $post;
+}
+
+function fakeTranslations(string $content, array $metadata = []): void
+{
+    ArticleTranslator::fake([$content])->preventStrayPrompts();
+
+    ArticleMetadataTranslator::fake([array_merge([
+        'title' => 'Vérification d\'empreinte',
+        'excerpt' => 'Un court extrait.',
+        'meta_description' => 'La méta description.',
+    ], $metadata)])->preventStrayPrompts();
+}
+
+it('stores the french translation without touching the english one', function (): void {
+    $post = englishPost();
+    fakeTranslations("# Titre\n\nLe contenu français.");
+
+    (new TranslatePostToFrench)($post);
+
+    $post->refresh();
+
+    expect($post->getTranslation('content', 'fr'))->toBe("# Titre\n\nLe contenu français.")
+        ->and($post->getTranslation('title', 'fr'))->toBe('Vérification d\'empreinte')
+        ->and($post->getTranslation('excerpt', 'fr'))->toBe('Un court extrait.')
+        ->and($post->getTranslation('content', 'en'))->toBe("# Title\n\nThe english body.")
+        ->and($post->getTranslation('title', 'en'))->toBe('Fingerprint verification');
+});
+
+it('derives the french slug from the translated title', function (): void {
+    $post = englishPost();
+    fakeTranslations('Le contenu français.');
+
+    (new TranslatePostToFrench)($post);
+
+    expect($post->fresh()->getTranslation('slug', 'fr'))->toBe('verification-dempreinte')
+        ->and($post->fresh()->getTranslation('slug', 'en'))->toBe('fingerprint-verification');
+});
+
+it('suffixes the french slug when it is already taken', function (): void {
+    $taken = Post::factory()->create();
+    $taken->replaceTranslations('slug', ['fr' => 'verification-dempreinte']);
+    $taken->save();
+
+    $post = englishPost();
+    fakeTranslations('Le contenu français.');
+
+    (new TranslatePostToFrench)($post);
+
+    expect($post->fresh()->getTranslation('slug', 'fr'))->toBe('verification-dempreinte-2');
+});
+
+it('keeps every image link of the source', function (): void {
+    $post = englishPost(['content' => "Intro.\n\n![A chart](/storage/blog/chart.png)\n\n![Logo](/storage/blog/logo.svg)"]);
+    fakeTranslations("Introduction.\n\n![Un graphique](/storage/blog/chart.png)\n\n![Logo](/storage/blog/logo.svg)");
+
+    (new TranslatePostToFrench)($post);
+
+    expect($post->fresh()->getTranslation('content', 'fr'))
+        ->toContain('/storage/blog/chart.png')
+        ->toContain('/storage/blog/logo.svg');
+});
+
+it('refuses a translation that dropped an image', function (): void {
+    $post = englishPost(['content' => "Intro.\n\n![A chart](/storage/blog/chart.png)"]);
+    fakeTranslations('Introduction, sans image.');
+
+    expect(fn () => (new TranslatePostToFrench)($post))
+        ->toThrow(RuntimeException::class, '/storage/blog/chart.png');
+
+    expect($post->fresh()->hasTranslation('content', 'fr'))->toBeFalse();
+});
+
+it('replaces the typographic characters the prompt forbids', function (): void {
+    $post = englishPost();
+    fakeTranslations(
+        "Le contenu \u{2014} avec des \u{201C}pièges\u{201D}\u{2026}",
+        ['title' => "Vérification d\u{2019}empreinte"],
+    );
+
+    (new TranslatePostToFrench)($post);
+
+    $post->refresh();
+
+    expect($post->getTranslation('content', 'fr'))->toBe('Le contenu - avec des "pièges"...')
+        ->and($post->getTranslation('title', 'fr'))->toBe("Vérification d'empreinte");
+});
+
+it('does not call the model when the post is already translated', function (): void {
+    $post = englishPost();
+    $post->setTranslation('content', 'fr', 'Déjà traduit.');
+    $post->save();
+
+    ArticleTranslator::fake();
+    ArticleMetadataTranslator::fake();
+
+    (new TranslatePostToFrench)($post);
+
+    ArticleTranslator::assertNeverPrompted();
+    ArticleMetadataTranslator::assertNeverPrompted();
+});
+
+it('sends the english content to the translator', function (): void {
+    $post = englishPost();
+    fakeTranslations('Le contenu français.');
+
+    (new TranslatePostToFrench)($post);
+
+    ArticleTranslator::assertPrompted(fn (AgentPrompt $prompt): bool => $prompt->contains('The english body.'));
+});
+
+it('offers the action only on posts without a french translation', function (): void {
+    $this->actingAs(App\Models\User::factory()->create());
+
+    $untranslated = englishPost();
+
+    $translated = englishPost();
+    $translated->replaceTranslations('slug', ['en' => 'already-translated']);
+    $translated->setTranslation('content', 'fr', 'Déjà traduit.');
+    $translated->save();
+
+    Livewire\Livewire::test(App\Filament\Resources\Posts\Pages\ListPosts::class)
+        ->assertTableActionVisible('translateToFrench', record: $untranslated)
+        ->assertTableActionHidden('translateToFrench', record: $translated);
+});
+
+it('translates a post from the posts table', function (): void {
+    $this->actingAs(App\Models\User::factory()->create());
+
+    $post = englishPost();
+    fakeTranslations('Le contenu français.');
+
+    Livewire\Livewire::test(App\Filament\Resources\Posts\Pages\ListPosts::class)
+        ->callTableAction('translateToFrench', record: $post)
+        ->assertNotified();
+
+    expect($post->fresh()->getTranslation('content', 'fr'))->toBe('Le contenu français.');
+});

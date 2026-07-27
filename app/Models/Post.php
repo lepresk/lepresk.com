@@ -7,7 +7,6 @@ namespace App\Models;
 use App\Observers\PostObserver;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
-use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * @property int $id
@@ -43,7 +43,20 @@ use Illuminate\Support\Str;
 final class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory, HasTranslations, SoftDeletes;
+
+    /** @var array<int, string> */
+    public array $translatable = [
+        'title',
+        'slug',
+        'excerpt',
+        'content',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
+        'og_title',
+        'og_description',
+    ];
 
     protected $fillable = [
         'title',
@@ -90,23 +103,25 @@ final class Post extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    // Auto-generate slug on creation
-    protected static function booted(): void
-    {
-        self::creating(function (Post $post): void {
-            if (empty($post->slug)) {
-                $post->slug = Str::slug($post->title);
-            }
-        });
-    }
-
     // Query Scopes
+
+    /**
+     * Every slug this post answers to, across locales.
+     *
+     * @return array<int, string>
+     */
+    public function slugsInAllLocales(): array
+    {
+        return array_values(array_filter(
+            $this->getTranslations('slug'),
+            fn (mixed $slug): bool => is_string($slug) && $slug !== '',
+        ));
+    }
 
     /**
      * @param  Builder<Post>  $query
      */
-    #[Scope]
-    protected function published(Builder $query): void
+    public function scopePublished(Builder $query): void
     {
         $query->where('status', 'published')
             ->whereNotNull('published_at')
@@ -114,11 +129,47 @@ final class Post extends Model
     }
 
     /**
+     * Order by publication date.
+     *
+     * Named `latestPublished` and not `latest`, because Eloquent's builder
+     * already exposes a `latest()` method that would shadow the scope.
+     *
      * @param  Builder<Post>  $query
      */
-    #[Scope]
-    protected function latest(Builder $query): void
+    public function scopeLatestPublished(Builder $query): void
     {
-        $query->latest('published_at');
+        $query->orderByDesc('published_at');
+    }
+
+    /**
+     * Match a slug in any of the available locales.
+     *
+     * @param  Builder<Post>  $query
+     */
+    public function scopeWhereSlug(Builder $query, string $slug): void
+    {
+        $query->where(function (Builder $query) use ($slug): void {
+            /** @var array<int, string> $locales */
+            $locales = config('app.available_locales', []);
+
+            foreach ($locales as $locale) {
+                $query->orWhere("slug->{$locale}", $slug);
+            }
+        });
+    }
+
+    // Auto-generate slug on creation
+    protected static function booted(): void
+    {
+        self::creating(function (Post $post): void {
+            $locale = app()->getLocale();
+            if (empty($post->getTranslation('slug', $locale, false))) {
+                /** @var string|null $title */
+                $title = $post->getTranslation('title', $locale, false);
+                if (is_string($title) && $title !== '') {
+                    $post->setTranslation('slug', $locale, Str::slug($title));
+                }
+            }
+        });
     }
 }

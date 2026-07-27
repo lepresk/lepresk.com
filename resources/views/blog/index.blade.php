@@ -2,7 +2,7 @@
 
 @section('title', 'Blog | Lepres Kikounga')
 
-@section('description', 'Réflexions et insights sur le leadership technique, l\'architecture logicielle et la stratégie d\'ingénierie')
+@section('description', __('blog.subtitle'))
 
 @section('content')
     <div class="min-h-screen pt-24">
@@ -10,7 +10,7 @@
             <div class="mb-16 text-center">
                 <h1 class="mb-6 text-balance font-bold leading-tight tracking-tighter text-5xl md:text-6xl">Blog</h1>
                 <p class="mx-auto max-w-2xl text-pretty text-lg text-muted-foreground">
-                    Réflexions et insights sur le leadership technique, l'architecture logicielle et la stratégie d'ingénierie
+                    {{ __('blog.subtitle') }}
                 </p>
             </div>
 
@@ -56,7 +56,7 @@
                             @endif
 
                             <div class="mt-4 flex items-center gap-2 text-sm font-medium text-primary">
-                                Lire l'article
+                                {{ __('blog.read_article') }}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1">
                                     <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                                 </svg>

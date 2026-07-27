@@ -8,9 +8,12 @@
     "require": {
         "php": "^8.4.0",
         "filament/filament": "^4.8.2",
+        "lara-zeus/spatie-translatable": "^1.0.4",
+        "laravel/ai": "^0.7.2",
         "laravel/framework": "^12.53.0",
         "nunomaduro/essentials": "^1.2.0",
-        "resend/resend-laravel": "^1.3"
+        "resend/resend-laravel": "^1.3",
+        "spatie/laravel-translatable": "^6.13"
     },
     "require-dev": {
         "driftingly/rector-laravel": "^2.1.12",

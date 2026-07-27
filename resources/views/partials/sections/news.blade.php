@@ -22,7 +22,7 @@
             @php
                 $articles = \App\Models\Post::published()
                     ->with(['categories'])
-                    ->latest()
+                    ->latestPublished()
                     ->take(3)
                     ->get();
             @endphp

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -90,22 +89,12 @@ final class Work extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    // Auto-generate slug on creation
-    protected static function booted(): void
-    {
-        self::creating(function (Work $work): void {
-            if (empty($work->slug)) {
-                $work->slug = Str::slug($work->title);
-            }
-        });
-    }
-
     // Query Scopes
+
     /**
      * @param  Builder<Work>  $query
      */
-    #[Scope]
-    protected function published(Builder $query): void
+    public function scopePublished(Builder $query): void
     {
         $query->where('status', 'published')
             ->whereNotNull('published_at')
@@ -115,9 +104,18 @@ final class Work extends Model
     /**
      * @param  Builder<Work>  $query
      */
-    #[Scope]
-    protected function ordered(Builder $query): void
+    public function scopeOrdered(Builder $query): void
     {
         $query->orderBy('order', 'asc');
+    }
+
+    // Auto-generate slug on creation
+    protected static function booted(): void
+    {
+        self::creating(function (Work $work): void {
+            if (empty($work->slug)) {
+                $work->slug = Str::slug($work->title);
+            }
+        });
     }
 }

@@ -1,0 +1,176 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Actions;
+
+use App\Ai\Agents\ArticleMetadataTranslator;
+use App\Ai\Agents\ArticleTranslator;
+use App\Models\Post;
+use Illuminate\Support\Str;
+use Laravel\Ai\Responses\StructuredAgentResponse;
+use RuntimeException;
+
+final class TranslatePostToFrench
+{
+    /**
+     * Short fields translated in a single structured call.
+     *
+     * @var array<int, string>
+     */
+    private const array METADATA_FIELDS = [
+        'title',
+        'excerpt',
+        'meta_title',
+        'meta_description',
+        'meta_keywords',
+        'og_title',
+        'og_description',
+    ];
+
+    /**
+     * Characters rule 8 of the prompt forbids, and their plain equivalents.
+     *
+     * @var array<string, string>
+     */
+    private const array FORBIDDEN_CHARACTERS = [
+        "\u{2014}" => '-',
+        "\u{2013}" => '-',
+        "\u{2018}" => "'",
+        "\u{2019}" => "'",
+        "\u{201C}" => '"',
+        "\u{201D}" => '"',
+        "\u{2026}" => '...',
+        "\u{00A0}" => ' ',
+        "\u{202F}" => ' ',
+    ];
+
+    /**
+     * Translate a post into French, leaving the source locale untouched.
+     */
+    public function __invoke(Post $post): Post
+    {
+        $locale = $this->sourceLocale();
+
+        if ($post->hasTranslation('content', 'fr')) {
+            return $post;
+        }
+
+        $content = $post->getTranslation('content', $locale, false);
+
+        if (! is_string($content) || $content === '') {
+            throw new RuntimeException("This post has no {$locale} content to translate.");
+        }
+
+        $translatedContent = $this->clean((new ArticleTranslator)->prompt($content)->text);
+
+        $this->assertImagesArePreserved($content, $translatedContent);
+
+        $metadata = $this->translateMetadata($post, $locale);
+
+        $post->setTranslation('content', 'fr', $translatedContent);
+
+        foreach ($metadata as $field => $value) {
+            $post->setTranslation($field, 'fr', $value);
+        }
+
+        $post->setTranslation('slug', 'fr', $this->availableSlug($metadata['title'], $post));
+
+        $post->save();
+
+        return $post;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    private function translateMetadata(Post $post, string $locale): array
+    {
+        $source = [];
+
+        foreach (self::METADATA_FIELDS as $field) {
+            $value = $post->getTranslation($field, $locale, false);
+
+            if (is_string($value) && $value !== '') {
+                $source[$field] = $value;
+            }
+        }
+
+        $response = (new ArticleMetadataTranslator)->prompt(
+            "Translate the values of this JSON object into French:\n".json_encode($source, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT),
+        );
+
+        $data = $response instanceof StructuredAgentResponse ? $response->toArray() : [];
+
+        $translated = [];
+
+        foreach (array_keys($source) as $field) {
+            $value = $data[$field] ?? null;
+
+            if (is_string($value) && $value !== '') {
+                $translated[$field] = $this->clean($value);
+            }
+        }
+
+        if (! isset($translated['title'])) {
+            throw new RuntimeException('The translated title came back empty.');
+        }
+
+        return $translated;
+    }
+
+    /**
+     * Every image the source references must survive the translation.
+     */
+    private function assertImagesArePreserved(string $source, string $translation): void
+    {
+        $lost = array_diff($this->imageUrls($source), $this->imageUrls($translation));
+
+        if ($lost !== []) {
+            throw new RuntimeException('The translation dropped these images: '.implode(', ', $lost));
+        }
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    private function imageUrls(string $markdown): array
+    {
+        preg_match_all('/!\[[^\]]*\]\(\s*([^)\s]+)/', $markdown, $matches);
+
+        return array_values(array_unique($matches[1]));
+    }
+
+    /**
+     * The models slip on rule 8 often enough to be worth fixing here.
+     */
+    private function clean(string $value): string
+    {
+        return str_replace(
+            array_keys(self::FORBIDDEN_CHARACTERS),
+            array_values(self::FORBIDDEN_CHARACTERS),
+            $value,
+        );
+    }
+
+    private function availableSlug(string $title, Post $post): string
+    {
+        $base = Str::slug($title);
+        $slug = $base;
+        $suffix = 1;
+
+        while (Post::query()->whereKeyNot($post->getKey())->whereSlug($slug)->exists()) {
+            $slug = $base.'-'.++$suffix;
+        }
+
+        return $slug;
+    }
+
+    private function sourceLocale(): string
+    {
+        /** @var string $locale */
+        $locale = config('app.fallback_locale', 'en');
+
+        return $locale;
+    }
+}

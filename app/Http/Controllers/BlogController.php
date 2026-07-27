@@ -19,7 +19,7 @@ final class BlogController
 
         $posts = Cache::rememberForever("blog.index.page:{$page}", fn () => Post::published()
             ->with(['categories', 'tags'])
-            ->latest()
+            ->latestPublished()
             ->paginate(12));
 
         /** @var \Illuminate\View\View $view */
@@ -34,7 +34,7 @@ final class BlogController
         /** @var Post $post */
         $post = Cache::rememberForever("post.slug:{$slug}", fn () => Post::published()
             ->with(['categories', 'tags'])
-            ->where('slug', $slug)
+            ->whereSlug($slug)
             ->firstOrFail());
 
         /** @var \Illuminate\View\View $view */

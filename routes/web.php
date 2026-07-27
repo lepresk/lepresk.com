@@ -14,8 +14,8 @@ Route::get('/', fn (): View => view('index'));
 
 // Blog routes
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 Route::get('/blog/preview/{id}', [BlogController::class, 'preview'])->name('blog.preview');
+Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
 // Project routes
 Route::get('/projets/{slug}', [WorkController::class, 'show'])->name('projects.show');

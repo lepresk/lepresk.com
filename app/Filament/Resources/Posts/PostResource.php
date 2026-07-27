@@ -17,10 +17,13 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use LaraZeus\SpatieTranslatable\Resources\Concerns\Translatable;
 use UnitEnum;
 
 final class PostResource extends Resource
 {
+    use Translatable;
+
     protected static ?string $model = Post::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;

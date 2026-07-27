@@ -12,12 +12,17 @@
     <meta name="author" content="Lepres Kikounga">
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="{{ url()->current() }}" />
+    <link rel="canonical" href="@yield('canonical', url()->current())" />
 
     <!-- Hreflang Tags -->
-    <link rel="alternate" hreflang="en" href="{{ url()->current() }}{{ parse_url(url()->current(), PHP_URL_QUERY) ? '&' : '?' }}lang=en" />
-    <link rel="alternate" hreflang="fr" href="{{ url()->current() }}{{ parse_url(url()->current(), PHP_URL_QUERY) ? '&' : '?' }}lang=fr" />
-    <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}" />
+    @hasSection('hreflang')
+        @yield('hreflang')
+    @else
+        @foreach(config('app.available_locales') as $hreflangLocale)
+            <link rel="alternate" hreflang="{{ $hreflangLocale }}" href="{{ url()->current() }}{{ parse_url(url()->current(), PHP_URL_QUERY) ? '&' : '?' }}lang={{ $hreflangLocale }}" />
+        @endforeach
+        <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}" />
+    @endif
 
     <!-- Language Declaration -->
     <meta http-equiv="content-language" content="{{ app()->getLocale() }}" />
