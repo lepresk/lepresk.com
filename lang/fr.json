@@ -143,6 +143,12 @@
     "error.404.go_blog": "Lire le blog",
     "error.404.go_contact": "Me contacter",
 
+    "error.419.title": "Page expirée | Lepres Kikounga",
+    "error.419.heading": "Cette page a expiré",
+    "error.419.description": "Vous êtes resté trop longtemps sur la page. Rechargez-la et recommencez.",
+    "error.419.reload": "Recharger la page",
+    "error.419.go_home": "Retour à l'accueil",
+
     "error.500.title": "Erreur serveur | Lepres Kikounga",
     "error.500.heading": "Quelque chose s'est mal passé",
     "error.500.description": "Nous rencontrons des difficultés techniques. Veuillez réessayer dans un instant.",
