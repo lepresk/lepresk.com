@@ -18,6 +18,17 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Build assets
+        run: |
+          npm install -g pnpm
+          pnpm install --frozen-lockfile
+          pnpm build
+
       - name: Generate .env file
         run: |
           cat <<EOF > .env
@@ -105,7 +116,9 @@ jobs:
 
           SSH_OPTS="-p $SSH_PORT -o LogLevel=ERROR -o StrictHostKeyChecking=yes"
 
-          rsync -az --quiet --delete --exclude-from='.gitignore' --exclude-from='.sync-ignore' -e "ssh $SSH_OPTS" ./ "$SSH_DEST:$APP_DIR/"
+          # public/build is gitignored, so the .gitignore exclusion would drop the assets
+          # we just compiled. rsync keeps the first matching rule, hence the include first.
+          rsync -az --quiet --delete --include='/public/build/' --include='/public/build/**' --exclude-from='.gitignore' --exclude-from='.sync-ignore' -e "ssh $SSH_OPTS" ./ "$SSH_DEST:$APP_DIR/"
 
           scp -q -P "$SSH_PORT" -o LogLevel=ERROR -o StrictHostKeyChecking=yes .env "$SSH_DEST:$APP_DIR/.env"
 
@@ -121,11 +134,9 @@ jobs:
             chmod -R 775 bootstrap/cache
             chmod -R 775 storage
 
-            nvm install node
-            nvm use node
-            npm install -g pnpm
-            pnpm i
-            pnpm build
+            # Assets are built on the runner: esbuild allocates enough memory to be
+            # killed on shared hosting, and a build that dies here leaves the site
+            # without a Vite manifest, so every public page returns a 500.
 
             if [ ! -f "composer.json" ]; then
               echo "Error: composer.json not found in the application directory"
