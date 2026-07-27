@@ -42,7 +42,16 @@ return new class extends Migration
             }
         }
 
-        // Step 2: Change column types to JSON
+        // Step 2: Drop the indexes on slug before it becomes JSON.
+        // MySQL and MariaDB store JSON as LONGTEXT and refuse a key on such a
+        // column without a prefix length, so the ALTER would fail otherwise.
+        // Uniqueness is enforced at the application level from now on.
+        Schema::table('posts', function (Blueprint $table): void {
+            $table->dropUnique(['slug']);
+            $table->dropIndex(['slug']);
+        });
+
+        // Step 3: Change column types to JSON
         Schema::table('posts', function (Blueprint $table): void {
             $table->json('title')->change();
             $table->json('slug')->change();
@@ -53,12 +62,6 @@ return new class extends Migration
             $table->json('meta_keywords')->nullable()->change();
             $table->json('og_title')->nullable()->change();
             $table->json('og_description')->nullable()->change();
-        });
-
-        // Step 3: Drop old unique index on slug (uniqueness handled at application level now)
-        Schema::table('posts', function (Blueprint $table): void {
-            $table->dropUnique(['slug']);
-            $table->dropIndex(['slug']);
         });
     }
 
