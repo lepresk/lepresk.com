@@ -157,3 +157,66 @@ it('translates a post from the posts table', function (): void {
 
     expect($post->fresh()->getTranslation('content', 'fr'))->toBe('Le contenu français.');
 });
+
+it('rewrites an existing french version when asked to', function (): void {
+    $post = englishPost();
+    $post->setTranslation('content', 'fr', 'Ancienne traduction.');
+    $post->setTranslation('title', 'fr', 'Ancien titre');
+    $post->setTranslation('slug', 'fr', 'ancien-slug');
+    $post->save();
+
+    fakeTranslations('Nouvelle traduction.');
+
+    (new TranslatePostToFrench)($post, overwrite: true);
+
+    $post->refresh();
+
+    expect($post->getTranslation('content', 'fr'))->toBe('Nouvelle traduction.')
+        ->and($post->getTranslation('title', 'fr'))->toBe('Vérification d\'empreinte')
+        ->and($post->getTranslation('content', 'en'))->toBe("# Title\n\nThe english body.");
+});
+
+it('keeps the published french slug when rewriting', function (): void {
+    $post = englishPost();
+    $post->setTranslation('content', 'fr', 'Ancienne traduction.');
+    $post->setTranslation('slug', 'fr', 'ancien-slug-deja-indexe');
+    $post->save();
+
+    fakeTranslations('Nouvelle traduction.');
+
+    (new TranslatePostToFrench)($post, overwrite: true);
+
+    expect($post->fresh()->getTranslation('slug', 'fr'))->toBe('ancien-slug-deja-indexe');
+});
+
+it('offers the rewrite action only on posts that already have a french version', function (): void {
+    $this->actingAs(App\Models\User::factory()->create());
+
+    $untranslated = englishPost();
+
+    $translated = englishPost();
+    $translated->replaceTranslations('slug', ['en' => 'already-translated']);
+    $translated->setTranslation('content', 'fr', 'Déjà traduit.');
+    $translated->save();
+
+    Livewire\Livewire::test(App\Filament\Resources\Posts\Pages\ListPosts::class)
+        ->assertTableActionHidden('retranslateToFrench', record: $untranslated)
+        ->assertTableActionVisible('retranslateToFrench', record: $translated);
+});
+
+it('rewrites the french version from the posts table', function (): void {
+    $this->actingAs(App\Models\User::factory()->create());
+
+    $post = englishPost();
+    $post->setTranslation('content', 'fr', 'Ancienne traduction.');
+    $post->setTranslation('slug', 'fr', 'ancien-slug');
+    $post->save();
+
+    fakeTranslations('Nouvelle traduction.');
+
+    Livewire\Livewire::test(App\Filament\Resources\Posts\Pages\ListPosts::class)
+        ->callTableAction('retranslateToFrench', record: $post)
+        ->assertNotified();
+
+    expect($post->fresh()->getTranslation('content', 'fr'))->toBe('Nouvelle traduction.');
+});

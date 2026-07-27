@@ -36,6 +36,7 @@ final class EditPost extends EditRecord
                 ))
                 ->openUrlInNewTab(),
             TranslatePostAction::make(),
+            TranslatePostAction::rewrite(),
             DeleteAction::make(),
             ForceDeleteAction::make(),
             RestoreAction::make(),

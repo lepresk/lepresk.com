@@ -47,12 +47,17 @@ final class TranslatePostToFrench
 
     /**
      * Translate a post into French, leaving the source locale untouched.
+     *
+     * An existing french version is kept unless $overwrite is set, and its slug
+     * survives a rewrite either way: the french URL may already be published and
+     * indexed, so it is not silently replaced behind the reader's back.
      */
-    public function __invoke(Post $post): Post
+    public function __invoke(Post $post, bool $overwrite = false): Post
     {
         $locale = $this->sourceLocale();
+        $existingSlug = $post->getTranslation('slug', 'fr', false);
 
-        if ($post->hasTranslation('content', 'fr')) {
+        if (! $overwrite && $post->hasTranslation('content', 'fr')) {
             return $post;
         }
 
@@ -74,7 +79,9 @@ final class TranslatePostToFrench
             $post->setTranslation($field, 'fr', $value);
         }
 
-        $post->setTranslation('slug', 'fr', $this->availableSlug($metadata['title'], $post));
+        $post->setTranslation('slug', 'fr', is_string($existingSlug) && $existingSlug !== ''
+            ? $existingSlug
+            : $this->availableSlug($metadata['title'], $post));
 
         $post->save();
 
