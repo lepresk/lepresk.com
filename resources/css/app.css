@@ -177,3 +177,10 @@
   }
 }
 
+
+/* The typography plugin wraps blockquotes in english curly quotes, which reads
+   as a translation artifact on the french version of an article. */
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none;
+}
