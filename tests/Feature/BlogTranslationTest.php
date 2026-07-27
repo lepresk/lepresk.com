@@ -101,3 +101,18 @@ it('returns a 404 for an unknown slug', function (): void {
 
     $this->get('/blog/does-not-exist')->assertNotFound();
 });
+
+it('exposes the locale switcher on the post pages', function (): void {
+    $this->actingAs(App\Models\User::factory()->create());
+
+    $post = Post::factory()->create();
+
+    Livewire\Livewire::test(App\Filament\Resources\Posts\Pages\ListPosts::class)
+        ->assertActionVisible('activeLocale');
+
+    Livewire\Livewire::test(App\Filament\Resources\Posts\Pages\EditPost::class, ['record' => $post->getKey()])
+        ->assertActionVisible('activeLocale');
+
+    Livewire\Livewire::test(App\Filament\Resources\Posts\Pages\CreatePost::class)
+        ->assertActionVisible('activeLocale');
+});
