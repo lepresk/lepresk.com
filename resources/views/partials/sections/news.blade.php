@@ -64,7 +64,7 @@
                         </h3>
 
                         @if($article->excerpt)
-                            <p class="text-sm text-muted-foreground leading-relaxed">{{ $article->excerpt }}</p>
+                            <p class="text-sm text-muted-foreground leading-relaxed line-clamp-3">{{ $article->excerpt }}</p>
                         @endif
 
                         <div class="mt-4 flex items-center gap-2 text-sm font-medium text-primary">
