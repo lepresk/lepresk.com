@@ -87,13 +87,13 @@ it('lists every translated slug in the sitemap', function (): void {
 it('flushes the cache of every slug of a post', function (): void {
     $post = translatedPost();
 
-    Cache::put('post.slug:fingerprint-verification', $post);
-    Cache::put('post.slug:verification-empreinte', $post);
+    Cache::put(App\Cache\BlogCache::postKey('en', 'fingerprint-verification'), '<html>');
+    Cache::put(App\Cache\BlogCache::postKey('fr', 'verification-empreinte'), '<html>');
 
     $post->update(['status' => 'draft']);
 
-    expect(Cache::has('post.slug:fingerprint-verification'))->toBeFalse()
-        ->and(Cache::has('post.slug:verification-empreinte'))->toBeFalse();
+    expect(Cache::has(App\Cache\BlogCache::postKey('en', 'fingerprint-verification')))->toBeFalse()
+        ->and(Cache::has(App\Cache\BlogCache::postKey('fr', 'verification-empreinte')))->toBeFalse();
 });
 
 it('returns a 404 for an unknown slug', function (): void {
