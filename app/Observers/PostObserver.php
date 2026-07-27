@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Observers;
 
 use App\Actions\CalculateReadTime;
+use App\Cache\BlogCache;
 use App\Models\Post;
-use Illuminate\Support\Facades\Cache;
 
 final class PostObserver
 {
@@ -23,6 +23,16 @@ final class PostObserver
     }
 
     public function deleted(Post $post): void
+    {
+        $this->flushCache($post);
+    }
+
+    public function restored(Post $post): void
+    {
+        $this->flushCache($post);
+    }
+
+    public function forceDeleted(Post $post): void
     {
         $this->flushCache($post);
     }
@@ -89,12 +99,6 @@ final class PostObserver
 
     private function flushCache(Post $post): void
     {
-        foreach ($post->slugsInAllLocales() as $slug) {
-            Cache::forget("post.slug:{$slug}");
-        }
-
-        for ($i = 1; $i <= 20; $i++) {
-            Cache::forget("blog.index.page:{$i}");
-        }
+        BlogCache::forgetPost($post);
     }
 }
