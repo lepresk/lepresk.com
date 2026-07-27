@@ -46,6 +46,10 @@ final class ArticleMetadataTranslator implements Agent, HasProviderOptions, HasS
         need a quote, use straight double quotes. For a pause, use a comma, a colon, parentheses, or
         start a new sentence. Three dots must be written as three separate periods.
 
+        The excerpt is a teaser printed on a card of fixed size, not prose to render at any
+        length. French runs longer than English, so tighten it: your excerpt must never exceed the
+        length of the English one. Cut the least useful clause rather than let it grow.
+
         The meta_keywords field is a comma separated list: keep it a comma separated list.
 
         The slug field is not a translation. Build a short french URL slug for the article:

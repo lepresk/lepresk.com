@@ -103,3 +103,13 @@ it('serves a new article as soon as it is published', function (): void {
 
     expect($second->slug)->toBe('second-post');
 });
+
+it('never lets a long excerpt stretch a card', function (): void {
+    $post = publishedPost('long-excerpt');
+    $post->replaceTranslations('excerpt', ['en' => str_repeat('Une phrase de teaser. ', 30)]);
+    $post->save();
+
+    $this->get(route('blog.index'))
+        ->assertOk()
+        ->assertSee('line-clamp-3', escape: false);
+});
