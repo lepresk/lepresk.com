@@ -15,16 +15,17 @@ it('rejects a locale it does not know', function (): void {
     $this->get('/language/de')->assertNotFound();
 });
 
-it('never caches a blog page in a shared cache', function (): void {
+it('lets the browser revalidate a blog page instead of reusing it in the wrong language', function (): void {
     $post = Post::factory()->published()->create();
 
     foreach ([route('blog.index'), route('blog.show', $post->slug)] as $url) {
         $response = $this->get($url);
 
+        // The host strips Vary, so a long lived entry would outlive a language switch.
         expect($response->headers->get('Cache-Control'))
             ->toContain('private')
-            ->not->toContain('public')
-            ->and($response->headers->get('Vary'))->toContain('Cookie');
+            ->toContain('no-cache')
+            ->not->toContain('public');
     }
 });
 
