@@ -589,7 +589,7 @@ After 10 months in production:
 
 Building high-availability systems requires careful planning, robust architecture, and continuous monitoring. Kubernetes provides the tools, but success depends on how you use them.
 
-The investment in proper HA architecture paid off—our client has complete confidence in the system's reliability, and our team sleeps better at night.
+The investment in proper HA architecture paid off. Our client has complete confidence in the system's reliability, and our team sleeps better at night.
 
 What's your experience with high-availability systems? I'd love to hear your stories and lessons learned.
 MARKDOWN
@@ -1688,7 +1688,7 @@ Deployed to 20+ businesses, helping them:
 ## Client Feedback
 
 > "Freeze transformed how we manage inventory. The interface is intuitive and the reports are exactly what we need."
-> — Small retail business owner
+> Small retail business owner
 
 The application continues to receive updates and has an active user base with excellent feedback on reliability and ease of use.
 MARKDOWN

@@ -16,7 +16,7 @@
     <meta property="og:url" content="{{ route('projects.show', $work->slug) }}">
     <meta property="og:title" content="{{ $work->og_title ?: $work->title }}">
     <meta property="og:description" content="{{ $work->og_description ?: ($work->meta_description ?: $work->description) }}">
-    <meta property="og:site_name" content="Lepres Kikounga Portfolio | VP of Engineering, CTO, Tech Advisor">
+    <meta property="og:site_name" content="Lepres Kikounga">
     <meta property="og:image" content="{{ $ogImage }}">
 @endsection
 
@@ -117,10 +117,10 @@
                                     data-lightbox-item
                                     data-lightbox-index="{{ $index }}"
                                     data-lightbox-src="{{ Storage::url($image) }}"
-                                    data-lightbox-alt="{{ $work->title }} — image {{ $index + 1 }}"
+                                    data-lightbox-alt="{{ $work->title }}, image {{ $index + 1 }}"
                                     aria-label="Agrandir l'image {{ $index + 1 }} sur {{ count($work->image_gallery) }}"
                                 >
-                                    <img src="{{ Storage::url($image) }}" alt="{{ $work->title }} — image {{ $index + 1 }}" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110">
+                                    <img src="{{ Storage::url($image) }}" alt="{{ $work->title }}, image {{ $index + 1 }}" loading="lazy" class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110">
                                     <span class="absolute inset-0 flex items-center justify-center bg-background/40 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                                         <svg class="h-10 w-10 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607ZM10.5 7.5v6m3-3h-6" />

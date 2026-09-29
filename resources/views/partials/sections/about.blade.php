@@ -29,7 +29,7 @@
                             'icon' => 'medal'
                         ],
                         [
-                            'value' => '18+',
+                            'value' => '20',
                             'label' => __('about.stat_engineers'),
                             'gradient' => 'bg-gradient-to-br from-purple-500 to-purple-600',
                             'icon' => 'users-three'

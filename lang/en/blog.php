@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'title' => 'Blog',
-    'subtitle' => 'Thoughts and insights on technical leadership, software architecture and engineering strategy',
+    'subtitle' => 'Notes on teams, architecture, and getting software into production',
     'read_article' => 'Read article',
     'back_to_articles' => 'Back to articles',
 ];

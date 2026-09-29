@@ -8,6 +8,7 @@
     @include('partials.sections.hero')
     @include('partials.sections.about')
     @include('partials.sections.experience')
+    @include('partials.sections.education')
     @include('partials.sections.services')
     @include('partials.sections.skills')
     @include('partials.sections.projects')

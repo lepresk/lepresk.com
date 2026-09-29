@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Blog | Lepres Kikounga')
+@section('title', __('meta.blog.title'))
 
 @section('description', __('blog.subtitle'))
 

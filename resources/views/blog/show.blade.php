@@ -31,7 +31,7 @@
     <meta property="og:url" content="{{ route('blog.show', $post->slug) }}">
     <meta property="og:title" content="{{ $post->og_title ?: $post->title }}">
     <meta property="og:description" content="{{ $post->og_description ?: ($post->meta_description ?: $post->excerpt) }}">
-    <meta property="og:site_name" content="Lepres Kikounga Portfolio | VP of Engineering, CTO, Tech Advisor">
+    <meta property="og:site_name" content="Lepres Kikounga">
     <meta property="og:image" content="{{ $ogImage }}">
     @if($post->published_at)
     <meta property="article:published_time" content="{{ $post->published_at->toIso8601String() }}">
@@ -88,7 +88,7 @@
 @section('content')
     @if(!empty($preview))
         <div class="bg-amber-500 text-black text-center py-2 text-sm font-semibold">
-            Preview Mode —
+            Preview Mode:
             @if($post->status === 'draft')
                 This post is a draft
             @elseif($post->published_at?->isFuture())

@@ -4,7 +4,7 @@
             LK<span class="text-primary">.</span>
         </a>
 
-        <div class="hidden items-center gap-8 lg:flex">
+        <div class="hidden items-center gap-4 lg:flex">
             <a href="/#home" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="home">
                 {{ __('nav.home') }}
             </a>
@@ -13,6 +13,9 @@
             </a>
             <a href="/#experience" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="experience">
                 {{ __('nav.experience') }}
+            </a>
+            <a href="/#education" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="education">
+                {{ __('nav.education') }}
             </a>
             <a href="/#services" class="nav-link relative text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-0 after:h-px after:bg-primary after:transition-all hover:text-primary text-muted-foreground after:w-0 hover:after:w-full" data-section="services">
                 {{ __('nav.services') }}
@@ -82,6 +85,9 @@
             </a>
             <a href="/#experience" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="experience">
                 {{ __('nav.experience') }}
+            </a>
+            <a href="/#education" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="education">
+                {{ __('nav.education') }}
             </a>
             <a href="/#services" class="mobile-nav-link text-2xl font-medium transition-all duration-300 hover:scale-110 hover:text-primary text-muted-foreground" data-section="services">
                 {{ __('nav.services') }}

@@ -11,35 +11,41 @@
             @php
                 $skillCategories = [
                     [
-                        'title' => 'Leadership & Management',
+                        'title' => __('skills.teams.title'),
                         'icon' => 'users',
-                        'skills' => ['Team Management', 'Agile / Scrum', 'Technical Strategy', 'Hiring & Mentorship', 'Engineering Culture']
+                        'skills' => [
+                            __('skills.teams.hiring'),
+                            __('skills.teams.coaching'),
+                            __('skills.teams.roadmap'),
+                            __('skills.teams.budget'),
+                            __('skills.teams.diagnosis'),
+                        ],
                     ],
                     [
-                        'title' => 'Backend Development',
+                        'title' => __('skills.backend.title'),
                         'icon' => 'server',
-                        'skills' => ['PHP / Laravel', 'Node.js / NestJS', 'Python / Django', '.NET / C#', 'CakePHP']
+                        'skills' => ['PHP / Laravel', 'Python / Django', 'Node.js / NestJS', 'ASP.NET Core / C#'],
                     ],
                     [
-                        'title' => 'Frontend Development',
+                        'title' => __('skills.frontend.title'),
                         'icon' => 'code',
-                        'skills' => ['React / Next.js', 'TypeScript', 'Tailwind CSS', 'Redux']
+                        'skills' => ['TypeScript', 'React / Next.js', 'React Native', 'Flutter'],
                     ],
                     [
-                        'title' => 'Mobile Development',
-                        'icon' => 'smartphone',
-                        'skills' => ['Flutter', 'Android (Kotlin)', 'Cross-platform Apps']
-                    ],
-                    [
-                        'title' => 'Database',
+                        'title' => __('skills.data.title'),
                         'icon' => 'database',
-                        'skills' => ['PostgreSQL', 'MySQL / MariaDB', 'MongoDB', 'Redis', 'SQL Server']
+                        'skills' => ['PostgreSQL', 'MySQL/MariaDB', 'SQL Server', 'Redis', 'RabbitMQ'],
                     ],
                     [
-                        'title' => 'Platform & Infrastructure',
+                        'title' => __('skills.platform.title'),
                         'icon' => 'blocks',
-                        'skills' => ['Docker', 'Linux', 'CI/CD Pipelines', 'GitHub Actions']
-                    ]
+                        'skills' => ['AWS', 'Docker', 'Kubernetes', 'CI/CD'],
+                    ],
+                    [
+                        'title' => __('skills.ai.title'),
+                        'icon' => 'spark',
+                        'skills' => ['Claude Code', 'Codex', 'Cursor', __('skills.ai.pipelines')],
+                    ],
                 ];
             @endphp
 
@@ -59,17 +65,13 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
                                 </svg>
-                            @elseif ($category['icon'] === 'smartphone')
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/>
-                                </svg>
                             @elseif ($category['icon'] === 'database')
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/>
                                 </svg>
-                            @elseif ($category['icon'] === 'globe')
+                            @elseif ($category['icon'] === 'spark')
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
+                                    <path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z"/><path d="M19 15l.7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7L19 15z"/>
                                 </svg>
                             @else
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

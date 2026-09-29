@@ -1,9 +1,9 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
-/* Syntax highlighting — Atom One Dark (always dark) */
+/* Syntax highlighting: Atom One Dark (always dark) */
 @import 'prism-themes/themes/prism-one-dark.css';
-/* Syntax highlighting — line numbers plugin */
+/* Syntax highlighting: line numbers plugin */
 @import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
