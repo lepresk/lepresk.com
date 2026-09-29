@@ -8,17 +8,17 @@
         "test:lint": "prettier --check resources/"
     },
     "devDependencies": {
-        "@tailwindcss/typography": "^0.5.19",
-        "@tailwindcss/vite": "^4.2.1",
-        "concurrently": "^9.2.1",
+        "@tailwindcss/typography": "^0.5.20",
+        "@tailwindcss/vite": "^4.3.3",
+        "concurrently": "^9.2.4",
         "laravel-vite-plugin": "^2.1.0",
-        "npm-check-updates": "^19.6.3",
-        "playwright": "^1.58.2",
-        "prettier": "^3.8.1",
+        "npm-check-updates": "^19.6.6",
+        "playwright": "^1.63.0",
+        "prettier": "^3.9.9",
         "prettier-plugin-organize-imports": "^4.3.0",
-        "prettier-plugin-tailwindcss": "^0.7.2",
-        "tailwindcss": "^4.2.1",
-        "vite": "^7.3.1"
+        "prettier-plugin-tailwindcss": "^0.7.4",
+        "tailwindcss": "^4.3.3",
+        "vite": "^7.3.6"
     },
     "dependencies": {
         "prism-themes": "^1.9.0",

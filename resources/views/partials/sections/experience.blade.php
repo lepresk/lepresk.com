@@ -14,6 +14,34 @@
                 @php
                     $experiences = [
                         [
+                            'title' => __('experience.cto_akieni.title'),
+                            'company' => 'Akieni',
+                            'location' => 'Brazzaville',
+                            'period' => __('experience.cto_akieni.period'),
+                            'achievements' => [
+                                __('experience.cto_akieni.achievement_1'),
+                                __('experience.cto_akieni.achievement_2'),
+                                __('experience.cto_akieni.achievement_3'),
+                                __('experience.cto_akieni.achievement_4'),
+                                __('experience.cto_akieni.achievement_5'),
+                            ],
+                            'technologies' => ['Leadership', 'Budget', 'Architecture'],
+                        ],
+                        [
+                            'title' => __('experience.academy.title'),
+                            'company' => 'Akieni',
+                            'location' => 'Brazzaville',
+                            'period' => __('experience.academy.period'),
+                            'achievements' => [
+                                __('experience.academy.achievement_1'),
+                                __('experience.academy.achievement_2'),
+                                __('experience.academy.achievement_3'),
+                                __('experience.academy.achievement_4'),
+                                __('experience.academy.achievement_5'),
+                            ],
+                            'technologies' => ['Curriculum', 'Mentorship', 'Hiring'],
+                        ],
+                        [
                             'title' => __('experience.vp_engineering.title'),
                             'company' => 'Akieni',
                             'location' => 'Brazzaville',
@@ -24,10 +52,8 @@
                                 __('experience.vp_engineering.achievement_3'),
                                 __('experience.vp_engineering.achievement_4'),
                                 __('experience.vp_engineering.achievement_5'),
-                                __('experience.vp_engineering.achievement_6'),
-                                __('experience.vp_engineering.achievement_7')
                             ],
-                            'technologies' => ['Technical Strategy', 'People Management', 'Process Design', 'R&D Leadership', 'Cross-functional Alignment', 'Hiring & Onboarding']
+                            'technologies' => ['Hiring', 'Squad leadership', 'Delivery'],
                         ],
                         [
                             'title' => __('experience.engineering_manager.title'),
@@ -40,9 +66,8 @@
                                 __('experience.engineering_manager.achievement_3'),
                                 __('experience.engineering_manager.achievement_4'),
                                 __('experience.engineering_manager.achievement_5'),
-                                __('experience.engineering_manager.achievement_6')
                             ],
-                            'technologies' => ['Django', 'SpringBoot', 'React', 'Redux', 'GraphQL', 'Next.js']
+                            'technologies' => ['High availability', 'Cloud migration', 'Team building'],
                         ],
                         [
                             'title' => __('experience.technical_officer.title'),
@@ -55,36 +80,33 @@
                                 __('experience.technical_officer.achievement_3'),
                                 __('experience.technical_officer.achievement_4'),
                                 __('experience.technical_officer.achievement_5'),
-                                __('experience.technical_officer.achievement_6')
                             ],
-                            'technologies' => ['ASP.NET Core', 'Blazor', 'SQL Server', 'PowerBI']
+                            'technologies' => ['SQL Server', 'Power BI', 'Data pipelines'],
                         ],
                         [
-                            'title' => __('experience.cto.title'),
-                            'company' => 'COWEMA',
+                            'title' => __('experience.cowema.title'),
+                            'company' => 'Cowema',
                             'location' => 'Brazzaville',
-                            'period' => __('experience.cto.period'),
+                            'period' => __('experience.cowema.period'),
                             'achievements' => [
-                                __('experience.cto.achievement_1'),
-                                __('experience.cto.achievement_2'),
-                                __('experience.cto.achievement_3'),
-                                __('experience.cto.achievement_4')
+                                __('experience.cowema.achievement_1'),
+                                __('experience.cowema.achievement_2'),
+                                __('experience.cowema.achievement_3'),
+                                __('experience.cowema.achievement_4'),
+                                __('experience.cowema.achievement_5'),
                             ],
-                            'technologies' => ['Laravel', 'Flutter', 'Kotlin', 'CakePHP', 'MariaDB']
+                            'technologies' => ['Android', 'iOS', 'Mobile money'],
                         ],
                         [
                             'title' => __('experience.freelance.title'),
-                            'company' => 'Self-employed',
+                            'company' => 'Freelance',
                             'location' => 'Pointe-Noire',
                             'period' => __('experience.freelance.period'),
                             'achievements' => [
                                 __('experience.freelance.achievement_1'),
-                                __('experience.freelance.achievement_2'),
-                                __('experience.freelance.achievement_3'),
-                                __('experience.freelance.achievement_4')
                             ],
-                            'technologies' => ['PHP', 'Java', 'MySQL', 'VB.NET', 'C#.NET', 'Android', 'WordPress']
-                        ]
+                            'technologies' => [],
+                        ],
                     ];
                 @endphp
 
@@ -122,13 +144,15 @@
                                             @endforeach
                                         </ul>
 
-                                        <div class="mt-6 flex flex-wrap gap-2">
-                                            @foreach ($exp['technologies'] as $tech)
-                                                <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                                                    {{ $tech }}
-                                                </span>
-                                            @endforeach
-                                        </div>
+                                        @if ($exp['technologies'] !== [])
+                                            <div class="mt-6 flex flex-wrap gap-2">
+                                                @foreach ($exp['technologies'] as $tech)
+                                                    <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                                                        {{ $tech }}
+                                                    </span>
+                                                @endforeach
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

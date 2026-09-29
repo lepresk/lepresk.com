@@ -43,8 +43,8 @@ return [
     |
     */
 
-    'public_email' => env('CONTACT_PUBLIC_EMAIL'),
+    'public_email' => env('CONTACT_PUBLIC_EMAIL') ?: 'info@lepresk.com',
 
-    'public_phone' => env('CONTACT_PUBLIC_PHONE'),
+    'public_phone' => env('CONTACT_PUBLIC_PHONE') ?: '+242 06 851 13 58',
 
 ];

@@ -8,7 +8,7 @@
     <title>@yield('title', __('meta.home.title'))</title>
 
     <meta name="description" content="@yield('description', __('meta.home.description'))">
-    <meta name="keywords" content="Lepresk, VP of Engineering, CTO, Tech Advisor, Engineering Leadership, System Architecture, Laravel, React, Flutter, .NET, Next.js">
+    <meta name="keywords" content="Lepres Kikounga, CTO, Akieni, Brazzaville, Laravel, PHP, Flutter, React Native, Python, TypeScript">
     <meta name="author" content="Lepres Kikounga">
 
     <!-- Canonical URL -->
@@ -36,7 +36,7 @@
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:title" content="@yield('title', __('meta.home.title'))">
         <meta property="og:description" content="@yield('description', __('meta.home.description'))">
-        <meta property="og:site_name" content="Lepres Kikounga Portfolio | VP of Engineering, CTO, Tech Advisor">
+        <meta property="og:site_name" content="Lepres Kikounga">
         <meta property="og:image" content="{{ asset('/images/profile.webp') }}">
     @endif
 
@@ -73,6 +73,26 @@
             'jobTitle' => __('hero.role'),
             'description' => __('meta.home.description'),
             'url' => url('/'),
+            'worksFor' => [
+                '@type' => 'Organization',
+                'name' => 'Akieni',
+            ],
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => 'Brazzaville',
+                'addressCountry' => 'CG',
+            ],
+            'alumniOf' => [
+                [
+                    '@type' => 'CollegeOrUniversity',
+                    'name' => 'Columbia Business School',
+                ],
+                [
+                    '@type' => 'EducationalOrganization',
+                    'name' => 'École Africaine de Développement',
+                ],
+            ],
+            'knowsAbout' => ['Laravel', 'PHP', 'Flutter', 'React Native', 'Engineering leadership'],
             'sameAs' => [
                 'https://linkedin.com/in/lepres-kikounga-438911133',
                 'https://linkedin.com/in/lepresk',
@@ -84,7 +104,7 @@
                 'https://dev.to/lepresk',
             ],
             'inLanguage' => ['en', 'fr']
-        ], JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     @endphp
     </script>
 
