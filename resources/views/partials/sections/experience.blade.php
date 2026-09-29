@@ -25,7 +25,7 @@
                                 __('experience.cto_akieni.achievement_4'),
                                 __('experience.cto_akieni.achievement_5'),
                             ],
-                            'technologies' => ['Leadership', 'Budget', 'Architecture'],
+                            'technologies' => [__('experience.tags.leadership'), __('experience.tags.budget'), __('experience.tags.architecture')],
                         ],
                         [
                             'title' => __('experience.academy.title'),
@@ -39,7 +39,7 @@
                                 __('experience.academy.achievement_4'),
                                 __('experience.academy.achievement_5'),
                             ],
-                            'technologies' => ['Curriculum', 'Mentorship', 'Hiring'],
+                            'technologies' => [__('experience.tags.curriculum'), __('experience.tags.mentorship'), __('experience.tags.hiring')],
                         ],
                         [
                             'title' => __('experience.vp_engineering.title'),
@@ -53,7 +53,7 @@
                                 __('experience.vp_engineering.achievement_4'),
                                 __('experience.vp_engineering.achievement_5'),
                             ],
-                            'technologies' => ['Hiring', 'Squad leadership', 'Delivery'],
+                            'technologies' => [__('experience.tags.hiring'), __('experience.tags.squad_leadership'), __('experience.tags.delivery')],
                         ],
                         [
                             'title' => __('experience.engineering_manager.title'),
@@ -67,7 +67,7 @@
                                 __('experience.engineering_manager.achievement_4'),
                                 __('experience.engineering_manager.achievement_5'),
                             ],
-                            'technologies' => ['High availability', 'Cloud migration', 'Team building'],
+                            'technologies' => [__('experience.tags.availability'), __('experience.tags.cloud'), __('experience.tags.team_building')],
                         ],
                         [
                             'title' => __('experience.technical_officer.title'),
@@ -81,7 +81,7 @@
                                 __('experience.technical_officer.achievement_4'),
                                 __('experience.technical_officer.achievement_5'),
                             ],
-                            'technologies' => ['SQL Server', 'Power BI', 'Data pipelines'],
+                            'technologies' => ['SQL Server', 'Power BI', __('experience.tags.data_pipelines')],
                         ],
                         [
                             'title' => __('experience.cowema.title'),

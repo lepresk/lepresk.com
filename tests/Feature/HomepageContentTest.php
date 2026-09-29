@@ -30,7 +30,13 @@ it('presents the current role, the updated career and the Columbia certificate',
         ->assertSee('Flutter', false)
         ->assertSee('React Native', false)
         ->assertDontSee('March 2025 – Present', false)
-        ->assertDontSee('Mars 2025 – Présent', false);
+        ->assertDontSee('Mars 2025 – Présent', false)
+        ->assertDontSee('je tiens le budget', false)
+        ->assertDontSee('J\'en tenais la technique', false)
+        ->assertDontSee('Where I\'ve worked', false)
+        ->assertDontSee('I don\'t only do slides', false)
+        ->assertDontSee('Got an idea?', false)
+        ->assertDontSee('Une idée ?', false);
 
     expect($response->getContent())->not->toMatch('/bg-primary"><\/div>\s*Go\s*<\/li>/')
         ->and($response->getContent())->not->toMatch('/rounded-full bg-primary\/10[^>]*>\s*(Claude Code|Codex|Cursor)\s*</')
